@@ -1,15 +1,10 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
 from PyQt5.QtGui import QIcon
 import mysql.connector
-
-wind = 0.0
-hum = 48
-atp = 1001
-lat = 10.58
-long = 56.84
-alt = 26
-sat = 13
 
 
 def get_data():
@@ -17,15 +12,45 @@ def get_data():
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
 
-    get_wind = "SELECT wind FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
+    get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
     cursor.execute(get_wind)
     get_data.wind = cursor.fetchone()
+    global wind
+    wind = get_data.wind[1]
+    global wind_timestamp
+    wind_timestamp = get_data.wind[2]
 
+    get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
+    cursor.execute(get_sens)
+    get_data.sens = cursor.fetchone()
+    global temp
+    temp = get_data.sens[1]
+    global hum
+    hum = get_data.sens[2]
+    global atp
+    atp = get_data.sens[3]
+    global sens_timestamp
+    sens_timestamp = get_data.sens[4]
 
+    get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps)"
+    cursor.execute(get_gps)
+    get_data.gps = cursor.fetchone()
+    global lat
+    lat = get_data.gps[1]
+    global long
+    long = get_data.gps[2]
+    global alt
+    alt = get_data.gps[3]
+    global gps_timestamp
+    gps_timestamp = get_data.gps[4]
 
 
 get_data()
-print(get_data.wind)
+
+
+print("Wind: ", wind, "Timestamp: ", wind_timestamp)
+print("Temp: ", temp, "Hum: ", hum, "ATP: ", atp, "Timestamp: ", sens_timestamp)
+print("Lat: ", lat, "Long: ", long, "Alt: ", alt, "Timestamp: ", gps_timestamp)
 
 
 class App(QMainWindow):
@@ -33,7 +58,8 @@ class App(QMainWindow):
     def __init__(self):
         super().__init__()
         self.title = "WFS - Weather Forecast Station"
-        self.left = 50
+        self.setWindowIcon(QIcon("drawing.svg.png"))
+        self.left = 2000
         self.top = 100
         self.width = 450
         self.height = 350
@@ -61,8 +87,9 @@ class App(QMainWindow):
         alt_label = QLabel("Altitude: " + str(alt), self)
         alt_label.move(50, 175)
 
-        sat_label = QLabel("Sattelites: " + str(sat), self)
-        sat_label.move(50, 200)
+        test_label = QLabel(self)
+        test_label.setText("test å skirve en skikkelig lang text for å se om det feiler")
+        test_label.move(50, 200)
 
         self.show()
 

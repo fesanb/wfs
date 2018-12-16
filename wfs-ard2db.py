@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 # Serial Formatting
 # Wind: <w,wind>
 # GPS: <GPS,gpslat,gpslong,gpsalt,gpssat>
