@@ -38,9 +38,9 @@ print("                            - Terminal console and debugging below")
 print(" ")
 print(" ")
 print(" ")
-time.sleep(2)
+time.sleep(0)
 
-cnx = mysql.connector.connect(host='192.168.1.43', user='wfs', database='wfs', password='wfs22')
+cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
 cursor = cnx.cursor()
 
 # HANDSHAKE
@@ -50,30 +50,33 @@ ports = list(port_list.comports())
 serial_port = ""
 beauti_sleep = 1
 
+
 while handshake == 0:
     for y in ports:
         x = [ports[i]]
         probe = x[0]
         i += 1
-        ser = serial.Serial(probe[0], 19200)
-        cc = ser.readline().decode()
-        print("    Probing: " + "\x1b[1;33;40m" + probe[0] + "\x1b[0m")
+        print("    Probing: " + "\x1b[1;33m" + probe[0] + "\x1b[0m")
+        ser = serial.Serial(probe[0], 19200, timeout=4)
+        cc = str(ser.readline())
+        probe_answer = cc[2:][:-5]
         time.sleep(beauti_sleep)
 
-        if cc[0] == "S":
-            print("\x1b[1;32;40m" + "    ok" + "\x1b[0m" + " - Handshake 'S' received. Trying to send signal back...")
+        if probe_answer == "S":
+            print("")
+            print("\x1b[1;32m" + "    ok" + "\x1b[0m" + " - Handshake 'S' received. Trying to send signal back...")
             time.sleep(beauti_sleep)
             serial_port = probe[0]
-            print("\x1b[1;32;40m" + "    ok" + "\x1b[0m" + " - Serial port set to: " + "\x1b[1;33;40m" + serial_port + "\x1b[0m")
+            print("\x1b[1;32m" + "    ok" + "\x1b[0m" + " - Serial port set to: " + "\x1b[1;33m" + serial_port + "\x1b[0m")
             time.sleep(beauti_sleep)
             ss = cc.encode()
             ser.write(ss)
 
-            print("\x1b[1;32;40m" + "    ok" + "\x1b[0m" + " - Handshake signal sent with success.")
+            print("\x1b[1;32m" + "    ok" + "\x1b[0m" + " - Handshake signal sent with success.")
             time.sleep(beauti_sleep)
             handshake = 1
             print("")
-            print("\x1b[1;32;40m" + "      <-- Handshake successful --> " + "\x1b[0m")
+            print("\x1b[1;32m" + "      <-- Handshake successful --> " + "\x1b[0m")
             print("")
             print(".. Starting script")
             print("")
@@ -82,6 +85,8 @@ while handshake == 0:
             ser.close()
 
             break
+        print("    Silence: " + "\x1b[1;31m" + probe[0] + "\x1b[0m")
+        print("")
 # HANDSHAKE
 
 try:
