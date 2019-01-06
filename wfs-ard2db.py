@@ -12,6 +12,7 @@ import serial
 import serial.tools.list_ports as port_list
 import mysql.connector
 
+
 print("")
 print("")
 print("")
@@ -137,7 +138,7 @@ while True:
                 cnx.commit()
 
         if pcs[0] == "SENS":
-            print("Temp: ", pcs[1], " Hum: ", pcs[2], " ATP: ", pcs[3], end="\r \r", flush=True)
+            print("Temp: ", pcs[1], " Hum: ", pcs[2], " ATP: ", pcs[3], end="\r")
             if pcs[1] != lastdatatemp and pcs[2] != lastdatahum and pcs[3] != lastdataatp:
                 lastdatatemp = pcs[1]
                 lastdatahum = pcs[2]

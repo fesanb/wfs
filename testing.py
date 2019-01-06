@@ -1,27 +1,8 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow
-from PyQt5.QtGui import QIcon
+import time
 
+a = 0
 
-class App(QMainWindow):
-
-    def __init__(self):
-        super().__init__()
-        self.title = 'PyQt5 status bar example - pythonspot.com'
-        self.left = 800
-        self.top = 300
-        self.width = 640
-        self.height = 480
-        self.initUI()
-
-    def initUI(self):
-        self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        self.statusBar().showMessage('Message in statusbar.')
-        self.show()
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = App()
-    sys.exit(app.exec_())
+while True:
+    a += 1
+    print(a, end="\r")
+    time.sleep(1)
