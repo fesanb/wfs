@@ -5,6 +5,8 @@ from curses import wrapper
 import mysql.connector
 import itertools
 
+
+
 def spinning_cursor():
     while True:
         for cursor in '|/-\\':
@@ -45,7 +47,8 @@ def get_db_data():
 
 def main(stdscr):
     stdscr.clear()
-
+    curses.halfdelay(5)
+    curses.noecho()
     get_db_data()
 
     stdscr.addstr(0, 1, """This is a wind forecast station prototype under development""")
@@ -61,10 +64,13 @@ def main(stdscr):
     stdscr.addstr(7, 20, str(gps[2]))
     stdscr.addstr(7, 35, str(gps[3]))
 
-
-    stdscr.addstr(10, 5, str(sens[1]))
-    stdscr.addstr(10, 10, str(sens[2]))
-    stdscr.addstr(10, 15, str(sens[3]))
+    stdscr.addstr(9, 5, 'Sensors: ')
+    stdscr.addstr(10, 5, 'Temperature: ')
+    stdscr.addstr(10, 20, 'Humidity: ')
+    stdscr.addstr(10, 35, 'Atmospheric Pressure: ')
+    stdscr.addstr(11, 5, str(sens[1]))
+    stdscr.addstr(11, 20, str(sens[2]))
+    stdscr.addstr(11, 35, str(sens[3]))
 
     stdscr.addstr(2, 30, 'Last record: ')
     stdscr.addstr(3, 30, str(last_record))
