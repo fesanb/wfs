@@ -48,7 +48,7 @@ class GetData(object):
 
 
 data = GetData()
-
+print("TEST")
 
 class App(QMainWindow):
 
