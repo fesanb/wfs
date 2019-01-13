@@ -1,6 +1,5 @@
 import sys
-#from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import mysql.connector
@@ -67,28 +66,38 @@ class App(QMainWindow):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self.wind_label = QLabel("wind: " + data.wind + "m/s", self)
+        self.wind_circle_label = QLabel(self)
+        self.wind_circle = QPixmap("wind-circle.png")
+        self.wind_circle.scaled(1, 1, Qt.KeepAspectRatio, Qt.FastTransformation)
+        self.wind_circle_label.setPixmap(self.wind_circle)
+        self.wind_circle_label.move(200, 200)
+
+        self.wind_label = QLabel("wind: " + data.wind + " m/s", self)
         self.wind_label.move(50, 50)
         self.wind_label.adjustSize()
 
-        self.hum_label = QLabel("Humidity: " + data.hum + "%", self)
-        self.hum_label.move(50, 75)
+        self.temp_label = QLabel("Temperature: " + data.temp + " °C", self)
+        self.temp_label.move(50, 75)
+        self.temp_label.adjustSize()
+
+        self.hum_label = QLabel("Humidity: " + data.hum + " %", self)
+        self.hum_label.move(50, 100)
         self.hum_label.adjustSize()
 
-        self.atp_label = QLabel("Atm. Pressure: " + data.atp + "mbar", self)
-        self.atp_label.move(50, 100)
+        self.atp_label = QLabel("Atm. Pressure: " + data.atp + " mbar", self)
+        self.atp_label.move(50, 125)
         self.atp_label.adjustSize()
 
         self.lat_label = QLabel("Latitude: " + data.lat, self)
-        self.lat_label.move(50, 125)
+        self.lat_label.move(50, 150)
         self.lat_label.adjustSize()
 
         self.long_label = QLabel("Longitude: " + data.long, self)
-        self.long_label.move(50, 150)
+        self.long_label.move(50, 175)
         self.long_label.adjustSize()
 
-        self.alt_label = QLabel("Altitude: " + data.alt + "m", self)
-        self.alt_label.move(50, 175)
+        self.alt_label = QLabel("Altitude: " + data.alt + " m", self)
+        self.alt_label.move(50, 200)
         self.alt_label.adjustSize()
 
         self.show()
