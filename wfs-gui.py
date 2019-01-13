@@ -1,53 +1,54 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
+#from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QLabel
 from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
 import mysql.connector
+import threading
+import time
 
 
-def get_data():
+class GetData(object):
+    def __init__(self, interval=1):
+        self.interval = interval
 
-    cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-    cursor = cnx.cursor()
+        thread = threading.Thread(target=self.mysql_fetch, args=())
+        thread.daemon = True
+        thread.start()
 
-    get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
-    cursor.execute(get_wind)
-    get_data.wind = cursor.fetchone()
-    global wind
-    wind = get_data.wind[1]
-    global wind_timestamp
-    wind_timestamp = get_data.wind[2]
+    def mysql_fetch(self):
+        while True:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor()
 
-    get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
-    cursor.execute(get_sens)
-    get_data.sens = cursor.fetchone()
-    global temp
-    temp = get_data.sens[1]
-    global hum
-    hum = get_data.sens[2]
-    global atp
-    atp = get_data.sens[3]
-    global sens_timestamp
-    sens_timestamp = get_data.sens[4]
+            get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
+            cursor.execute(get_wind)
+            db_wind = cursor.fetchone()
+            self.wind = str(db_wind[1])
+            self.wind_timestamp = str(db_wind[2])
 
-    get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps)"
-    cursor.execute(get_gps)
-    get_data.gps = cursor.fetchone()
-    global lat
-    lat = get_data.gps[1]
-    global long
-    long = get_data.gps[2]
-    global alt
-    alt = get_data.gps[3]
-    global gps_timestamp
-    gps_timestamp = get_data.gps[4]
+            get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
+            cursor.execute(get_sens)
+            db_sens = cursor.fetchone()
+            self.temp = str(db_sens[1])
+            self.hum = str(db_sens[2])
+            self.atp = str(db_sens[3])
+            self.sens_timestamp = str(db_sens[4])
 
+            get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps)"
+            cursor.execute(get_gps)
+            db_gps = cursor.fetchone()
+            self.lat = str(db_gps[1])
+            self.long = str(db_gps[2])
+            self.alt = str(db_gps[3])
+            self.gps_timestamp = str(db_gps[4])
 
-get_data()
+            #print("Thread Running")
+
+            time.sleep(self.interval)
 
 
-print("Wind: ", wind, "Timestamp: ", wind_timestamp)
-print("Temp: ", temp, "Hum: ", hum, "ATP: ", atp, "Timestamp: ", sens_timestamp)
-print("Lat: ", lat, "Long: ", long, "Alt: ", alt, "Timestamp: ", gps_timestamp)
+data = GetData()
 
 
 class App(QMainWindow):
@@ -56,43 +57,53 @@ class App(QMainWindow):
         super().__init__()
         self.title = "WFS - Weather Forecast Station"
         self.setWindowIcon(QIcon("drawing.svg.png"))
-        self.left = 2000
-        self.top = 100
-        self.width = 450
-        self.height = 350
+        self.left = 475
+        self.top = 650
+        self.width = 480
+        self.height = 720
         self.initUI()
 
     def initUI(self):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        wind_label = QLabel("wind: " + str(wind), self)
-        wind_label.move(50, 50)
+        self.wind_label = QLabel("wind: " + data.wind + "m/s", self)
+        self.wind_label.move(50, 50)
+        self.wind_label.adjustSize()
 
-        hum_label = QLabel("Humidity: " + str(hum), self)
-        hum_label.move(50, 75)
+        self.hum_label = QLabel("Humidity: " + data.hum + "%", self)
+        self.hum_label.move(50, 75)
+        self.hum_label.adjustSize()
 
-        atp_label = QLabel("Atm. Pressure: " + str(atp), self)
-        atp_label.move(50, 100)
+        self.atp_label = QLabel("Atm. Pressure: " + data.atp + "mbar", self)
+        self.atp_label.move(50, 100)
+        self.atp_label.adjustSize()
 
-        lat_label = QLabel("Latitude: " + str(lat), self)
-        lat_label.move(50, 125)
+        self.lat_label = QLabel("Latitude: " + data.lat, self)
+        self.lat_label.move(50, 125)
+        self.lat_label.adjustSize()
 
-        long_label = QLabel("Longitude: " + str(long), self)
-        long_label.move(50, 150)
+        self.long_label = QLabel("Longitude: " + data.long, self)
+        self.long_label.move(50, 150)
+        self.long_label.adjustSize()
 
-        alt_label = QLabel("Altitude: " + str(alt), self)
-        alt_label.move(50, 175)
-
-        test_label = QLabel(self)
-        test_label.setText("test å skirve en skikkelig lang text for å se om det feiler")
-        test_label.move(50, 200)
+        self.alt_label = QLabel("Altitude: " + data.alt + "m", self)
+        self.alt_label.move(50, 175)
+        self.alt_label.adjustSize()
 
         self.show()
+
+    def update_label(self):
+        self.wind_label.setText("wind: " + data.wind + "m/s")
+        QApplication.processEvents()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
-    sys.exit(app.exec_())
 
+    timer = QTimer()
+    timer.timeout.connect(ex.update_label)
+    timer.start(1000)
+
+    sys.exit(app.exec_())
