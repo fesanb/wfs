@@ -48,7 +48,7 @@ class GetData(object):
 
 
 data = GetData()
-print("TEST")
+
 
 class App(QMainWindow):
 
@@ -67,13 +67,14 @@ class App(QMainWindow):
         self.setGeometry(self.left, self.top, self.width, self.height)
 
         self.wind_circle_label = QLabel(self)
-        self.wind_circle = QPixmap("wind-circle.png")
-        self.wind_circle.scaled(1, 1, Qt.KeepAspectRatio, Qt.FastTransformation)
+        self.wind_circle = QPixmap("wind-circle.png").scaled(200, 200)
         self.wind_circle_label.setPixmap(self.wind_circle)
-        self.wind_circle_label.move(200, 200)
+        self.wind_circle_label.move(200, 20)
+        self.wind_circle_label.adjustSize()
 
-        self.wind_label = QLabel("wind: " + data.wind + " m/s", self)
-        self.wind_label.move(50, 50)
+        self.wind_label = QLabel(data.wind, self)
+        self.wind_label.move(255, 80)
+        self.wind_label.setFont(QFont('Arial', 50))
         self.wind_label.adjustSize()
 
         self.temp_label = QLabel("Temperature: " + data.temp + " °C", self)
@@ -103,7 +104,7 @@ class App(QMainWindow):
         self.show()
 
     def update_label(self):
-        self.wind_label.setText("wind: " + data.wind + "m/s")
+        self.wind_label.setText(data.wind)
         QApplication.processEvents()
 
 
