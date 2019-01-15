@@ -77,6 +77,11 @@ class App(QMainWindow):
         self.wind_label.setFont(QFont('Arial', 50))
         self.wind_label.adjustSize()
 
+        self.wind_label_postfix = QLabel("m/s", self)
+        self.wind_label_postfix.move(350, 130)
+        self.wind_label_postfix.adjustSize()
+
+
         self.temp_label = QLabel("Temperature: " + data.temp + " °C", self)
         self.temp_label.move(50, 75)
         self.temp_label.adjustSize()

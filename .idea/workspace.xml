@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gui.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wfs-gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="64" column="21" lean-forward="true" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+            <state relative-caret-position="224">
+              <caret line="80" column="39" selection-start-line="80" selection-start-column="39" selection-end-line="80" selection-end-column="39" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -70,6 +71,9 @@
   <component name="Git.Settings">
     <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -80,19 +84,29 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="4">
     <option name="x" value="960" />
     <option name="width" value="961" />
     <option name="height" value="1055" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
       <pane id="ProjectPane" />
-      <pane id="Scope" />
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="wfs" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -272,19 +286,19 @@
       <option name="project" value="LOCAL" />
       <updated>1547412855794</updated>
     </task>
-    <task id="LOCAL-00002" summary="curses formatting waiting for threading">
-      <created>1547246089518</created>
+    <task id="LOCAL-00002" summary="tes">
+      <created>1547413229285</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1547246089518</updated>
+      <updated>1547413229285</updated>
     </task>
-    <task id="LOCAL-00003" summary="curses formatting waiting for threading">
-      <created>1547406021704</created>
+    <task id="LOCAL-00003" summary="threading and qlabel update, working. Image label set, and positioned.">
+      <created>1547500252671</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1547406021704</updated>
+      <updated>1547500252671</updated>
     </task>
     <task id="LOCAL-00004" summary="update">
       <created>1546801226215</created>
@@ -307,14 +321,14 @@
       <option name="project" value="LOCAL" />
       <updated>1546806429131</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="960" y="0" width="961" height="1055" extended-state="4" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49286845" visible="true" weight="0.21428572" />
-      <window_info id="Structure" order="1" sideWeight="0.5071315" side_tool="true" visible="true" weight="0.21428572" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49286845" visible="true" weight="0.2196162" />
+      <window_info id="Structure" order="1" sideWeight="0.5071315" side_tool="true" visible="true" weight="0.2196162" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -323,14 +337,19 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4997367" weight="0.32919255" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.4978678" visible="true" weight="0.3287234" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4978678" visible="true" weight="0.3287234" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4997367" weight="0.32919255" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5021322" side_tool="true" visible="true" weight="0.3287234" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.5021322" side_tool="true" visible="true" weight="0.3287234" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4997367" weight="0.32919255" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="tes" />
+    <MESSAGE value="threading and qlabel update, working. Image label set, and positioned." />
+    <option name="LAST_COMMIT_MESSAGE" value="threading and qlabel update, working. Image label set, and positioned." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/wfs-cmdgui.py">
@@ -345,8 +364,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wfs-gui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="64" column="21" lean-forward="true" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+        <state relative-caret-position="224">
+          <caret line="80" column="39" selection-start-line="80" selection-start-column="39" selection-end-line="80" selection-end-column="39" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
