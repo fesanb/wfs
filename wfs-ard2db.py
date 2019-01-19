@@ -102,10 +102,14 @@ lastdatahum = ""
 lastdatatemp = ""
 lastdataatp = ""
 
-timepassed = time.perf_counter()
-countertime = 0
-interval = 0.3
+wind_timepassed = time.perf_counter()
+wind_countertime = 0
+wind_interval = 0.3
 
+
+sens_timepassed = time.perf_counter()
+sens_countertime = 0
+sens_interval = 600
 
 
 while True:
@@ -113,7 +117,7 @@ while True:
         cc = ser.readline()
         pcs = cc.decode().split(",")
 
-        if timepassed - countertime > interval:
+        if wind_timepassed - wind_countertime > wind_interval:
             if pcs[0] == "w":
                 if pcs[1] != lastdatawind:
                     lastdatawind = pcs[1]
@@ -122,8 +126,8 @@ while True:
                     emp_no = cursor.lastrowid
                     cnx.commit()
 
-                    countertime = time.perf_counter()
-        timepassed = time.perf_counter()
+                    wind_countertime = time.perf_counter()
+        wind_timepassed = time.perf_counter()
 
         if pcs[0] == "GPS":
             if pcs[1] != "0.00":
@@ -135,15 +139,22 @@ while True:
                 cnx.commit()
 
         if pcs[0] == "SENS":
-            print("Temp: ", pcs[1], " Hum: ", pcs[2], " ATP: ", pcs[3], end="\r")
-            if pcs[1] != lastdatatemp and pcs[2] != lastdatahum and pcs[3] != lastdataatp:
-                lastdatatemp = pcs[1]
-                lastdatahum = pcs[2]
-                lastdataatp = pcs[3]
-                add_sens = (u'''INSERT INTO sens(temp, hum, atp) VALUES (%s, %s, %s)''' % (pcs[1], pcs[2], pcs[3]))
-                cursor.execute(add_sens)
-                emp_no = cursor.lastrowid
-                cnx.commit()
+            temp = round(float(pcs[1]), 1)
+            hum = int(round(float(pcs[2])))
+            atp = int(pcs[3])
+
+            if sens_timepassed - sens_countertime > sens_interval:
+                if temp != lastdatatemp or hum != lastdatahum or atp != lastdataatp:
+                    lastdatatemp = temp
+                    lastdatahum = hum
+                    lastdataatp = atp
+                    add_sens = (u'''INSERT INTO sens(temp, hum, atp) VALUES (%s, %s, %s)''' % (temp, hum, atp))
+                    cursor.execute(add_sens)
+                    emp_no = cursor.lastrowid
+                    cnx.commit()
+                    print("Temp: ", temp, " Hum: ", hum, " ATP: ", atp, end="\r")
+                    sens_countertime = time.perf_counter()
+        sens_timepassed = time.perf_counter()
 
     except:
         print("Error in serial read")

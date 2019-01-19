@@ -30,7 +30,7 @@ class GetData(object):
             cursor.execute(get_sens)
             db_sens = cursor.fetchone()
             self.temp = str(db_sens[1])
-            self.hum = str(db_sens[2])
+            self.hum = str(round(db_sens[2]))
             self.atp = str(db_sens[3])
             self.sens_timestamp = str(db_sens[4])
 
@@ -69,7 +69,7 @@ class App(QMainWindow):
         self.wind_circle_label = QLabel(self)
         self.wind_circle = QPixmap("wind-circle.png").scaled(200, 200)
         self.wind_circle_label.setPixmap(self.wind_circle)
-        self.wind_circle_label.move(200, 20)
+        self.wind_circle_label.move(210, 20)
         self.wind_circle_label.adjustSize()
 
         self.wind_label = QLabel(data.wind, self)
@@ -81,35 +81,50 @@ class App(QMainWindow):
         self.wind_label_postfix.move(350, 130)
         self.wind_label_postfix.adjustSize()
 
+        self.temp_label_prefix = QLabel("Temperature:", self)
+        self.temp_label_prefix.move(30, 30)
+        self.temp_label_postfix = QLabel("°C", self)
+        self.temp_label_postfix.move(160, 30)
+        self.hum_label_prefix = QLabel("Humidity:", self)
+        self.hum_label_prefix.move(30, 50)
+        self.hum_label_postfix = QLabel("%", self)
+        self.hum_label_postfix.move(160, 50)
+        self.atp_label_prefix = QLabel("Atm. Pressure:", self)
+        self.atp_label_prefix.move(30, 70)
+        self.atp_label_postfix = QLabel("mBar", self)
+        self.atp_label_postfix.move(160, 70)
 
-        self.temp_label = QLabel("Temperature: " + data.temp + " °C", self)
-        self.temp_label.move(50, 75)
+        self.temp_label = QLabel(data.temp, self)
+        self.temp_label.move(130, 38)
         self.temp_label.adjustSize()
 
-        self.hum_label = QLabel("Humidity: " + data.hum + " %", self)
-        self.hum_label.move(50, 100)
+        self.hum_label = QLabel(data.hum, self)
+        self.hum_label.move(130, 59)
         self.hum_label.adjustSize()
 
-        self.atp_label = QLabel("Atm. Pressure: " + data.atp + " mbar", self)
-        self.atp_label.move(50, 125)
+        self.atp_label = QLabel(data.atp, self)
+        self.atp_label.move(130, 79)
         self.atp_label.adjustSize()
 
         self.lat_label = QLabel("Latitude: " + data.lat, self)
-        self.lat_label.move(50, 150)
+        self.lat_label.move(50, 300)
         self.lat_label.adjustSize()
 
         self.long_label = QLabel("Longitude: " + data.long, self)
-        self.long_label.move(50, 175)
+        self.long_label.move(50, 325)
         self.long_label.adjustSize()
 
         self.alt_label = QLabel("Altitude: " + data.alt + " m", self)
-        self.alt_label.move(50, 200)
+        self.alt_label.move(50, 350)
         self.alt_label.adjustSize()
 
         self.show()
 
     def update_label(self):
         self.wind_label.setText(data.wind)
+        self.temp_label.setText(data.temp)
+        self.hum_label.setText(data.hum)
+        self.atp_label.setText(data.atp)
         QApplication.processEvents()
 
 
