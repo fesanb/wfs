@@ -52,6 +52,15 @@ class GetData(object):
 
             get_mean_wind = "SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
+            get_max_wind01 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)"
+            get_max_wind05 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)"
+            get_max_wind010 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
+            get_max_wind030 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)"
+            get_max_wind1 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
+            get_max_wind2 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2 HOUR)"
+            get_max_wind4 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 4 HOUR)"
+            get_max_wind6 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 6 HOUR)"
+
             # TEMP
             get_max_temp_12 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
             get_max_temp_24 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
@@ -85,6 +94,63 @@ class GetData(object):
                 self.meanwind = str(round(db_mean_wind[0], 1))
             except:
                 self.meanwind = "0"
+
+            #   Wind History MAx list
+            cursor.execute(get_max_wind01)
+            db_max_temp01 = cursor.fetchone()
+            try:
+                self.maxwind01 = str(round(db_max_temp01[0], 1))
+            except:
+                self.maxwind01 = "0"
+
+            cursor.execute(get_max_wind05)
+            db_max_temp05 = cursor.fetchone()
+            try:
+                self.maxwind05 = str(round(db_max_temp05[0], 1))
+            except:
+                self.maxwind05 = "0"
+
+            cursor.execute(get_max_wind010)
+            db_max_temp010 = cursor.fetchone()
+            try:
+                self.maxwind010 = str(round(db_max_temp010[0], 1))
+            except:
+                self.maxwind010 = "0"
+
+            cursor.execute(get_max_wind030)
+            db_max_temp030 = cursor.fetchone()
+            try:
+                self.maxwind030 = str(round(db_max_temp030[0], 1))
+            except:
+                self.maxwind030 = "0"
+
+            cursor.execute(get_max_wind1)
+            db_max_temp1 = cursor.fetchone()
+            try:
+                self.maxwind1 = str(round(db_max_temp1[0], 1))
+            except:
+                self.maxwind1 = "0"
+
+            cursor.execute(get_max_wind2)
+            db_max_temp2 = cursor.fetchone()
+            try:
+                self.maxwind2 = str(round(db_max_temp2[0], 1))
+            except:
+                self.maxwind2 = "0"
+
+            cursor.execute(get_max_wind4)
+            db_max_temp4 = cursor.fetchone()
+            try:
+                self.maxwind4 = str(round(db_max_temp4[0], 1))
+            except:
+                self.maxwind4 = "0"
+
+            cursor.execute(get_max_wind6)
+            db_max_temp6 = cursor.fetchone()
+            try:
+                self.maxwind6 = str(round(db_max_temp6[0], 1))
+            except:
+                self.maxwind6 = "0"
 
             #   MAX
             cursor.execute(get_max_temp)
@@ -219,11 +285,52 @@ class GetData(object):
             except:
                 self.min24atp = "0"
 
+            baufort = [
+                "Beaufort 0 - Calm",
+                "Beaufort 1 - Light Air",
+                "Beaufort 2 - Light breeze",
+                "Beaufort 3 - Gentle breeze",
+                "Beaufort 4 - Moderate breeze",
+                "Beaufort 5 - Fresh breeze",
+                "Beaufort 6 - Strong breeze",
+                "Beaufort 7 - Moderate gale",
+                "Beaufort 8 - Fresh Gale",
+                "Beaufort 9 - Strong Gale",
+                "Beaufort 10 - Storm",
+                "Beaufort 11 - Violent Storm",
+                "Beaufort 12 - Hurricane"
+            ]
+            baufortmean = self.meanwind
+
+            if float(baufortmean) < 0.3:
+                self.baufortLS = baufort[0]
+            if float(baufortmean) > 1.6:
+                self.baufortLS = baufort[1]
+            if float(baufortmean) > 3.4:
+                self.baufortLS = baufort[2]
+            if float(baufortmean) > 5.5:
+                self.baufortLS = baufort[3]
+            if float(baufortmean) > 8.0:
+                self.baufortLS = baufort[4]
+            if float(baufortmean) > 10.8:
+                self.baufortLS = baufort[5]
+            if float(baufortmean) > 13.9:
+                self.baufortLS = baufort[6]
+            if float(baufortmean) > 17.2:
+                self.baufortLS = baufort[7]
+            if float(baufortmean) > 20.8:
+                self.baufortLS = baufort[8]
+            if float(baufortmean) > 24.5:
+                self.baufortLS = baufort[9]
+            if float(baufortmean) > 28.5:
+                self.baufortLS = baufort[10]
+            if float(baufortmean) > 32.7:
+                self.baufortLS = baufort[11]
+
 
             # print("Thread Running")
 
             time.sleep(self.interval)
-
 
 data = GetData()
 
@@ -246,8 +353,19 @@ class App(QWidget):
     def initUI(self):
 
         self.mainContainer = QVBoxLayout(self)
-        self.windContainer = QHBoxLayout()
 
+        self.windHeader = QHBoxLayout(self)
+        self.windHL = QLabel("WIND")
+        self.windHL.setFont(QFont('Arial', 20))
+        self.windHL.setAlignment(Qt.AlignCenter)
+        self.windHeader.addWidget(self.windHL)
+        self.meanHL = QLabel("MEAN")
+        self.meanHL.setFont(QFont('Arial', 20))
+        self.meanHL.setAlignment(Qt.AlignCenter)
+        self.windHeader.addWidget(self.meanHL)
+        self.mainContainer.addLayout(self.windHeader)
+
+        self.windContainer = QHBoxLayout()
         self.windFrame = QFrame(self)
         self.wind_VL = QVBoxLayout(self.windFrame)
         self.windL = QLabel(data.wind, self.windFrame)
@@ -270,9 +388,72 @@ class App(QWidget):
         
         self.mainContainer.addLayout(self.windContainer)
 
+        self.baufortbox = QHBoxLayout()
+        self.baufortL = QLabel(data.baufortLS)
+        self.baufortL.setAlignment(Qt.AlignHCenter)
+        self.baufortL.setMinimumHeight(50)
+        self.baufortL.setFont(QFont('Arial', 20))
+        self.baufortbox.addWidget(self.baufortL)
+        self.mainContainer.addLayout(self.baufortbox)
+
+
+        self.windHistoryContainer = QVBoxLayout()
+        self.windHistoryHeader = QHBoxLayout()
+        self.windHHLS = "Max Wind History:"
+        self.windHHL = QLabel(self.windHHLS)
+        self.windHHL.setFont(QFont('Arial', 15))
+        self.windHistoryHeader.addWidget(self.windHHL)
+        self.windHistoryContainer.addLayout(self.windHistoryHeader)
+
+        self.windHG = QGridLayout()
+        self.windHG.addWidget(QLabel("1min"),   0, 0)
+        self.windHG.addWidget(QLabel("5min"),   0, 1)
+        self.windHG.addWidget(QLabel("10min"),  0, 2)
+        self.windHG.addWidget(QLabel("30min"),  0, 3)
+        self.windHG.addWidget(QLabel("1hr"),    0, 4)
+        self.windHG.addWidget(QLabel("2hr"),    0, 5)
+        self.windHG.addWidget(QLabel("4hr"),    0, 6)
+        self.windHG.addWidget(QLabel("6hr"),    0, 7)
+
+        self.windmax01 = QLabel(data.maxwind01)
+        self.windmax01.setAlignment(Qt.AlignHCenter)
+        self.windHG.addWidget(self.windmax01,   1, 0)
+
+        self.windmax05 = QLabel(data.maxwind05)
+        self.windmax05.setAlignment(Qt.AlignHCenter)
+        self.windHG.addWidget(self.windmax05,   1, 1)
+
+        self.windmax010 = QLabel(data.maxwind010)
+        self.windmax010.setAlignment(Qt.AlignHCenter)
+        self.windHG.addWidget(self.windmax010,  1, 2)
+
+        self.windmax030 = QLabel(data.maxwind030)
+        self.windmax030.setAlignment(Qt.AlignHCenter)
+        self.windHG.addWidget(self.windmax030,  1, 3)
+
+        self.windmax1 = QLabel(data.maxwind1)
+        self.windmax1.setAlignment(Qt.AlignHCenter)
+        self.windHG.addWidget(self.windmax1,    1, 4)
+
+        self.windmax2 = QLabel(data.maxwind2)
+        self.windmax2.setAlignment(Qt.AlignHCenter)
+        self.windHG.addWidget(self.windmax2,    1, 5)
+
+        self.windmax4 = QLabel(data.maxwind4)
+        self.windmax4.setAlignment(Qt.AlignHCenter)
+        self.windHG.addWidget(self.windmax4,    1, 6)
+
+        self.windmax6 = QLabel(data.maxwind6)
+        self.windmax6.setAlignment(Qt.AlignHCenter)
+        self.windHG.addWidget(self.windmax6,    1, 7)
+
+
+
+        self.windHistoryContainer.addLayout(self.windHG)
+        self.mainContainer.addLayout(self.windHistoryContainer)
+
         self.sensContainer = QVBoxLayout()
         self.sensContainer.setSpacing(0)
-
         self.sensFrame = QFrame(self)
         self.sensgrid = QGridLayout(self.sensFrame)
 
@@ -288,33 +469,54 @@ class App(QWidget):
         self.sensgrid.addWidget(QLabel("Max all time"), 6, 0)
         self.sensgrid.addWidget(QLabel("Min all time"), 7, 0)
 
-        self.sensgrid.addWidget(QLabel(data.temp),      1, 1)
-        self.sensgrid.addWidget(QLabel(data.hum),       1, 2)
-        self.sensgrid.addWidget(QLabel(data.atp),       1, 3)
+        self.tempL = QLabel(data.temp)
+        self.sensgrid.addWidget(self.tempL,      1, 1)
+        self.humL = QLabel(data.hum)
+        self.sensgrid.addWidget(self.humL,       1, 2)
+        self.atpL = QLabel(data.atp)
+        self.sensgrid.addWidget(self.atpL,       1, 3)
 
-        self.sensgrid.addWidget(QLabel(data.max12temp), 2, 1)
-        self.sensgrid.addWidget(QLabel(data.max12hum),  2, 2)
-        self.sensgrid.addWidget(QLabel(data.max12atp),  2, 3)
+        self.max12tempL = QLabel(data.max12temp)
+        self.sensgrid.addWidget(self.max12tempL, 2, 1)
+        self.max12humL = QLabel(data.max12hum)
+        self.sensgrid.addWidget(self.max12humL,  2, 2)
+        self.max12atpL = QLabel(data.max12atp)
+        self.sensgrid.addWidget(self.max12atpL,  2, 3)
 
-        self.sensgrid.addWidget(QLabel(data.min12temp), 3, 1)
-        self.sensgrid.addWidget(QLabel(data.min12hum),  3, 2)
-        self.sensgrid.addWidget(QLabel(data.min12atp),  3, 3)
+        self.min12tempL = QLabel(data.min12temp)
+        self.sensgrid.addWidget(self.min12tempL, 3, 1)
+        self.min12humL = QLabel(data.min12hum)
+        self.sensgrid.addWidget(self.min12humL,  3, 2)
+        self.min12atpL = QLabel(data.min12atp)
+        self.sensgrid.addWidget(self.min12atpL,  3, 3)
 
-        self.sensgrid.addWidget(QLabel(data.max24temp), 4, 1)
-        self.sensgrid.addWidget(QLabel(data.max24hum),  4, 2)
-        self.sensgrid.addWidget(QLabel(data.max24atp),  4, 3)
+        self.max24tempL = QLabel(data.max24temp)
+        self.sensgrid.addWidget(self.max24tempL, 4, 1)
+        self.max24humL = QLabel(data.max24hum)
+        self.sensgrid.addWidget(self.max24humL,  4, 2)
+        self.max24atpL = QLabel(data.max24atp)
+        self.sensgrid.addWidget(self.max24atpL,  4, 3)
 
-        self.sensgrid.addWidget(QLabel(data.min24temp), 5, 1)
-        self.sensgrid.addWidget(QLabel(data.min24hum),  5, 2)
-        self.sensgrid.addWidget(QLabel(data.min24atp),  5, 3)
+        self.min24tempL = QLabel(data.min24temp)
+        self.sensgrid.addWidget(self.min24tempL, 5, 1)
+        self.min24humL = QLabel(data.min24hum)
+        self.sensgrid.addWidget(self.min24humL,  5, 2)
+        self.min24atpL = QLabel(data.min24atp)
+        self.sensgrid.addWidget(self.min24atpL,  5, 3)
 
-        self.sensgrid.addWidget(QLabel(data.maxtemp),   6, 1)
-        self.sensgrid.addWidget(QLabel(data.maxhum),    6, 2)
-        self.sensgrid.addWidget(QLabel(data.maxatp),    6, 3)
+        self.maxtempL = QLabel(data.maxtemp)
+        self.sensgrid.addWidget(self.maxtempL,   6, 1)
+        self.maxhumL = QLabel(data.maxhum)
+        self.sensgrid.addWidget(self.maxhumL,    6, 2)
+        self.maxatpL = QLabel(data.maxatp)
+        self.sensgrid.addWidget(self.maxatpL,    6, 3)
 
-        self.sensgrid.addWidget(QLabel(data.mintemp),   7, 1)
-        self.sensgrid.addWidget(QLabel(data.minhum),    7, 2)
-        self.sensgrid.addWidget(QLabel(data.minatp),    7, 3)
+        self.mintempL = QLabel(data.mintemp)
+        self.sensgrid.addWidget(self.mintempL,   7, 1)
+        self.minhumL = QLabel(data.minhum)
+        self.sensgrid.addWidget(self.minhumL,    7, 2)
+        self.minatpL = QLabel(data.minatp)
+        self.sensgrid.addWidget(self.minatpL,    7, 3)
 
         self.sensContainer.addWidget(self.sensFrame)
         self.mainContainer.addLayout(self.sensContainer)
@@ -324,10 +526,46 @@ class App(QWidget):
     def update_label(self):
         self.windL.setText(data.wind)
         self.meanL.setText(data.meanwind)
-        # self.sensgrid.addWidget.setT
-        # self.temp_label.setText(data.temp)
-        # self.hum_label.setText(data.hum)
-        # self.atp_label.setText(data.atp)
+
+        self.baufortL.setText(data.baufortLS)
+
+        self.tempL.setText(data.temp)
+        self.humL.setText(data.hum)
+        self.atpL.setText(data.atp)
+
+        self.max12tempL.setText(data.max12temp)
+        self.max12humL.setText(data.max12hum)
+        self.max12atpL.setText(data.max12atp)
+
+        self.min12tempL.setText(data.min12temp)
+        self.min12humL.setText(data.min12hum)
+        self.min12atpL.setText(data.min12atp)
+
+        self.max24tempL.setText(data.max24temp)
+        self.max24humL.setText(data.max24hum)
+        self.max24atpL.setText(data.max24atp)
+
+        self.min24tempL.setText(data.min24temp)
+        self.min24humL.setText(data.min24hum)
+        self.min24atpL.setText(data.min24atp)
+
+        self.maxtempL.setText(data.maxtemp)
+        self.maxhumL.setText(data.maxhum)
+        self.maxatpL.setText(data.maxatp)
+
+        self.mintempL.setText(data.mintemp)
+        self.minhumL.setText(data.minhum)
+        self.minatpL.setText(data.minatp)
+
+        self.windmax01.setText(data.maxwind01)
+        self.windmax05.setText(data.maxwind05)
+        self.windmax010.setText(data.maxwind010)
+        self.windmax030.setText(data.maxwind030)
+        self.windmax1.setText(data.maxwind1)
+        self.windmax2.setText(data.maxwind2)
+        self.windmax4.setText(data.maxwind4)
+        self.windmax6.setText(data.maxwind6)
+
         QApplication.processEvents()
 
 
