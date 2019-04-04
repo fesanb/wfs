@@ -7,6 +7,7 @@ import pyqtgraph as pg
 import mysql.connector
 import threading
 import time
+from datetime import datetime
 
 sys.settrace
 
@@ -30,8 +31,10 @@ get_max_wind2 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), IN
 get_max_wind4 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 4 HOUR)"
 get_max_wind6 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 6 HOUR)"
 
-get_graph_wind = "SELECT ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR) "
-get_graph_id = "SELECT id FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR) "
+get_graph_wind = "SELECT ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
+get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
+get_graph_atp = "SELECT atp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
+get_graph_atp_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
 
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
 get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps)"
@@ -99,34 +102,34 @@ def fetch_wind():
             "Beaufort 10 - Storm",
             "Beaufort 11 - Violent Storm",
             "Beaufort 12 - Hurricane"]
-        
+
 
         if float(fetch_wind.meanwind) < 0.3:
             fetch_wind.beaufortLS = beaufort[0]
-        elif float(fetch_wind.meanwind) > 0.3:
-            fetch_wind.beaufortLS = beaufort[1]
-        elif float(fetch_wind.meanwind) > 1.6:
-            fetch_wind.beaufortLS = beaufort[2]
-        elif float(fetch_wind.meanwind) > 3.4:
-            fetch_wind.beaufortLS = beaufort[3]
-        elif float(fetch_wind.meanwind) > 5.5:
-            fetch_wind.beaufortLS = beaufort[4]
-        elif float(fetch_wind.meanwind) > 8.0:
-            fetch_wind.beaufortLS = beaufort[5]
-        elif float(fetch_wind.meanwind) > 10.8:
-            fetch_wind.beaufortLS = beaufort[6]
-        elif float(fetch_wind.meanwind) > 13.9:
-            fetch_wind.beaufortLS = beaufort[7]
-        elif float(fetch_wind.meanwind) > 17.2:
-            fetch_wind.beaufortLS = beaufort[8]
-        elif float(fetch_wind.meanwind) > 20.8:
-            fetch_wind.beaufortLS = beaufort[9]
-        elif float(fetch_wind.meanwind) > 24.5:
-            fetch_wind.beaufortLS = beaufort[10]
-        elif float(fetch_wind.meanwind) > 28.5:
-            fetch_wind.beaufortLS = beaufort[11]
         elif float(fetch_wind.meanwind) > 32.7:
             fetch_wind.beaufortLS = beaufort[12]
+        elif float(fetch_wind.meanwind) > 28.5:
+            fetch_wind.beaufortLS = beaufort[11]
+        elif float(fetch_wind.meanwind) > 24.5:
+            fetch_wind.beaufortLS = beaufort[10]
+        elif float(fetch_wind.meanwind) > 20.8:
+            fetch_wind.beaufortLS = beaufort[9]
+        elif float(fetch_wind.meanwind) > 17.2:
+            fetch_wind.beaufortLS = beaufort[8]
+        elif float(fetch_wind.meanwind) > 13.9:
+            fetch_wind.beaufortLS = beaufort[7]
+        elif float(fetch_wind.meanwind) > 10.8:
+            fetch_wind.beaufortLS = beaufort[6]
+        elif float(fetch_wind.meanwind) > 8.0:
+            fetch_wind.beaufortLS = beaufort[5]
+        elif float(fetch_wind.meanwind) > 5.5:
+            fetch_wind.beaufortLS = beaufort[4]
+        elif float(fetch_wind.meanwind) > 3.4:
+            fetch_wind.beaufortLS = beaufort[3]
+        elif float(fetch_wind.meanwind) > 1.6:
+            fetch_wind.beaufortLS = beaufort[2]
+        elif float(fetch_wind.meanwind) > 0.3:
+            fetch_wind.beaufortLS = beaufort[1]
 
         #print(fetch_wind.beaufortLS)
 
@@ -189,12 +192,33 @@ def fetch_graph():
         else:
             fetch_graph.graphwind_Y = [0]
 
-        cursor.execute(get_graph_id)
+        cursor.execute(get_graph_wind_timestamp)
         if cursor.rowcount > 0:
-            db_graph_id = cursor.fetchall()
-            fetch_graph.graphwind_X = np.ravel(db_graph_id)
+            db_graph_timestamp = cursor.fetchall()
+            print(db_graph_timestamp[0])
+            for row in db_graph_timestamp:
+                t = datetime.strptime(str(row),"%Y-%m-%d %H:%M:%S")
+            fetch_graph.graphwind_X = t
         else:
             fetch_graph.graphwind_X = [0]
+
+
+        cursor.execute(get_graph_atp)
+        if cursor.rowcount > 0:
+            db_graph_atp = cursor.fetchall()
+            fetch_graph.graphatp_Y = np.ravel(db_graph_atp)
+        else:
+            fetch_graph.graphatp_Y = [0]
+
+        cursor.execute(get_graph_atp_timestamp)
+        if cursor.rowcount > 0:
+            db_graph_atp_timestamp = cursor.fetchall()
+            #np.ravel(db_graph_atp_timestamp)
+            for row in db_graph_atp_timestamp:
+                t = datetime.strptime(row,"%Y-%m-%d %H:%M:%S").date()
+            fetch_graph.graphatp_X = t
+        else:
+            fetch_graph.graphatp_X = [0]
 
         time.sleep(1)
         #print(thread4.name)
@@ -552,6 +576,7 @@ class App(QWidget):
         x = [1, 3, 6, 8, 9]
         y = [3, 6, 1, 7, 9]
         self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
+        self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
         self.mainContainer.addLayout(self.graphContainer)
 
         self.sensContainer = QVBoxLayout()
@@ -636,6 +661,7 @@ class App(QWidget):
             self.atpL.setText(fetch_sens.atp)
 
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
+            self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
 
             self.max12tempL.setText(fetch_grid.max12temp)
             self.max12humL.setText(fetch_grid.max12hum)

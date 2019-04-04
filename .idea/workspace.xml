@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/wfs-data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/bak.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testing.py" beforeDir="false" afterPath="$PROJECT_DIR$/testing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs-gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gui.py" afterDir="false" />
     </list>
@@ -22,13 +20,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wfs-gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2265">
-              <caret line="188" column="13" lean-forward="true" selection-start-line="188" selection-start-column="13" selection-end-line="188" selection-end-column="13" />
+            <state relative-caret-position="9030">
+              <caret line="602" column="42" lean-forward="true" selection-start-line="602" selection-start-column="42" selection-end-line="602" selection-end-column="42" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#4113#4720#0" />
-                <element signature="e#4717#5345#0" />
-                <element signature="e#5978#12169#0" />
               </folding>
             </state>
           </provider>
@@ -75,8 +70,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+            <state relative-caret-position="30">
+              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="56" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -84,7 +82,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bak.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1545">
+            <state relative-caret-position="1515">
               <caret line="103" selection-start-line="103" selection-end-line="103" />
               <folding>
                 <element signature="e#331#369#0" expanded="true" />
@@ -104,7 +102,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>wind</find>
       <find>12</find>
       <find>max</find>
       <find>sensFrame</find>
@@ -115,6 +112,7 @@
       <find>self</find>
       <find>print</find>
       <find>data</find>
+      <find>wind</find>
     </findStrings>
     <replaceStrings>
       <replace>wind_interval</replace>
@@ -128,6 +126,8 @@
       <replace>GetData</replace>
       <replace>fetch_graph</replace>
       <replace>fetch_grid</replace>
+      <replace>if is None:</replace>
+      <replace>atp</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -159,8 +159,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="869" />
-    <option name="width" value="1051" />
+    <option name="x" value="959" />
+    <option name="width" value="961" />
     <option name="height" value="1054" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -235,7 +235,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.testing">
+  <component name="RunManager" selected="Python.wfs-gui">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -439,19 +439,25 @@
       <option name="project" value="LOCAL" />
       <updated>1548616751433</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="GUI almost complete with data output. Missing a few labels to clear output for user.">
+      <created>1550250681643</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1550250681643</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="869" y="0" width="1051" height="1054" extended-state="4" />
-    <editor active="true" />
+    <frame x="959" y="0" width="961" height="1054" extended-state="4" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48395377" weight="0.38132295" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.48395377" visible="true" weight="0.38059703" />
       <window_info id="Structure" order="1" sideWeight="0.5160462" side_tool="true" weight="0.38132295" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32976654" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49902725" weight="0.3290735" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7470817" visible="true" weight="0.17039403" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7470817" weight="0.17039403" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.75680935" weight="0.29925454" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -495,6 +501,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wfs-gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9030">
+          <caret line="602" column="42" lean-forward="true" selection-start-line="602" selection-start-column="42" selection-end-line="602" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wfs-data.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/wfs-cmdgui.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="945">
@@ -522,35 +541,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bak.py">
+    <entry file="file://$PROJECT_DIR$/testing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1545">
-          <caret line="103" selection-start-line="103" selection-end-line="103" />
+        <state relative-caret-position="30">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="56" />
           <folding>
-            <element signature="e#331#369#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wfs-data.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testing.py">
+    <entry file="file://$PROJECT_DIR$/bak.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wfs-gui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2265">
-          <caret line="188" column="13" lean-forward="true" selection-start-line="188" selection-start-column="13" selection-end-line="188" selection-end-column="13" />
+        <state relative-caret-position="1515">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#4113#4720#0" />
-            <element signature="e#4717#5345#0" />
-            <element signature="e#5978#12169#0" />
+            <element signature="e#331#369#0" expanded="true" />
           </folding>
         </state>
       </provider>
