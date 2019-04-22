@@ -2,9 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/stefan.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ard/WFS-FRQCNT_v1.0.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ard/WFS_v0.3.ino" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/arrow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/img/drawing.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kicad/Sens-board.kicad_pcb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kicad/Sens-board.pro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kicad/Sens-board.sch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test/test.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testing.py" beforeDir="false" afterPath="$PROJECT_DIR$/testing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/arch/bak.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/drawing.svg.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/drawing.svg.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/serial_read.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/serial_read.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testing.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/testing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-cmdgui.py" beforeDir="false" afterPath="$PROJECT_DIR$/arch/wfs-cmdgui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wind-circle.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img/wind-circle.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wind-circle.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/wind-circle.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wfs-gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9030">
-              <caret line="602" column="42" lean-forward="true" selection-start-line="602" selection-start-column="42" selection-end-line="602" selection-end-column="42" />
+            <state relative-caret-position="315">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -35,7 +49,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wfs-cmdgui.py">
+        <entry file="file://$PROJECT_DIR$/arch/wfs-cmdgui.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="945">
               <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
@@ -59,7 +73,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serial_read.py">
+        <entry file="file://$PROJECT_DIR$/test/serial_read.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
               <caret line="5" column="22" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="22" />
@@ -68,7 +82,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testing.py">
+        <entry file="file://$PROJECT_DIR$/test/testing.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
               <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="56" />
@@ -80,7 +94,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bak.py">
+        <entry file="file://$PROJECT_DIR$/arch/bak.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1515">
               <caret line="103" selection-start-line="103" selection-end-line="103" />
@@ -100,36 +114,6 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>12</find>
-      <find>max</find>
-      <find>sensFrame</find>
-      <find>AVG</find>
-      <find>beaufort</find>
-      <find>temp</find>
-      <find>= &quot;0&quot;</find>
-      <find>self</find>
-      <find>print</find>
-      <find>data</find>
-      <find>wind</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>wind_interval</replace>
-      <replace>sens</replace>
-      <replace>mean</replace>
-      <replace>24</replace>
-      <replace>min</replace>
-      <replace>MAX</replace>
-      <replace>te</replace>
-      <replace>wind</replace>
-      <replace>GetData</replace>
-      <replace>fetch_graph</replace>
-      <replace>fetch_grid</replace>
-      <replace>if is None:</replace>
-      <replace>atp</replace>
-    </replaceStrings>
-  </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
@@ -143,7 +127,7 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/testing.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/test/testing.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/wfs-gui.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
@@ -157,11 +141,6 @@
         <option value="$PROJECT_DIR$/wfs-gui.py" />
       </list>
     </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="959" />
-    <option name="width" value="961" />
-    <option name="height" value="1054" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -217,12 +196,6 @@
       </pane>
     </panes>
   </component>
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/testing.py" />
-    <property name="restartRequiresConfirmation" value="false" />
-    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
-  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -269,7 +242,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/serial_read.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/serial_read.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -290,7 +263,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testing.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/testing.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -332,7 +305,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs-cmdgui.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/arch/wfs-cmdgui.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -376,9 +349,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="StructureViewFactory">
-    <option name="ACTIVE_ACTIONS" value=",SHOW_INHERITED" />
-  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -390,12 +360,12 @@
       <option name="presentableId" value="Default" />
       <updated>1544907544111</updated>
     </task>
-    <task id="LOCAL-00001" summary="PYQT5 working, working on image and layout of the app.">
-      <created>1547412855794</created>
+    <task id="LOCAL-00001" summary="GUI almost complete with data output. Missing a few labels to clear output for user.">
+      <created>1555920218548</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1547412855794</updated>
+      <updated>1555920218548</updated>
     </task>
     <task id="LOCAL-00002" summary="tes">
       <created>1547413229285</created>
@@ -446,7 +416,14 @@
       <option name="project" value="LOCAL" />
       <updated>1550250681643</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="GUI almost complete with data output. Missing a few labels to clear output for user.">
+      <created>1554406150403</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1554406150403</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -457,109 +434,19 @@
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32976654" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49902725" weight="0.3290735" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.7470817" weight="0.17039403" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5959488" visible="true" weight="0.3290735" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.75680935" weight="0.29925454" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.4997367" weight="0.32919255" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4968017" weight="0.32800853" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4997367" weight="0.32919255" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50097275" side_tool="true" weight="0.171459" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.40405118" side_tool="true" visible="true" weight="0.3290735" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4997367" weight="0.32919255" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4989339" weight="0.3290735" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="tes" />
-    <MESSAGE value="threading and qlabel update, working. Image label set, and positioned." />
-    <MESSAGE value="GUI updated to update wind and sens labels. delay set on sens DB input to reduce number of rows in db." />
-    <MESSAGE value="GUI almost complete with data output. Missing a few labels to clear output for user." />
-    <option name="LAST_COMMIT_MESSAGE" value="GUI almost complete with data output. Missing a few labels to clear output for user." />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../.PyCharmCE2018.3/system/python_stubs/-1247971764/PyQt5/QtWidgets/QBoxLayout.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="1134" selection-start-line="1134" selection-end-line="1134" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wfs-gui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9030">
-          <caret line="602" column="42" lean-forward="true" selection-start-line="602" selection-start-column="42" selection-end-line="602" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wfs-data.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wfs-cmdgui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="945">
-          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wfs-ard2db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1605">
-          <caret line="111" column="19" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="19" />
-          <folding>
-            <element signature="e#110#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/serial_read.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bak.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="103" selection-start-line="103" selection-end-line="103" />
-          <folding>
-            <element signature="e#331#369#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>
