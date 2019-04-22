@@ -66,6 +66,7 @@ get_min_atp_12 = "SELECT MIN(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), IN
 get_min_atp_24 = "SELECT MIN(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
 get_min_atp = "SELECT MIN(atp) FROM sens"
 
+
 def fetch_wind():
     while True:
         cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
@@ -75,18 +76,17 @@ def fetch_wind():
         if cursor.rowcount > 0:
             db_wind = cursor.fetchone()
             fetch_wind.wind = str(db_wind[1])
-            wind_timestamp = str(db_wind[2])
+            # wind_timestamp = str(db_wind[2])
         else:
             fetch_wind.wind = "0"
 
         cursor.execute(get_mean_wind)
         db_mean_wind = cursor.fetchone()
-        if db_mean_wind[0] == None:  # cursor.rowcount is 0 and
+        if db_mean_wind[0] is None:  # cursor.rowcount is 0 and
             fetch_wind.meanwind = "0"
         else:
-            #print(db_mean_wind[0])
+            # print(db_mean_wind[0])
             fetch_wind.meanwind = round(float(db_mean_wind[0]), 0)
-
 
         beaufort = [
             "Beaufort 0 - Calm",
@@ -102,7 +102,6 @@ def fetch_wind():
             "Beaufort 10 - Storm",
             "Beaufort 11 - Violent Storm",
             "Beaufort 12 - Hurricane"]
-
 
         if float(fetch_wind.meanwind) < 0.3:
             fetch_wind.beaufortLS = beaufort[0]
@@ -131,11 +130,8 @@ def fetch_wind():
         elif float(fetch_wind.meanwind) > 0.3:
             fetch_wind.beaufortLS = beaufort[1]
 
-        #print(fetch_wind.beaufortLS)
-
-        #print(fetch_wind.meanwind)
         time.sleep(1)
-        #print(thread1.name)
+
 
 def fetch_sens():
     while True:
@@ -155,7 +151,7 @@ def fetch_sens():
             fetch_sens.atp = "0"
 
         time.sleep(1)
-        #print(thread2.name)
+        # print(thread2.name)
 
 
 def fetch_gps():
@@ -177,7 +173,7 @@ def fetch_gps():
             fetch_gps.gps_timestamp = "0"
 
         time.sleep(1)
-        #print(thread3.name)
+        # print(thread3.name)
 
 
 def fetch_graph():
@@ -197,11 +193,10 @@ def fetch_graph():
             db_graph_timestamp = cursor.fetchall()
             print(db_graph_timestamp[0])
             for row in db_graph_timestamp:
-                t = datetime.strptime(str(row),"%Y-%m-%d %H:%M:%S")
+                t = datetime.strptime(str(row), "%Y-%m-%d %H:%M:%S")
             fetch_graph.graphwind_X = t
         else:
             fetch_graph.graphwind_X = [0]
-
 
         cursor.execute(get_graph_atp)
         if cursor.rowcount > 0:
@@ -213,15 +208,15 @@ def fetch_graph():
         cursor.execute(get_graph_atp_timestamp)
         if cursor.rowcount > 0:
             db_graph_atp_timestamp = cursor.fetchall()
-            #np.ravel(db_graph_atp_timestamp)
+            # np.ravel(db_graph_atp_timestamp)
             for row in db_graph_atp_timestamp:
-                t = datetime.strptime(row,"%Y-%m-%d %H:%M:%S").date()
+                t = datetime.strptime(row, "%Y-%m-%d %H:%M:%S").date()
             fetch_graph.graphatp_X = t
         else:
             fetch_graph.graphatp_X = [0]
 
         time.sleep(1)
-        #print(thread4.name)
+        # print(thread4.name)
 
 
 def fetch_grid():
@@ -419,14 +414,11 @@ def fetch_grid():
             fetch_grid.min24atp = str(round(db_min_atp_24[0]))
 
         time.sleep(1)
-        #print(thread5.name)
-
-
+        # print(thread5.name)
 
 # print("Thread Running")
+# data = fetch_wind()
 
-
-#data = fetch_wind()
 
 thread1 = threading.Thread(target=fetch_wind, args=())
 thread1.daemon = True
@@ -447,7 +439,6 @@ thread4.start()
 thread5 = threading.Thread(target=fetch_grid, args=())
 thread5.daemon = True
 thread5.start()
-
 
 
 class App(QWidget):
