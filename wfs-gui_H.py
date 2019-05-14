@@ -447,10 +447,10 @@ class App(QWidget):
         super(App, self).__init__(parent=parent)
         self.title = "WFS - Weather Forecast Station"
         self.setWindowIcon(QIcon("drawing.svg.png"))
-        self.left = 475
-        self.top = 650
-        self.width = 480
-        self.height = 720
+        self.left = 0
+        self.top = 0
+        self.width = 720
+        self.height = 480
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.setStyleSheet("color: white; background-color: #152025;")
