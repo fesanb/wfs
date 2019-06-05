@@ -10,7 +10,7 @@ import time
 from datetime import datetime
 
 sys.settrace
-
+#test
 
 get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_max_wind_12 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
