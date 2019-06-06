@@ -31,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="572" lean-forward="true" selection-start-line="572" selection-end-line="572" />
+            <state relative-caret-position="382">
+              <caret line="511" column="8" lean-forward="true" selection-start-line="511" selection-start-column="8" selection-end-line="511" selection-end-column="8" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -73,6 +73,14 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>windmax01</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>data</replace>
+    </replaceStrings>
+  </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
@@ -86,6 +94,7 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/wfs-gui_H.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/wfs-gui.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/test/testing.py" root0="SKIP_INSPECTION" />
   </component>
@@ -149,7 +158,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -408,7 +417,7 @@
     <frame x="-8" y="-8" width="1936" height="1035" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.48395377" visible="true" weight="0.11064278" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48395377" visible="true" weight="0.11064278" />
       <window_info id="Structure" order="1" sideWeight="0.5160462" side_tool="true" weight="0.38132295" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32976654" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -417,10 +426,10 @@
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.4997367" weight="0.32919255" />
-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.5943098" type="SLIDING" weight="0.30430108" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4963119" visible="true" weight="0.32795697" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.5943098" type="SLIDING" visible="true" weight="0.22580644" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4947313" visible="true" weight="0.12150538" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49894625" weight="0.32903227" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5036881" side_tool="true" visible="true" weight="0.32795697" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5052687" side_tool="true" visible="true" weight="0.12150538" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49947312" weight="0.32903227" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4989339" weight="0.3290735" />
       <window_info anchor="bottom" id="Educational.CheckDetails" order="12" />
@@ -497,8 +506,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="572" lean-forward="true" selection-start-line="572" selection-end-line="572" />
+        <state relative-caret-position="382">
+          <caret line="511" column="8" lean-forward="true" selection-start-line="511" selection-start-column="8" selection-end-line="511" selection-end-column="8" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

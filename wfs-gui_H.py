@@ -509,15 +509,15 @@ class App(QWidget):
         self.sensorG.addWidget(QLabel("ATP: "), 2, 0)
 
         self.sensdataT = QLabel(fetch_sens.temp)
-        self.sensdataT.setAlignment(Qt.AlignHCenter)
+        #self.sensdataT.setAlignment(Qt.AlignHCenter)
         self.sensorG.addWidget(self.sensdataT, 0, 1)
 
         self.sensdataH = QLabel(fetch_sens.hum)
-        self.sensdataH.setAlignment(Qt.AlignHCenter)
+        #self.sensdataH.setAlignment(Qt.AlignHCenter)
         self.sensorG.addWidget(self.sensdataH, 1, 1)
 
         self.sensdataA = QLabel(fetch_sens.atp)
-        self.sensdataA.setAlignment(Qt.AlignHCenter)
+        #self.sensdataA.setAlignment(Qt.AlignHCenter)
         self.sensorG.addWidget(self.sensdataA, 2, 1)
 
 
@@ -624,9 +624,9 @@ class App(QWidget):
 
             self.beaufortL.setText(fetch_wind.beaufortLS)
 
-            self.tempL.setText(fetch_sens.temp)
-            self.humL.setText(fetch_sens.hum)
-            self.atpL.setText(fetch_sens.atp)
+            self.sensdataT.setText(fetch_sens.temp)
+            self.sensdataH.setText(fetch_sens.hum)
+            self.sensdataA.setText(fetch_sens.atp)
 
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
             self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
