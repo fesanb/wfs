@@ -400,12 +400,13 @@ class App(QWidget):
         self.showFullScreen()
         self.setWindowTitle(self.title)
         # self.setGeometry(self.left, self.top, self.width, self.height)
-        self.setStyleSheet("color: white; background-color: #152025;")
+        self.setStyleSheet("color: white; background-color: #000000;")
         self.initUI()
 
         self.win = QWidget()
 
     def initUI(self):
+
 
         self.mainContainer = QVBoxLayout(self)
 
@@ -461,6 +462,7 @@ class App(QWidget):
         self.sensorG.addWidget(QLabel("ATP: "), 3, 0)
 
         self.sensdataT = QLabel(fetch_sens.temp)
+        self.sensdataT.setAlignment(Qt.AlignHCenter)
         self.sensorG.addWidget(self.sensdataT, 1, 1)
 
         self.sensdataH = QLabel(fetch_sens.hum)
@@ -468,6 +470,33 @@ class App(QWidget):
 
         self.sensdataA = QLabel(fetch_sens.atp)
         self.sensorG.addWidget(self.sensdataA, 3, 1)
+
+        self.sensgridTemp30 = QLabel(fetch_grid.max30temp)
+        self.sensorG.addWidget(self.sensgridTemp30, 1, 2)
+
+        self.sensgridTemp60 = QLabel(fetch_grid.max60temp)
+        self.sensorG.addWidget(self.sensgridTemp60, 1, 3)
+
+        self.sensgridTemp120 = QLabel(fetch_grid.max120temp)
+        self.sensorG.addWidget(self.sensgridTemp120, 1, 4)
+        
+        self.sensgridHum30 = QLabel(fetch_grid.max30hum)
+        self.sensorG.addWidget(self.sensgridHum30, 2, 2)
+
+        self.sensgridHum60 = QLabel(fetch_grid.max60hum)
+        self.sensorG.addWidget(self.sensgridHum60, 2, 3)
+
+        self.sensgridHum120 = QLabel(fetch_grid.max120hum)
+        self.sensorG.addWidget(self.sensgridHum120, 2, 4)
+        
+        self.sensgridatp30 = QLabel(fetch_grid.max30atp)
+        self.sensorG.addWidget(self.sensgridatp30, 3, 2)
+
+        self.sensgridatp60 = QLabel(fetch_grid.max60atp)
+        self.sensorG.addWidget(self.sensgridatp60, 3, 3)
+
+        self.sensgridatp120 = QLabel(fetch_grid.max120atp)
+        self.sensorG.addWidget(self.sensgridatp120, 3, 4)
 
         self.sensDataContainer.addLayout(self.sensorG)
         self.windContainer.addWidget(self.sensFrame2)
@@ -539,7 +568,7 @@ class App(QWidget):
 
         #GRAPH
         self.graphContainer = QVBoxLayout()
-        pg.setConfigOption('background', '#152025')
+        pg.setConfigOption('background', '#000000')
         self.graph = pg.PlotWidget()
         self.graphContainer.addWidget(self.graph)
         x = [1, 3, 6, 8, 9]

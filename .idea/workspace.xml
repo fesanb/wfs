@@ -31,8 +31,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="382">
-              <caret line="511" column="8" lean-forward="true" selection-start-line="511" selection-start-column="8" selection-end-line="511" selection-end-column="8" />
+            <state relative-caret-position="259">
+              <caret line="570" column="49" selection-start-line="570" selection-start-column="49" selection-end-line="570" selection-end-column="49" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -76,9 +76,11 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>windmax01</find>
+      <find>60</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
+      <replace>120</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -132,6 +134,11 @@
             <path>
               <item name="wfs" type="b2602c69:ProjectViewProjectNode" />
               <item name="wfs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfs" type="462c0819:PsiDirectoryNode" />
+              <item name="arch" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="wfs" type="b2602c69:ProjectViewProjectNode" />
@@ -415,9 +422,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1035" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48395377" visible="true" weight="0.11064278" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48395377" visible="true" weight="0.26027396" />
       <window_info id="Structure" order="1" sideWeight="0.5160462" side_tool="true" weight="0.38132295" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32976654" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -426,10 +432,10 @@
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.4997367" weight="0.32919255" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.5943098" type="SLIDING" visible="true" weight="0.22580644" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.4947313" visible="true" weight="0.12150538" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.5943098" type="SLIDING" weight="0.22580644" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.56006324" visible="true" weight="0.2204301" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49894625" weight="0.32903227" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5052687" side_tool="true" visible="true" weight="0.12150538" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.4399368" side_tool="true" weight="0.12444934" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49947312" weight="0.32903227" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4989339" weight="0.3290735" />
       <window_info anchor="bottom" id="Educational.CheckDetails" order="12" />
@@ -438,24 +444,41 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="windows install" />
     <MESSAGE value="!" />
-    <option name="LAST_COMMIT_MESSAGE" value="!" />
+    <MESSAGE value="Horizontal GIU starting to get there." />
+    <option name="LAST_COMMIT_MESSAGE" value="Horizontal GIU starting to get there." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/wfs-data.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wfs-ard2db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1887">
-          <caret line="111" column="19" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="19" />
-          <folding>
-            <element signature="e#110#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/arch/wfs-cmdgui.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -504,10 +527,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wfs-ard2db.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1887">
+          <caret line="111" column="19" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="19" />
+          <folding>
+            <element signature="e#110#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="511" column="8" lean-forward="true" selection-start-line="511" selection-start-column="8" selection-end-line="511" selection-end-column="8" />
+        <state relative-caret-position="259">
+          <caret line="570" column="49" selection-start-line="570" selection-start-column="49" selection-end-line="570" selection-end-column="49" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
