@@ -472,13 +472,17 @@ class App(QWidget):
         self.meanHL.setFont(QFont('Arial', 20))
         self.meanHL.setAlignment(Qt.AlignCenter)
         self.windHeader.addWidget(self.meanHL)
+        self.sensHL = QLabel("SENSOR")
+        self.sensHL.setFont(QFont('Arial', 20))
+        self.sensHL.setAlignment(Qt.AlignCenter)
+        self.windHeader.addWidget(self.sensHL)
         self.mainContainer.addLayout(self.windHeader)
 
         self.windContainer = QHBoxLayout()
         self.windFrame = QFrame(self)
         self.wind_VL = QVBoxLayout(self.windFrame)
         self.windL = QLabel(fetch_wind.wind, self.windFrame)
-        self.windL.setStyleSheet("background-image: url('img/wind-circle.png'); background-repeat: no-repeat;")
+        self.windL.setStyleSheet("background-image: url('img/wind-circle.png'); background-repeat: no-repeat; background-position: center")
         self.windL.setAlignment(Qt.AlignCenter)
         self.windL.setMinimumHeight(200)
         self.windL.setFont(QFont('Arial', 50))
@@ -488,13 +492,53 @@ class App(QWidget):
         self.meanFrame = QFrame(self)
         self.mean_VL = QVBoxLayout(self.meanFrame)
         self.meanL = QLabel(str(fetch_wind.meanwind), self.meanFrame)
-        self.meanL.setStyleSheet("background-image: url('img/wind-circle.png'); background-repeat: no-repeat;")
+        self.meanL.setStyleSheet("background-image: url('img/wind-circle.png'); background-repeat: no-repeat; background-position: center")
         self.meanL.setAlignment(Qt.AlignCenter)
         self.meanL.setMinimumHeight(200)
         self.meanL.setFont(QFont('Arial', 50))
         self.mean_VL.addWidget(self.meanL)
         self.windContainer.addWidget(self.meanFrame)
 
+        #
+        self.sensFrame2 = QFrame(self)
+        self.sensDataContainer = QVBoxLayout(self.sensFrame2)
+
+        self.sensorG = QGridLayout()
+        self.sensorG.addWidget(QLabel("Temp: "), 0, 0)
+        self.sensorG.addWidget(QLabel("Hum: "), 1, 0)
+        self.sensorG.addWidget(QLabel("ATP: "), 2, 0)
+
+        self.sensdataT = QLabel(fetch_sens.temp)
+        self.sensdataT.setAlignment(Qt.AlignHCenter)
+        self.sensorG.addWidget(self.sensdataT, 0, 1)
+
+        self.sensdataH = QLabel(fetch_sens.hum)
+        self.sensdataH.setAlignment(Qt.AlignHCenter)
+        self.sensorG.addWidget(self.sensdataH, 1, 1)
+
+        self.sensdataA = QLabel(fetch_sens.atp)
+        self.sensdataA.setAlignment(Qt.AlignHCenter)
+        self.sensorG.addWidget(self.sensdataA, 2, 1)
+
+
+        self.sensDataContainer.addLayout(self.sensorG)
+        self.windContainer.addWidget(self.sensFrame2)
+
+        # #start
+        # self.dataFrame = QFrame(self)
+        # self.data_VL = QVBoxLayout(self.dataFrame)
+        # self.dataLtempT = QLabel("TEMP: ", self.dataFrame)
+        # self.dataLtemp = QLabel(fetch_sens.temp, self.dataFrame)
+        # self.dataLhumT = QLabel("HUM: ", self.dataFrame)
+        # self.dataLhum = QLabel(fetch_sens.hum, self.dataFrame)
+        # self.dataLatpT = QLabel("ATP: ", self.dataFrame)
+        # self.dataLatp = QLabel(fetch_sens.atp, self.dataFrame)
+        #
+        # # self.data_VL.setAlignment(Qt.AlignCenter)
+        # # self.data_VL.setFont(QFont('Arial', 20))
+        # self.data_VL.addWidget(self.dataLtempT)
+        # self.windContainer.addWidget(self.dataFrame)
+        # #stop
         self.mainContainer.addLayout(self.windContainer)
 
         self.beaufortbox = QHBoxLayout()
@@ -571,74 +615,6 @@ class App(QWidget):
         self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
         self.mainContainer.addLayout(self.graphContainer)
 
-        self.sensContainer = QVBoxLayout()
-        self.sensContainer.setSpacing(0)
-        self.sensFrame = QFrame(self)
-        self.sensgrid = QGridLayout(self.sensFrame)
-
-        self.sensgrid.addWidget(QLabel("Temp (°C)"), 0, 1)
-        self.sensgrid.addWidget(QLabel("Humid (%)"), 0, 2)
-        self.sensgrid.addWidget(QLabel("ATP (mBar)"), 0, 3)
-
-        self.sensgrid.addWidget(QLabel("Current"), 1, 0)
-        self.sensgrid.addWidget(QLabel("Max 12hrs"), 2, 0)
-        self.sensgrid.addWidget(QLabel("Min 12hrs"), 3, 0)
-        self.sensgrid.addWidget(QLabel("Max 24hrs"), 4, 0)
-        self.sensgrid.addWidget(QLabel("Min 24hrs"), 5, 0)
-        self.sensgrid.addWidget(QLabel("Max all time"), 6, 0)
-        self.sensgrid.addWidget(QLabel("Min all time"), 7, 0)
-
-        self.tempL = QLabel(fetch_sens.temp)
-        self.sensgrid.addWidget(self.tempL, 1, 1)
-        self.humL = QLabel(fetch_sens.hum)
-        self.sensgrid.addWidget(self.humL, 1, 2)
-        self.atpL = QLabel(fetch_sens.atp)
-        self.sensgrid.addWidget(self.atpL, 1, 3)
-
-        self.max12tempL = QLabel(fetch_grid.max12temp)
-        self.sensgrid.addWidget(self.max12tempL, 2, 1)
-        self.max12humL = QLabel(fetch_grid.max12hum)
-        self.sensgrid.addWidget(self.max12humL, 2, 2)
-        self.max12atpL = QLabel(fetch_grid.max12atp)
-        self.sensgrid.addWidget(self.max12atpL, 2, 3)
-
-        self.min12tempL = QLabel(fetch_grid.min12temp)
-        self.sensgrid.addWidget(self.min12tempL, 3, 1)
-        self.min12humL = QLabel(fetch_grid.min12hum)
-        self.sensgrid.addWidget(self.min12humL, 3, 2)
-        self.min12atpL = QLabel(fetch_grid.min12atp)
-        self.sensgrid.addWidget(self.min12atpL, 3, 3)
-
-        self.max24tempL = QLabel(fetch_grid.max24temp)
-        self.sensgrid.addWidget(self.max24tempL, 4, 1)
-        self.max24humL = QLabel(fetch_grid.max24hum)
-        self.sensgrid.addWidget(self.max24humL, 4, 2)
-        self.max24atpL = QLabel(fetch_grid.max24atp)
-        self.sensgrid.addWidget(self.max24atpL, 4, 3)
-
-        self.min24tempL = QLabel(fetch_grid.min24temp)
-        self.sensgrid.addWidget(self.min24tempL, 5, 1)
-        self.min24humL = QLabel(fetch_grid.min24hum)
-        self.sensgrid.addWidget(self.min24humL, 5, 2)
-        self.min24atpL = QLabel(fetch_grid.min24atp)
-        self.sensgrid.addWidget(self.min24atpL, 5, 3)
-
-        self.maxtempL = QLabel(fetch_grid.maxtemp)
-        self.sensgrid.addWidget(self.maxtempL, 6, 1)
-        self.maxhumL = QLabel(fetch_grid.maxhum)
-        self.sensgrid.addWidget(self.maxhumL, 6, 2)
-        self.maxatpL = QLabel(fetch_grid.maxatp)
-        self.sensgrid.addWidget(self.maxatpL, 6, 3)
-
-        self.mintempL = QLabel(fetch_grid.mintemp)
-        self.sensgrid.addWidget(self.mintempL, 7, 1)
-        self.minhumL = QLabel(fetch_grid.minhum)
-        self.sensgrid.addWidget(self.minhumL, 7, 2)
-        self.minatpL = QLabel(fetch_grid.minatp)
-        self.sensgrid.addWidget(self.minatpL, 7, 3)
-
-        self.sensContainer.addWidget(self.sensFrame)
-        self.mainContainer.addLayout(self.sensContainer)
         self.mainContainer.addStretch()
 
     def update_label(self):
@@ -654,30 +630,6 @@ class App(QWidget):
 
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
             self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
-
-            self.max12tempL.setText(fetch_grid.max12temp)
-            self.max12humL.setText(fetch_grid.max12hum)
-            self.max12atpL.setText(fetch_grid.max12atp)
-
-            self.min12tempL.setText(fetch_grid.min12temp)
-            self.min12humL.setText(fetch_grid.min12hum)
-            self.min12atpL.setText(fetch_grid.min12atp)
-
-            self.max24tempL.setText(fetch_grid.max24temp)
-            self.max24humL.setText(fetch_grid.max24hum)
-            self.max24atpL.setText(fetch_grid.max24atp)
-
-            self.min24tempL.setText(fetch_grid.min24temp)
-            self.min24humL.setText(fetch_grid.min24hum)
-            self.min24atpL.setText(fetch_grid.min24atp)
-
-            self.maxtempL.setText(fetch_grid.maxtemp)
-            self.maxhumL.setText(fetch_grid.maxhum)
-            self.maxatpL.setText(fetch_grid.maxatp)
-
-            self.mintempL.setText(fetch_grid.mintemp)
-            self.minhumL.setText(fetch_grid.minhum)
-            self.minatpL.setText(fetch_grid.minatp)
 
             self.windmax01.setText(fetch_grid.maxwind01)
             self.windmax05.setText(fetch_grid.maxwind05)
