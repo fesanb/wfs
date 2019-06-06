@@ -40,32 +40,22 @@ get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
 get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps)"
 
 # TEMP
-get_max_temp_12 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_max_temp_24 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
+get_max_temp_30 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)"
+get_max_temp_60 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
+get_max_temp_120 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2 HOUR)"
 get_max_temp = "SELECT MAX(temp) FROM sens"
 
-get_min_temp_12 = "SELECT MIN(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_min_temp_24 = "SELECT MIN(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_min_temp = "SELECT MIN(temp) FROM sens"
-
 # HUM
-get_max_hum_12 = "SELECT MAX(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_max_hum_24 = "SELECT MAX(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
+get_max_hum_30 = "SELECT MAX(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)"
+get_max_hum_60 = "SELECT MAX(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
+get_max_hum_120 = "SELECT MAX(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2 HOUR)"
 get_max_hum = "SELECT MAX(hum) FROM sens"
 
-get_min_hum_12 = "SELECT MIN(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_min_hum_24 = "SELECT MIN(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_min_hum = "SELECT MIN(hum) FROM sens"
-
 # ATP
-get_max_atp_12 = "SELECT MAX(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_max_atp_24 = "SELECT MAX(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
+get_max_atp_30 = "SELECT MAX(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)"
+get_max_atp_60 = "SELECT MAX(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
+get_max_atp_120 = "SELECT MAX(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2 HOUR)"
 get_max_atp = "SELECT MAX(atp) FROM sens"
-
-get_min_atp_12 = "SELECT MIN(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_min_atp_24 = "SELECT MIN(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_min_atp = "SELECT MIN(atp) FROM sens"
-
 
 def fetch_wind():
     while True:
@@ -303,115 +293,71 @@ def fetch_grid():
         else:
             fetch_grid.maxatp = str(round(db_max_atp[0]))
 
-        #   MIN
-        cursor.execute(get_min_temp)
-        db_min_temp = cursor.fetchone()
-        if db_min_temp[0] is None:
-            fetch_grid.mintemp = "0"
+        #   SENS 30
+        cursor.execute(get_max_temp_30)
+        db_max_temp_30 = cursor.fetchone()
+        if db_max_temp_30[0] is None:
+            fetch_grid.max30temp = "0"
         else:
-            fetch_grid.mintemp = str(round(db_min_temp[0], 1))
+            fetch_grid.max30temp = str(round(db_max_temp_30[0], 1))
 
-        cursor.execute(get_min_hum)
-        db_min_hum = cursor.fetchone()
-        if db_min_hum[0] is None:
-            fetch_grid.minhum = "0"
+        cursor.execute(get_max_hum_30)
+        db_max_hum_30 = cursor.fetchone()
+        if db_max_hum_30[0] is None:
+            fetch_grid.max30hum = "0"
         else:
-            fetch_grid.minhum = str(round(db_min_hum[0]))
+            fetch_grid.max30hum = str(round(db_max_hum_30[0]))
 
-        cursor.execute(get_min_atp)
-        db_min_atp = cursor.fetchone()
-        if db_min_atp[0] is None:
-            fetch_grid.minatp = "0"
+        cursor.execute(get_max_atp_30)
+        db_max_atp_30 = cursor.fetchone()
+        if db_max_atp_30[0] is None:
+            fetch_grid.max30atp = "0"
         else:
-            fetch_grid.minatp = str(round(db_min_atp[0]))
+            fetch_grid.max30atp = str(round(db_max_atp_30[0]))
 
-        #   MAX12
-        cursor.execute(get_max_temp_12)
-        db_max_temp_12 = cursor.fetchone()
-        if db_max_temp_12[0] is None:
-            fetch_grid.max12temp = "0"
+        #   SENS 60
+        cursor.execute(get_max_temp_60)
+        db_max_temp_60 = cursor.fetchone()
+        if db_max_temp_60[0] is None:
+            fetch_grid.max60temp = "0"
         else:
-            fetch_grid.max12temp = str(round(db_max_temp_12[0], 1))
+            fetch_grid.max60temp = str(round(db_max_temp_60[0], 1))
 
-        cursor.execute(get_max_hum_12)
-        db_max_hum_12 = cursor.fetchone()
-        if db_max_hum_12[0] is None:
-            fetch_grid.max12hum = "0"
+        cursor.execute(get_max_hum_60)
+        db_max_hum_60 = cursor.fetchone()
+        if db_max_hum_60[0] is None:
+            fetch_grid.max60hum = "0"
         else:
-            fetch_grid.max12hum = str(round(db_max_hum_12[0]))
+            fetch_grid.max60hum = str(round(db_max_hum_60[0]))
 
-        cursor.execute(get_max_atp_12)
-        db_max_atp_12 = cursor.fetchone()
-        if db_max_atp_12[0] is None:
-            fetch_grid.max12atp = "0"
+        cursor.execute(get_max_atp_60)
+        db_max_atp_60 = cursor.fetchone()
+        if db_max_atp_60[0] is None:
+            fetch_grid.max60atp = "0"
         else:
-            fetch_grid.max12atp = str(round(db_max_atp_12[0]))
+            fetch_grid.max60atp = str(round(db_max_atp_60[0]))
 
-        #   MIN12
-        cursor.execute(get_min_temp_12)
-        db_min_temp_12 = cursor.fetchone()
-        if db_min_temp_12[0] is None:
-            fetch_grid.min12temp = "0"
+        #   SENS 120
+        cursor.execute(get_max_temp_120)
+        db_max_temp_120 = cursor.fetchone()
+        if db_max_temp_120[0] is None:
+            fetch_grid.max120temp = "0"
         else:
-            fetch_grid.min12temp = str(round(db_min_temp_12[0], 1))
+            fetch_grid.max120temp = str(round(db_max_temp_120[0], 1))
 
-        cursor.execute(get_min_hum_12)
-        db_min_hum_12 = cursor.fetchone()
-        if db_min_hum_12[0] is None:
-            fetch_grid.min12hum = "0"
+        cursor.execute(get_max_hum_120)
+        db_max_hum_120 = cursor.fetchone()
+        if db_max_hum_120[0] is None:
+            fetch_grid.max120hum = "0"
         else:
-            fetch_grid.min12hum = str(round(db_min_hum_12[0]))
+            fetch_grid.max120hum = str(round(db_max_hum_120[0]))
 
-        cursor.execute(get_min_atp_12)
-        db_min_atp_12 = cursor.fetchone()
-        if db_min_atp_12[0] is None:
-            fetch_grid.min12atp = "0"
+        cursor.execute(get_max_atp_120)
+        db_max_atp_120 = cursor.fetchone()
+        if db_max_atp_120[0] is None:
+            fetch_grid.max120atp = "0"
         else:
-            fetch_grid.min12atp = str(round(db_min_atp_12[0]))
-
-        #   MAX24
-        cursor.execute(get_max_temp_24)
-        db_max_temp_24 = cursor.fetchone()
-        if db_max_temp_24[0] is None:
-            fetch_grid.max24temp = "0"
-        else:
-            fetch_grid.max24temp = str(round(db_max_temp_24[0], 1))
-
-        cursor.execute(get_max_hum_24)
-        db_max_hum_24 = cursor.fetchone()
-        if db_max_hum_24[0] is None:
-            fetch_grid.max24hum = "0"
-        else:
-            fetch_grid.max24hum = str(round(db_max_hum_24[0]))
-
-        cursor.execute(get_max_atp_24)
-        db_max_atp_24 = cursor.fetchone()
-        if db_max_atp_24[0] is None:
-            fetch_grid.max24atp = "0"
-        else:
-            fetch_grid.max24atp = str(round(db_max_atp_24[0]))
-
-        #   MIN24
-        cursor.execute(get_min_temp_24)
-        db_min_temp_24 = cursor.fetchone()
-        if db_min_temp_24[0] is None:
-            fetch_grid.min24temp = "0"
-        else:
-            fetch_grid.min24temp = str(round(db_min_temp_24[0], 1))
-
-        cursor.execute(get_min_hum_24)
-        db_min_hum_24 = cursor.fetchone()
-        if db_min_hum_24[0] is None:
-            fetch_grid.min24hum = "0"
-        else:
-            fetch_grid.min24hum = str(round(db_min_hum_24[0]))
-
-        cursor.execute(get_min_atp_24)
-        db_min_atp_24 = cursor.fetchone()
-        if db_min_atp_24[0] is None:
-            fetch_grid.min24atp = "0"
-        else:
-            fetch_grid.min24atp = str(round(db_min_atp_24[0]))
+            fetch_grid.max120atp = str(round(db_max_atp_120[0]))
 
         time.sleep(1)
         # print(thread5.name)
@@ -504,43 +450,30 @@ class App(QWidget):
         self.sensDataContainer = QVBoxLayout(self.sensFrame2)
 
         self.sensorG = QGridLayout()
-        self.sensorG.addWidget(QLabel("Temp: "), 0, 0)
-        self.sensorG.addWidget(QLabel("Hum: "), 1, 0)
-        self.sensorG.addWidget(QLabel("ATP: "), 2, 0)
+
+        self.sensorG.addWidget(QLabel("NOW"), 0, 1)
+        self.sensorG.addWidget(QLabel("30min"), 0, 2)
+        self.sensorG.addWidget(QLabel("1hr"), 0, 3)
+        self.sensorG.addWidget(QLabel("2hr"), 0, 4)
+
+        self.sensorG.addWidget(QLabel("Temp: "), 1, 0)
+        self.sensorG.addWidget(QLabel("Hum: "), 2, 0)
+        self.sensorG.addWidget(QLabel("ATP: "), 3, 0)
 
         self.sensdataT = QLabel(fetch_sens.temp)
-        #self.sensdataT.setAlignment(Qt.AlignHCenter)
-        self.sensorG.addWidget(self.sensdataT, 0, 1)
+        self.sensorG.addWidget(self.sensdataT, 1, 1)
 
         self.sensdataH = QLabel(fetch_sens.hum)
-        #self.sensdataH.setAlignment(Qt.AlignHCenter)
-        self.sensorG.addWidget(self.sensdataH, 1, 1)
+        self.sensorG.addWidget(self.sensdataH, 2, 1)
 
         self.sensdataA = QLabel(fetch_sens.atp)
-        #self.sensdataA.setAlignment(Qt.AlignHCenter)
-        self.sensorG.addWidget(self.sensdataA, 2, 1)
-
+        self.sensorG.addWidget(self.sensdataA, 3, 1)
 
         self.sensDataContainer.addLayout(self.sensorG)
         self.windContainer.addWidget(self.sensFrame2)
-
-        # #start
-        # self.dataFrame = QFrame(self)
-        # self.data_VL = QVBoxLayout(self.dataFrame)
-        # self.dataLtempT = QLabel("TEMP: ", self.dataFrame)
-        # self.dataLtemp = QLabel(fetch_sens.temp, self.dataFrame)
-        # self.dataLhumT = QLabel("HUM: ", self.dataFrame)
-        # self.dataLhum = QLabel(fetch_sens.hum, self.dataFrame)
-        # self.dataLatpT = QLabel("ATP: ", self.dataFrame)
-        # self.dataLatp = QLabel(fetch_sens.atp, self.dataFrame)
-        #
-        # # self.data_VL.setAlignment(Qt.AlignCenter)
-        # # self.data_VL.setFont(QFont('Arial', 20))
-        # self.data_VL.addWidget(self.dataLtempT)
-        # self.windContainer.addWidget(self.dataFrame)
-        # #stop
         self.mainContainer.addLayout(self.windContainer)
 
+        #Bauforth box
         self.beaufortbox = QHBoxLayout()
         self.beaufortL = QLabel(str(fetch_wind.beaufortLS))
         self.beaufortL.setAlignment(Qt.AlignHCenter)
@@ -549,7 +482,7 @@ class App(QWidget):
         self.beaufortbox.addWidget(self.beaufortL)
         self.mainContainer.addLayout(self.beaufortbox)
 
-
+        #Wind grid box
         self.windHistoryContainer = QVBoxLayout()
         self.windHistoryHeader = QHBoxLayout()
         self.windHHLS = "Max Wind History:"
@@ -604,7 +537,7 @@ class App(QWidget):
         self.windHistoryContainer.addLayout(self.windHG)
         self.mainContainer.addLayout(self.windHistoryContainer)
 
-
+        #GRAPH
         self.graphContainer = QVBoxLayout()
         pg.setConfigOption('background', '#152025')
         self.graph = pg.PlotWidget()
