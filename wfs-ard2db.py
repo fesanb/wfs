@@ -142,7 +142,7 @@ while True:
                 emp_no = cursor.lastrowid
                 cnx.commit()
 
-        print("hey4")
+        print("hey4-")
 
         if pcs[0] == "SENS":
             temp = round(float(pcs[1]), 1)
