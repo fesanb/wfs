@@ -48,47 +48,47 @@ cursor = cnx.cursor()
 i = 0
 handshake = 0
 ports = list(port_list.comports())
-serial_port = ""
+serial_port = "/dev/ttyS0"
 beauti_sleep = 1
 
 
-while handshake == 0:
-    for y in ports:
-        x = [ports[i]]
-        probe = x[0]
-        i += 1
-        print("    Probing: " + "\x1b[1;33m" + probe[0] + "\x1b[0m")
-        ser = serial.Serial(probe[0], 19200, timeout=4)
-        cc = str(ser.readline())
-        probe_answer = cc[2:][:-5]
-        time.sleep(beauti_sleep)
-
-        if probe_answer == "S":
-            print("")
-            print("\x1b[1;32m" + "    ok" + "\x1b[0m" + " - Handshake 'S' received. Trying to send signal back...")
-            time.sleep(beauti_sleep)
-            serial_port = probe[0]
-            print("\x1b[1;32m" + "    ok" + "\x1b[0m" + " - Serial port set to: " + "\x1b[1;33m" + serial_port + "\x1b[0m")
-            time.sleep(beauti_sleep)
-            ss = cc.encode()
-            ser.write(ss)
-
-            print("\x1b[1;32m" + "    ok" + "\x1b[0m" + " - Handshake signal sent with success.")
-            time.sleep(beauti_sleep)
-            handshake = 1
-            print("")
-            print("\x1b[1;32m" + "      <-- Handshake successful --> " + "\x1b[0m")
-            print("")
-            print(".. Starting script")
-            print("")
-            print("")
-            time.sleep(beauti_sleep)
-            ser.close()
-
-            break
-        print("    Silence: " + "\x1b[1;31m" + probe[0] + "\x1b[0m")
-        print("")
-# HANDSHAKE
+# while handshake == 0:
+#     for y in ports:
+#         x = [ports[i]]
+#         probe = x[0]
+#         i += 1
+#         print("    Probing: " + "\x1b[1;33m" + probe[0] + "\x1b[0m")
+#         ser = serial.Serial(probe[0], 19200, timeout=4)
+#         cc = str(ser.readline())
+#         probe_answer = cc[2:][:-5]
+#         time.sleep(beauti_sleep)
+#
+#         if probe_answer == "S":
+#             print("")
+#             print("\x1b[1;32m" + "    ok" + "\x1b[0m" + " - Handshake 'S' received. Trying to send signal back...")
+#             time.sleep(beauti_sleep)
+#             serial_port = probe[0]
+#             print("\x1b[1;32m" + "    ok" + "\x1b[0m" + " - Serial port set to: " + "\x1b[1;33m" + serial_port + "\x1b[0m")
+#             time.sleep(beauti_sleep)
+#             ss = cc.encode()
+#             ser.write(ss)
+#
+#             print("\x1b[1;32m" + "    ok" + "\x1b[0m" + " - Handshake signal sent with success.")
+#             time.sleep(beauti_sleep)
+#             handshake = 1
+#             print("")
+#             print("\x1b[1;32m" + "      <-- Handshake successful --> " + "\x1b[0m")
+#             print("")
+#             print(".. Starting script")
+#             print("")
+#             print("")
+#             time.sleep(beauti_sleep)
+#             ser.close()
+#
+#             break
+#         print("    Silence: " + "\x1b[1;31m" + probe[0] + "\x1b[0m")
+#         print("")
+# # HANDSHAKE
 
 try:
     ser = serial.Serial(serial_port, 19200)
