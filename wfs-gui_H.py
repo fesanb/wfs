@@ -571,7 +571,7 @@ class App(QWidget):
         x = [1, 3, 6, 8, 9]
         y = [3, 6, 1, 7, 9]
         self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
-        self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
+        # self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
         self.mainContainer.addLayout(self.graphContainer)
 
         self.mainContainer.addStretch()
@@ -588,7 +588,7 @@ class App(QWidget):
             self.sensdataA.setText(fetch_sens.atp)
 
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
-            self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
+            # self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
 
             self.windmax01.setText(fetch_grid.maxwind01)
             self.windmax05.setText(fetch_grid.maxwind05)
