@@ -36,6 +36,7 @@ get_graph_wind = "SELECT ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(
 get_graph_wind_id = "SELECT id FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
 get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
 get_graph_atp = "SELECT atp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
+get_graph_atp_id = "SELECT id FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
 get_graph_atp_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
 
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
@@ -194,13 +195,10 @@ def fetch_graph():
         else:
             fetch_graph.graphatp_Y = [0]
 
-        cursor.execute(get_graph_atp_timestamp)
+        cursor.execute(get_graph_atp_id)
         if cursor.rowcount > 0:
-            db_graph_atp_timestamp = cursor.fetchall()
-            # np.ravel(db_graph_atp_timestamp)
-            for row in db_graph_atp_timestamp:
-                t = datetime.strptime(row, "%Y-%m-%d %H:%M:%S").date()
-            fetch_graph.graphatp_X = t
+            db_graph_atp_id = cursor.fetchall()
+            fetch_graph.graphatp_X = np.ravel(db_graph_atp_id)
         else:
             fetch_graph.graphatp_X = [0]
 
