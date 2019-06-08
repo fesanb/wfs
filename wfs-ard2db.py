@@ -113,9 +113,11 @@ sens_interval = 600
 
 
 while True:
+    print(hey1)
     try:
         cc = ser.readline()
         pcs = cc.decode().split(",")
+        print(hey2)
 
         if wind_timepassed - wind_countertime > wind_interval:
             if pcs[0] == "w":
@@ -129,6 +131,8 @@ while True:
                     wind_countertime = time.perf_counter()
         wind_timepassed = time.perf_counter()
 
+        print(hey3)
+
         if pcs[0] == "GPS":
             if pcs[1] != "0.00":
                 print("Lat: ", pcs[1], " Long: ", pcs[2], " Alt: ", pcs[3], " SAT: ", pcs[4])
@@ -137,6 +141,8 @@ while True:
                 cursor.execute(add_gps)
                 emp_no = cursor.lastrowid
                 cnx.commit()
+
+        print(hey4)
 
         if pcs[0] == "SENS":
             temp = round(float(pcs[1]), 1)
