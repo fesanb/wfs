@@ -147,6 +147,94 @@ def fetch_sens():
                 fetch_sens.hum = "0"
                 fetch_sens.atp = "0"
                 fetch_sens.sens_timestamp = "0"
+                
+            # #   MAX
+            # cursor.execute(get_max_temp)
+            # db_max_temp = cursor.fetchone()
+            # if db_max_temp[0] is None:
+            #     fetch_sens.maxtemp = "0"
+            # else:
+            #     fetch_sens.maxtemp = str(round(db_max_temp[0], 1))
+            #
+            # cursor.execute(get_max_hum)
+            # db_max_hum = cursor.fetchone()
+            # if db_max_hum[0] is None:
+            #     fetch_sens.maxhum = "0"
+            # else:
+            #     fetch_sens.maxhum = str(round(db_max_hum[0]))
+            #
+            # cursor.execute(get_max_atp)
+            # db_max_atp = cursor.fetchone()
+            # if db_max_atp[0] is None:
+            #     fetch_sens.maxatp = "0"
+            # else:
+            #     fetch_sens.maxatp = str(round(db_max_atp[0]))
+
+            #   SENS 30
+            cursor.execute(get_max_temp_30)
+            db_max_temp_30 = cursor.fetchone()
+            if db_max_temp_30[0] is None:
+                fetch_sens.max30temp = "0"
+            else:
+                fetch_sens.max30temp = str(round(db_max_temp_30[0], 1))
+
+            cursor.execute(get_max_hum_30)
+            db_max_hum_30 = cursor.fetchone()
+            if db_max_hum_30[0] is None:
+                fetch_sens.max30hum = "0"
+            else:
+                fetch_sens.max30hum = str(round(db_max_hum_30[0]))
+
+            cursor.execute(get_max_atp_30)
+            db_max_atp_30 = cursor.fetchone()
+            if db_max_atp_30[0] is None:
+                fetch_sens.max30atp = "0"
+            else:
+                fetch_sens.max30atp = str(round(db_max_atp_30[0]))
+
+            #   SENS 60
+            cursor.execute(get_max_temp_60)
+            db_max_temp_60 = cursor.fetchone()
+            if db_max_temp_60[0] is None:
+                fetch_sens.max60temp = "0"
+            else:
+                fetch_sens.max60temp = str(round(db_max_temp_60[0], 1))
+
+            cursor.execute(get_max_hum_60)
+            db_max_hum_60 = cursor.fetchone()
+            if db_max_hum_60[0] is None:
+                fetch_sens.max60hum = "0"
+            else:
+                fetch_sens.max60hum = str(round(db_max_hum_60[0]))
+
+            cursor.execute(get_max_atp_60)
+            db_max_atp_60 = cursor.fetchone()
+            if db_max_atp_60[0] is None:
+                fetch_sens.max60atp = "0"
+            else:
+                fetch_sens.max60atp = str(round(db_max_atp_60[0]))
+
+            #   SENS 120
+            cursor.execute(get_max_temp_120)
+            db_max_temp_120 = cursor.fetchone()
+            if db_max_temp_120[0] is None:
+                fetch_sens.max120temp = "0"
+            else:
+                fetch_sens.max120temp = str(round(db_max_temp_120[0], 1))
+
+            cursor.execute(get_max_hum_120)
+            db_max_hum_120 = cursor.fetchone()
+            if db_max_hum_120[0] is None:
+                fetch_sens.max120hum = "0"
+            else:
+                fetch_sens.max120hum = str(round(db_max_hum_120[0]))
+
+            cursor.execute(get_max_atp_120)
+            db_max_atp_120 = cursor.fetchone()
+            if db_max_atp_120[0] is None:
+                fetch_sens.max120atp = "0"
+            else:
+                fetch_sens.max120atp = str(round(db_max_atp_120[0]))
 
             time.sleep(1)
             # print(thread2.name)
@@ -282,94 +370,6 @@ def fetch_grid():
             else:
                 fetch_grid.maxwind6 = str(round(db_max_wind6[0], 1))
 
-            #   MAX
-            cursor.execute(get_max_temp)
-            db_max_temp = cursor.fetchone()
-            if db_max_temp[0] is None:
-                fetch_grid.maxtemp = "0"
-            else:
-                fetch_grid.maxtemp = str(round(db_max_temp[0], 1))
-
-            cursor.execute(get_max_hum)
-            db_max_hum = cursor.fetchone()
-            if db_max_hum[0] is None:
-                fetch_grid.maxhum = "0"
-            else:
-                fetch_grid.maxhum = str(round(db_max_hum[0]))
-
-            cursor.execute(get_max_atp)
-            db_max_atp = cursor.fetchone()
-            if db_max_atp[0] is None:
-                fetch_grid.maxatp = "0"
-            else:
-                fetch_grid.maxatp = str(round(db_max_atp[0]))
-
-            #   SENS 30
-            cursor.execute(get_max_temp_30)
-            db_max_temp_30 = cursor.fetchone()
-            if db_max_temp_30[0] is None:
-                fetch_grid.max30temp = "0"
-            else:
-                fetch_grid.max30temp = str(round(db_max_temp_30[0], 1))
-
-            cursor.execute(get_max_hum_30)
-            db_max_hum_30 = cursor.fetchone()
-            if db_max_hum_30[0] is None:
-                fetch_grid.max30hum = "0"
-            else:
-                fetch_grid.max30hum = str(round(db_max_hum_30[0]))
-
-            cursor.execute(get_max_atp_30)
-            db_max_atp_30 = cursor.fetchone()
-            if db_max_atp_30[0] is None:
-                fetch_grid.max30atp = "0"
-            else:
-                fetch_grid.max30atp = str(round(db_max_atp_30[0]))
-
-            #   SENS 60
-            cursor.execute(get_max_temp_60)
-            db_max_temp_60 = cursor.fetchone()
-            if db_max_temp_60[0] is None:
-                fetch_grid.max60temp = "0"
-            else:
-                fetch_grid.max60temp = str(round(db_max_temp_60[0], 1))
-
-            cursor.execute(get_max_hum_60)
-            db_max_hum_60 = cursor.fetchone()
-            if db_max_hum_60[0] is None:
-                fetch_grid.max60hum = "0"
-            else:
-                fetch_grid.max60hum = str(round(db_max_hum_60[0]))
-
-            cursor.execute(get_max_atp_60)
-            db_max_atp_60 = cursor.fetchone()
-            if db_max_atp_60[0] is None:
-                fetch_grid.max60atp = "0"
-            else:
-                fetch_grid.max60atp = str(round(db_max_atp_60[0]))
-
-            #   SENS 120
-            cursor.execute(get_max_temp_120)
-            db_max_temp_120 = cursor.fetchone()
-            if db_max_temp_120[0] is None:
-                fetch_grid.max120temp = "0"
-            else:
-                fetch_grid.max120temp = str(round(db_max_temp_120[0], 1))
-
-            cursor.execute(get_max_hum_120)
-            db_max_hum_120 = cursor.fetchone()
-            if db_max_hum_120[0] is None:
-                fetch_grid.max120hum = "0"
-            else:
-                fetch_grid.max120hum = str(round(db_max_hum_120[0]))
-
-            cursor.execute(get_max_atp_120)
-            db_max_atp_120 = cursor.fetchone()
-            if db_max_atp_120[0] is None:
-                fetch_grid.max120atp = "0"
-            else:
-                fetch_grid.max120atp = str(round(db_max_atp_120[0]))
-
             time.sleep(1)
             # print(thread5.name)
         except Exception as e:
@@ -482,31 +482,31 @@ class App(QWidget):
             self.sensdataA = QLabel(fetch_sens.atp)
             self.sensorG.addWidget(self.sensdataA, 3, 1)
 
-            self.sensgridTemp30 = QLabel(fetch_grid.max30temp)
+            self.sensgridTemp30 = QLabel(fetch_sens.max30temp)
             self.sensorG.addWidget(self.sensgridTemp30, 1, 2)
 
-            self.sensgridTemp60 = QLabel(fetch_grid.max60temp)
+            self.sensgridTemp60 = QLabel(fetch_sens.max60temp)
             self.sensorG.addWidget(self.sensgridTemp60, 1, 3)
 
-            self.sensgridTemp120 = QLabel(fetch_grid.max120temp)
+            self.sensgridTemp120 = QLabel(fetch_sens.max120temp)
             self.sensorG.addWidget(self.sensgridTemp120, 1, 4)
 
-            self.sensgridHum30 = QLabel(fetch_grid.max30hum)
+            self.sensgridHum30 = QLabel(fetch_sens.max30hum)
             self.sensorG.addWidget(self.sensgridHum30, 2, 2)
 
-            self.sensgridHum60 = QLabel(fetch_grid.max60hum)
+            self.sensgridHum60 = QLabel(fetch_sens.max60hum)
             self.sensorG.addWidget(self.sensgridHum60, 2, 3)
 
-            self.sensgridHum120 = QLabel(fetch_grid.max120hum)
+            self.sensgridHum120 = QLabel(fetch_sens.max120hum)
             self.sensorG.addWidget(self.sensgridHum120, 2, 4)
 
-            self.sensgridatp30 = QLabel(fetch_grid.max30atp)
+            self.sensgridatp30 = QLabel(fetch_sens.max30atp)
             self.sensorG.addWidget(self.sensgridatp30, 3, 2)
 
-            self.sensgridatp60 = QLabel(fetch_grid.max60atp)
+            self.sensgridatp60 = QLabel(fetch_sens.max60atp)
             self.sensorG.addWidget(self.sensgridatp60, 3, 3)
 
-            self.sensgridatp120 = QLabel(fetch_grid.max120atp)
+            self.sensgridatp120 = QLabel(fetch_sens.max120atp)
             self.sensorG.addWidget(self.sensgridatp120, 3, 4)
 
             self.sensgridtimestamp = QLabel(fetch_sens.sens_timestamp)
@@ -631,15 +631,15 @@ class App(QWidget):
             self.sensdataT.setText(fetch_sens.temp)
             self.sensdataH.setText(fetch_sens.hum)
             self.sensdataA.setText(fetch_sens.atp)
-            self.sensgridTemp30.setText(fetch_grid.max30temp)
-            self.sensgridTemp60.setText(fetch_grid.max60temp)
-            self.sensgridTemp120.setText(fetch_grid.max120temp)
-            self.sensgridHum30.setText(fetch_grid.max30hum)
-            self.sensgridHum60.setText(fetch_grid.max60hum)
-            self.sensgridHum120.setText(fetch_grid.max120hum)
-            self.sensgridatp30.setText(fetch_grid.max30atp)
-            self.sensgridatp60.setText(fetch_grid.max60atp)
-            self.sensgridatp120.setText(fetch_grid.max120atp)
+            self.sensgridTemp30.setText(fetch_sens.max30temp)
+            self.sensgridTemp60.setText(fetch_sens.max60temp)
+            self.sensgridTemp120.setText(fetch_sens.max120temp)
+            self.sensgridHum30.setText(fetch_sens.max30hum)
+            self.sensgridHum60.setText(fetch_sens.max60hum)
+            self.sensgridHum120.setText(fetch_sens.max120hum)
+            self.sensgridatp30.setText(fetch_sens.max30atp)
+            self.sensgridatp60.setText(fetch_sens.max60atp)
+            self.sensgridatp120.setText(fetch_sens.max120atp)
             self.sensgridtimestamp.setText(fetch_sens.sens_timestamp)
             self.sensgridgps.setText("Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long + " Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp)
 
