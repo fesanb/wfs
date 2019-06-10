@@ -62,306 +62,318 @@ get_max_atp = "SELECT MAX(atp) FROM sens"
 
 def fetch_wind():
     while True:
-        cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-        cursor = cnx.cursor(buffered=True)
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor(buffered=True)
 
-        cursor.execute(get_wind)
-        if cursor.rowcount > 0:
-            db_wind = cursor.fetchone()
-            fetch_wind.wind = str(db_wind[1])
-            # wind_timestamp = str(db_wind[2])
-        else:
-            fetch_wind.wind = "0"
+            cursor.execute(get_wind)
+            if cursor.rowcount > 0:
+                db_wind = cursor.fetchone()
+                fetch_wind.wind = str(db_wind[1])
+                # wind_timestamp = str(db_wind[2])
+            else:
+                fetch_wind.wind = "0"
 
-        cursor.execute(get_mean_wind)
-        db_mean_wind = cursor.fetchone()
-        if db_mean_wind[0] is None:  # cursor.rowcount is 0 and
-            fetch_wind.meanwind = "0"
-        else:
-            # print(db_mean_wind[0])
-            fetch_wind.meanwind = round(float(db_mean_wind[0]), 0)
+            cursor.execute(get_mean_wind)
+            db_mean_wind = cursor.fetchone()
+            if db_mean_wind[0] is None:  # cursor.rowcount is 0 and
+                fetch_wind.meanwind = "0"
+            else:
+                # print(db_mean_wind[0])
+                fetch_wind.meanwind = round(float(db_mean_wind[0]), 0)
 
-        beaufort = [
-            "Beaufort 0 - Calm",
-            "Beaufort 1 - Light Air",
-            "Beaufort 2 - Light breeze",
-            "Beaufort 3 - Gentle breeze",
-            "Beaufort 4 - Moderate breeze",
-            "Beaufort 5 - Fresh breeze",
-            "Beaufort 6 - Strong breeze",
-            "Beaufort 7 - Moderate gale",
-            "Beaufort 8 - Fresh Gale",
-            "Beaufort 9 - Strong Gale",
-            "Beaufort 10 - Storm",
-            "Beaufort 11 - Violent Storm",
-            "Beaufort 12 - Hurricane"]
+            beaufort = [
+                "Beaufort 0 - Calm",
+                "Beaufort 1 - Light Air",
+                "Beaufort 2 - Light breeze",
+                "Beaufort 3 - Gentle breeze",
+                "Beaufort 4 - Moderate breeze",
+                "Beaufort 5 - Fresh breeze",
+                "Beaufort 6 - Strong breeze",
+                "Beaufort 7 - Moderate gale",
+                "Beaufort 8 - Fresh Gale",
+                "Beaufort 9 - Strong Gale",
+                "Beaufort 10 - Storm",
+                "Beaufort 11 - Violent Storm",
+                "Beaufort 12 - Hurricane"]
 
-        if float(fetch_wind.meanwind) < 0.3:
-            fetch_wind.beaufortLS = beaufort[0]
-        elif float(fetch_wind.meanwind) > 32.7:
-            fetch_wind.beaufortLS = beaufort[12]
-        elif float(fetch_wind.meanwind) > 28.5:
-            fetch_wind.beaufortLS = beaufort[11]
-        elif float(fetch_wind.meanwind) > 24.5:
-            fetch_wind.beaufortLS = beaufort[10]
-        elif float(fetch_wind.meanwind) > 20.8:
-            fetch_wind.beaufortLS = beaufort[9]
-        elif float(fetch_wind.meanwind) > 17.2:
-            fetch_wind.beaufortLS = beaufort[8]
-        elif float(fetch_wind.meanwind) > 13.9:
-            fetch_wind.beaufortLS = beaufort[7]
-        elif float(fetch_wind.meanwind) > 10.8:
-            fetch_wind.beaufortLS = beaufort[6]
-        elif float(fetch_wind.meanwind) > 8.0:
-            fetch_wind.beaufortLS = beaufort[5]
-        elif float(fetch_wind.meanwind) > 5.5:
-            fetch_wind.beaufortLS = beaufort[4]
-        elif float(fetch_wind.meanwind) > 3.4:
-            fetch_wind.beaufortLS = beaufort[3]
-        elif float(fetch_wind.meanwind) > 1.6:
-            fetch_wind.beaufortLS = beaufort[2]
-        elif float(fetch_wind.meanwind) > 0.3:
-            fetch_wind.beaufortLS = beaufort[1]
+            if float(fetch_wind.meanwind) < 0.3:
+                fetch_wind.beaufortLS = beaufort[0]
+            elif float(fetch_wind.meanwind) > 32.7:
+                fetch_wind.beaufortLS = beaufort[12]
+            elif float(fetch_wind.meanwind) > 28.5:
+                fetch_wind.beaufortLS = beaufort[11]
+            elif float(fetch_wind.meanwind) > 24.5:
+                fetch_wind.beaufortLS = beaufort[10]
+            elif float(fetch_wind.meanwind) > 20.8:
+                fetch_wind.beaufortLS = beaufort[9]
+            elif float(fetch_wind.meanwind) > 17.2:
+                fetch_wind.beaufortLS = beaufort[8]
+            elif float(fetch_wind.meanwind) > 13.9:
+                fetch_wind.beaufortLS = beaufort[7]
+            elif float(fetch_wind.meanwind) > 10.8:
+                fetch_wind.beaufortLS = beaufort[6]
+            elif float(fetch_wind.meanwind) > 8.0:
+                fetch_wind.beaufortLS = beaufort[5]
+            elif float(fetch_wind.meanwind) > 5.5:
+                fetch_wind.beaufortLS = beaufort[4]
+            elif float(fetch_wind.meanwind) > 3.4:
+                fetch_wind.beaufortLS = beaufort[3]
+            elif float(fetch_wind.meanwind) > 1.6:
+                fetch_wind.beaufortLS = beaufort[2]
+            elif float(fetch_wind.meanwind) > 0.3:
+                fetch_wind.beaufortLS = beaufort[1]
 
-        time.sleep(1)
+            time.sleep(1)
+        except Exception as e:
+            print(repr(e))
 
 
 def fetch_sens():
     while True:
-        cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-        cursor = cnx.cursor(buffered=True)
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor(buffered=True)
 
-        cursor.execute(get_sens)
-        if cursor.rowcount > 0:
-            db_sens = cursor.fetchone()
-            fetch_sens.temp = str(db_sens[1])
-            fetch_sens.hum = str(round(db_sens[2]))
-            fetch_sens.atp = str(db_sens[3])
-            fetch_sens.sens_timestamp = str(db_sens[4])
-        else:
-            fetch_sens.temp = "0"
-            fetch_sens.hum = "0"
-            fetch_sens.atp = "0"
-            fetch_sens.sens_timestamp = "0"
+            cursor.execute(get_sens)
+            if cursor.rowcount > 0:
+                db_sens = cursor.fetchone()
+                fetch_sens.temp = str(db_sens[1])
+                fetch_sens.hum = str(round(db_sens[2]))
+                fetch_sens.atp = str(db_sens[3])
+                fetch_sens.sens_timestamp = str(db_sens[4])
+            else:
+                fetch_sens.temp = "0"
+                fetch_sens.hum = "0"
+                fetch_sens.atp = "0"
+                fetch_sens.sens_timestamp = "0"
 
-        time.sleep(1)
-        # print(thread2.name)
+            time.sleep(1)
+            # print(thread2.name)
+        except Exception as e:
+            print(repr(e))
 
 
 def fetch_gps():
     while True:
-        cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-        cursor = cnx.cursor(buffered=True)
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor(buffered=True)
 
-        cursor.execute(get_gps)
-        if cursor.rowcount > 0:
-            db_gps = cursor.fetchone()
-            fetch_gps.lat = str(db_gps[1])
-            fetch_gps.long = str(db_gps[2])
-            fetch_gps.alt = str(db_gps[3])
-            fetch_gps.gps_timestamp = str(db_gps[4])
-        else:
-            fetch_gps.lat = "0"
-            fetch_gps.long = "0"
-            fetch_gps.alt = "0"
-            fetch_gps.gps_timestamp = "0"
+            cursor.execute(get_gps)
+            if cursor.rowcount > 0:
+                db_gps = cursor.fetchone()
+                fetch_gps.lat = str(db_gps[1])
+                fetch_gps.long = str(db_gps[2])
+                fetch_gps.alt = str(db_gps[3])
+                fetch_gps.gps_timestamp = str(db_gps[4])
+            else:
+                fetch_gps.lat = "0"
+                fetch_gps.long = "0"
+                fetch_gps.alt = "0"
+                fetch_gps.gps_timestamp = "0"
 
-        time.sleep(1)
-        # print(thread3.name)
+            time.sleep(1)
+            # print(thread3.name)
+        except Exception as e:
+            print(repr(e))
 
 
 def fetch_graph():
     while True:
-        cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-        cursor = cnx.cursor(buffered=True)
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor(buffered=True)
 
-        cursor.execute(get_graph_wind)
-        if cursor.rowcount > 0:
-            db_graph_wind = cursor.fetchall()
-            fetch_graph.graphwind_Y = np.ravel(db_graph_wind)
-        else:
-            fetch_graph.graphwind_Y = [0]
+            cursor.execute(get_graph_wind)
+            if cursor.rowcount > 0:
+                db_graph_wind = cursor.fetchall()
+                fetch_graph.graphwind_Y = np.ravel(db_graph_wind)
+            else:
+                fetch_graph.graphwind_Y = [0]
 
-        cursor.execute(get_graph_wind_id)
-        if cursor.rowcount > 0:
-            db_graph_id = cursor.fetchall()
-            fetch_graph.graphwind_X = np.ravel(db_graph_id)
-        else:
-            fetch_graph.graphwind_X = [0]
+            cursor.execute(get_graph_wind_id)
+            if cursor.rowcount > 0:
+                db_graph_id = cursor.fetchall()
+                fetch_graph.graphwind_X = np.ravel(db_graph_id)
+            else:
+                fetch_graph.graphwind_X = [0]
 
-        cursor.execute(get_graph_atp)
-        if cursor.rowcount > 0:
-            db_graph_atp = cursor.fetchall()
-            fetch_graph.graphatp_Y = np.ravel(db_graph_atp)
-        else:
-            fetch_graph.graphatp_Y = [0]
+            cursor.execute(get_graph_atp)
+            if cursor.rowcount > 0:
+                db_graph_atp = cursor.fetchall()
+                fetch_graph.graphatp_Y = np.ravel(db_graph_atp)
+            else:
+                fetch_graph.graphatp_Y = [0]
 
-        cursor.execute(get_graph_atp_id)
-        if cursor.rowcount > 0:
-            db_graph_atp_id = cursor.fetchall()
-            fetch_graph.graphatp_X = np.ravel(db_graph_atp_id)
-        else:
-            fetch_graph.graphatp_X = [0]
+            cursor.execute(get_graph_atp_id)
+            if cursor.rowcount > 0:
+                db_graph_atp_id = cursor.fetchall()
+                fetch_graph.graphatp_X = np.ravel(db_graph_atp_id)
+            else:
+                fetch_graph.graphatp_X = [0]
 
-        time.sleep(1)
-        # print(thread4.name)
+            time.sleep(1)
+            # print(thread4.name)
+        except Exception as e:
+            print(repr(e))
 
 
 def fetch_grid():
     while True:
-        cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-        cursor = cnx.cursor(buffered=True)
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor(buffered=True)
 
-        #   Wind History Max list
-        cursor.execute(get_max_wind01)
-        db_max_wind01 = cursor.fetchone()
-        if db_max_wind01[0] is None:
-            fetch_grid.maxwind01 = "0"
-        else:
-            fetch_grid.maxwind01 = str(round(db_max_wind01[0], 1))
+            #   Wind History Max list
+            cursor.execute(get_max_wind01)
+            db_max_wind01 = cursor.fetchone()
+            if db_max_wind01[0] is None:
+                fetch_grid.maxwind01 = "0"
+            else:
+                fetch_grid.maxwind01 = str(round(db_max_wind01[0], 1))
 
-        cursor.execute(get_max_wind05)
-        db_max_wind05 = cursor.fetchone()
-        if db_max_wind05[0] is None:
-            fetch_grid.maxwind05 = "0"
-        else:
-            fetch_grid.maxwind05 = str(round(db_max_wind05[0], 1))
+            cursor.execute(get_max_wind05)
+            db_max_wind05 = cursor.fetchone()
+            if db_max_wind05[0] is None:
+                fetch_grid.maxwind05 = "0"
+            else:
+                fetch_grid.maxwind05 = str(round(db_max_wind05[0], 1))
 
-        cursor.execute(get_max_wind010)
-        db_max_wind010 = cursor.fetchone()
-        if db_max_wind010[0] is None:
-            fetch_grid.maxwind010 = "0"
-        else:
-            fetch_grid.maxwind010 = str(round(db_max_wind010[0], 1))
+            cursor.execute(get_max_wind010)
+            db_max_wind010 = cursor.fetchone()
+            if db_max_wind010[0] is None:
+                fetch_grid.maxwind010 = "0"
+            else:
+                fetch_grid.maxwind010 = str(round(db_max_wind010[0], 1))
 
-        cursor.execute(get_max_wind030)
-        db_max_wind030 = cursor.fetchone()
-        if db_max_wind030[0] is None:
-            fetch_grid.maxwind030 = "0"
-        else:
-            fetch_grid.maxwind030 = str(round(db_max_wind030[0], 1))
+            cursor.execute(get_max_wind030)
+            db_max_wind030 = cursor.fetchone()
+            if db_max_wind030[0] is None:
+                fetch_grid.maxwind030 = "0"
+            else:
+                fetch_grid.maxwind030 = str(round(db_max_wind030[0], 1))
 
-        cursor.execute(get_max_wind1)
-        db_max_wind1 = cursor.fetchone()
-        if db_max_wind1[0] is None:
-            fetch_grid.maxwind1 = "0"
-        else:
-            fetch_grid.maxwind1 = str(round(db_max_wind1[0], 1))
+            cursor.execute(get_max_wind1)
+            db_max_wind1 = cursor.fetchone()
+            if db_max_wind1[0] is None:
+                fetch_grid.maxwind1 = "0"
+            else:
+                fetch_grid.maxwind1 = str(round(db_max_wind1[0], 1))
 
-        cursor.execute(get_max_wind2)
-        db_max_wind2 = cursor.fetchone()
-        if db_max_wind2[0] is None:
-            fetch_grid.maxwind2 = "0"
-        else:
-            fetch_grid.maxwind2 = str(round(db_max_wind2[0], 1))
+            cursor.execute(get_max_wind2)
+            db_max_wind2 = cursor.fetchone()
+            if db_max_wind2[0] is None:
+                fetch_grid.maxwind2 = "0"
+            else:
+                fetch_grid.maxwind2 = str(round(db_max_wind2[0], 1))
 
-        cursor.execute(get_max_wind4)
-        db_max_wind4 = cursor.fetchone()
-        if db_max_wind4[0] is None:
-            fetch_grid.maxwind4 = "0"
-        else:
-            fetch_grid.maxwind4 = str(round(db_max_wind4[0], 1))
+            cursor.execute(get_max_wind4)
+            db_max_wind4 = cursor.fetchone()
+            if db_max_wind4[0] is None:
+                fetch_grid.maxwind4 = "0"
+            else:
+                fetch_grid.maxwind4 = str(round(db_max_wind4[0], 1))
 
-        cursor.execute(get_max_wind6)
-        db_max_wind6 = cursor.fetchone()
-        if db_max_wind6[0] is None:
-            fetch_grid.maxwind6 = "0"
-        else:
-            fetch_grid.maxwind6 = str(round(db_max_wind6[0], 1))
+            cursor.execute(get_max_wind6)
+            db_max_wind6 = cursor.fetchone()
+            if db_max_wind6[0] is None:
+                fetch_grid.maxwind6 = "0"
+            else:
+                fetch_grid.maxwind6 = str(round(db_max_wind6[0], 1))
 
-        #   MAX
-        cursor.execute(get_max_temp)
-        db_max_temp = cursor.fetchone()
-        if db_max_temp[0] is None:
-            fetch_grid.maxtemp = "0"
-        else:
-            fetch_grid.maxtemp = str(round(db_max_temp[0], 1))
+            #   MAX
+            cursor.execute(get_max_temp)
+            db_max_temp = cursor.fetchone()
+            if db_max_temp[0] is None:
+                fetch_grid.maxtemp = "0"
+            else:
+                fetch_grid.maxtemp = str(round(db_max_temp[0], 1))
 
-        cursor.execute(get_max_hum)
-        db_max_hum = cursor.fetchone()
-        if db_max_hum[0] is None:
-            fetch_grid.maxhum = "0"
-        else:
-            fetch_grid.maxhum = str(round(db_max_hum[0]))
+            cursor.execute(get_max_hum)
+            db_max_hum = cursor.fetchone()
+            if db_max_hum[0] is None:
+                fetch_grid.maxhum = "0"
+            else:
+                fetch_grid.maxhum = str(round(db_max_hum[0]))
 
-        cursor.execute(get_max_atp)
-        db_max_atp = cursor.fetchone()
-        if db_max_atp[0] is None:
-            fetch_grid.maxatp = "0"
-        else:
-            fetch_grid.maxatp = str(round(db_max_atp[0]))
+            cursor.execute(get_max_atp)
+            db_max_atp = cursor.fetchone()
+            if db_max_atp[0] is None:
+                fetch_grid.maxatp = "0"
+            else:
+                fetch_grid.maxatp = str(round(db_max_atp[0]))
 
-        #   SENS 30
-        cursor.execute(get_max_temp_30)
-        db_max_temp_30 = cursor.fetchone()
-        if db_max_temp_30[0] is None:
-            fetch_grid.max30temp = "0"
-        else:
-            fetch_grid.max30temp = str(round(db_max_temp_30[0], 1))
+            #   SENS 30
+            cursor.execute(get_max_temp_30)
+            db_max_temp_30 = cursor.fetchone()
+            if db_max_temp_30[0] is None:
+                fetch_grid.max30temp = "0"
+            else:
+                fetch_grid.max30temp = str(round(db_max_temp_30[0], 1))
 
-        cursor.execute(get_max_hum_30)
-        db_max_hum_30 = cursor.fetchone()
-        if db_max_hum_30[0] is None:
-            fetch_grid.max30hum = "0"
-        else:
-            fetch_grid.max30hum = str(round(db_max_hum_30[0]))
+            cursor.execute(get_max_hum_30)
+            db_max_hum_30 = cursor.fetchone()
+            if db_max_hum_30[0] is None:
+                fetch_grid.max30hum = "0"
+            else:
+                fetch_grid.max30hum = str(round(db_max_hum_30[0]))
 
-        cursor.execute(get_max_atp_30)
-        db_max_atp_30 = cursor.fetchone()
-        if db_max_atp_30[0] is None:
-            fetch_grid.max30atp = "0"
-        else:
-            fetch_grid.max30atp = str(round(db_max_atp_30[0]))
+            cursor.execute(get_max_atp_30)
+            db_max_atp_30 = cursor.fetchone()
+            if db_max_atp_30[0] is None:
+                fetch_grid.max30atp = "0"
+            else:
+                fetch_grid.max30atp = str(round(db_max_atp_30[0]))
 
-        #   SENS 60
-        cursor.execute(get_max_temp_60)
-        db_max_temp_60 = cursor.fetchone()
-        if db_max_temp_60[0] is None:
-            fetch_grid.max60temp = "0"
-        else:
-            fetch_grid.max60temp = str(round(db_max_temp_60[0], 1))
+            #   SENS 60
+            cursor.execute(get_max_temp_60)
+            db_max_temp_60 = cursor.fetchone()
+            if db_max_temp_60[0] is None:
+                fetch_grid.max60temp = "0"
+            else:
+                fetch_grid.max60temp = str(round(db_max_temp_60[0], 1))
 
-        cursor.execute(get_max_hum_60)
-        db_max_hum_60 = cursor.fetchone()
-        if db_max_hum_60[0] is None:
-            fetch_grid.max60hum = "0"
-        else:
-            fetch_grid.max60hum = str(round(db_max_hum_60[0]))
+            cursor.execute(get_max_hum_60)
+            db_max_hum_60 = cursor.fetchone()
+            if db_max_hum_60[0] is None:
+                fetch_grid.max60hum = "0"
+            else:
+                fetch_grid.max60hum = str(round(db_max_hum_60[0]))
 
-        cursor.execute(get_max_atp_60)
-        db_max_atp_60 = cursor.fetchone()
-        if db_max_atp_60[0] is None:
-            fetch_grid.max60atp = "0"
-        else:
-            fetch_grid.max60atp = str(round(db_max_atp_60[0]))
+            cursor.execute(get_max_atp_60)
+            db_max_atp_60 = cursor.fetchone()
+            if db_max_atp_60[0] is None:
+                fetch_grid.max60atp = "0"
+            else:
+                fetch_grid.max60atp = str(round(db_max_atp_60[0]))
 
-        #   SENS 120
-        cursor.execute(get_max_temp_120)
-        db_max_temp_120 = cursor.fetchone()
-        if db_max_temp_120[0] is None:
-            fetch_grid.max120temp = "0"
-        else:
-            fetch_grid.max120temp = str(round(db_max_temp_120[0], 1))
+            #   SENS 120
+            cursor.execute(get_max_temp_120)
+            db_max_temp_120 = cursor.fetchone()
+            if db_max_temp_120[0] is None:
+                fetch_grid.max120temp = "0"
+            else:
+                fetch_grid.max120temp = str(round(db_max_temp_120[0], 1))
 
-        cursor.execute(get_max_hum_120)
-        db_max_hum_120 = cursor.fetchone()
-        if db_max_hum_120[0] is None:
-            fetch_grid.max120hum = "0"
-        else:
-            fetch_grid.max120hum = str(round(db_max_hum_120[0]))
+            cursor.execute(get_max_hum_120)
+            db_max_hum_120 = cursor.fetchone()
+            if db_max_hum_120[0] is None:
+                fetch_grid.max120hum = "0"
+            else:
+                fetch_grid.max120hum = str(round(db_max_hum_120[0]))
 
-        cursor.execute(get_max_atp_120)
-        db_max_atp_120 = cursor.fetchone()
-        if db_max_atp_120[0] is None:
-            fetch_grid.max120atp = "0"
-        else:
-            fetch_grid.max120atp = str(round(db_max_atp_120[0]))
+            cursor.execute(get_max_atp_120)
+            db_max_atp_120 = cursor.fetchone()
+            if db_max_atp_120[0] is None:
+                fetch_grid.max120atp = "0"
+            else:
+                fetch_grid.max120atp = str(round(db_max_atp_120[0]))
 
-        time.sleep(1)
-        # print(thread5.name)
-
-# print("Thread Running")
-# data = fetch_wind()
+            time.sleep(1)
+            # print(thread5.name)
+        except Exception as e:
+            print(repr(e))
 
 
 thread1 = threading.Thread(target=fetch_wind, args=())
