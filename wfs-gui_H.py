@@ -597,7 +597,10 @@ class App(QWidget):
         self.graphContainer.addWidget(self.graph)
         x = [1, 3, 6, 8, 9]
         y = [3, 6, 1, 7, 9]
-        self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
+        try:
+            self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
+        except Exception as e:
+            print(repr(e))
         # self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
         self.mainContainer.addLayout(self.graphContainer)
 
