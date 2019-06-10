@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-ard2db.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-ard2db.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs-gui_H.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gui_H.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="462" column="8" lean-forward="true" selection-start-line="462" selection-start-column="8" selection-end-line="462" selection-end-column="52" />
+            <state relative-caret-position="-493">
+              <caret line="471" column="4" selection-start-line="471" selection-start-column="4" selection-end-line="471" selection-end-column="4" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -91,6 +88,7 @@
     <findStrings>
       <find>windmax01</find>
       <find>60</find>
+      <find>fetch_grid.max30temp</find>
     </findStrings>
     <replaceStrings>
       <replace>data</replace>
@@ -447,8 +445,8 @@
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.4997367" weight="0.32919255" />
-      <window_info active="true" anchor="bottom" id="Run" internal_type="SLIDING" order="6" sideWeight="0.5943098" type="SLIDING" visible="true" weight="0.22580644" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.56006324" visible="true" weight="0.2204301" />
+      <window_info anchor="bottom" id="Run" internal_type="SLIDING" order="6" sideWeight="0.5943098" type="SLIDING" weight="0.22580644" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.56006324" visible="true" weight="0.2204301" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49894625" weight="0.32903227" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.4399368" side_tool="true" weight="0.12444934" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49947312" weight="0.32903227" />
@@ -505,7 +503,8 @@
     <MESSAGE value="Horizontal GIU starting to get there." />
     <MESSAGE value="Updating graph. Not working with datetime, converting back to &quot;id&quot;" />
     <MESSAGE value="removing ATP from graph" />
-    <option name="LAST_COMMIT_MESSAGE" value="removing ATP from graph" />
+    <MESSAGE value="Final touches for Beito" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final touches for Beito" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/wfs-data.py">
@@ -570,8 +569,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="462" column="8" lean-forward="true" selection-start-line="462" selection-start-column="8" selection-end-line="462" selection-end-column="52" />
+        <state relative-caret-position="-493">
+          <caret line="471" column="4" selection-start-line="471" selection-start-column="4" selection-end-line="471" selection-end-column="4" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
