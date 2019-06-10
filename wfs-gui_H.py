@@ -510,11 +510,15 @@ class App(QWidget):
             self.sensorG.addWidget(self.sensgridatp120, 3, 4)
 
             self.sensgridtimestamp = QLabel(fetch_sens.sens_timestamp)
-            self.sensorG.addWidget(self.sensgridtimestamp, 4, 0, 4, 4)
+            self.sensorG.addWidget(self.sensgridtimestamp, 4, 0)
 
-            gps = "Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long + " Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp
+            gps = "Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long
             self.sensgridgps = QLabel(gps)
-            self.sensorG.addWidget(self.sensgridgps, 5, 0, 5, 4)
+            self.sensorG.addWidget(self.sensgridgps, 5, 0)
+
+            gps2 = "Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp
+            self.sensgridgps2 = QLabel(gps2)
+            self.sensorG.addWidget(self.sensgridgps2, 6, 0)
 
         except Exception as e:
             print(repr(e))
@@ -641,7 +645,8 @@ class App(QWidget):
             self.sensgridatp60.setText(fetch_sens.max60atp)
             self.sensgridatp120.setText(fetch_sens.max120atp)
             self.sensgridtimestamp.setText(fetch_sens.sens_timestamp)
-            self.sensgridgps.setText("Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long + " Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp)
+            self.sensgridgps.setText("Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long)
+            self.sensgridgps2.setText("Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp)
 
         except Exception as e:
             print(repr(e))
