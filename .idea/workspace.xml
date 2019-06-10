@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs-ard2db.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-ard2db.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-gui_H.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gui_H.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1323">
-              <caret line="590" column="14" selection-start-line="590" selection-start-column="14" selection-end-line="590" selection-end-column="14" />
+            <state relative-caret-position="255">
+              <caret line="462" column="8" lean-forward="true" selection-start-line="462" selection-start-column="8" selection-end-line="462" selection-end-column="52" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -40,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wfs-ard2db.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="643">
-              <caret line="166" lean-forward="true" selection-start-line="166" selection-end-line="166" />
+            <state relative-caret-position="439">
+              <caret line="149" column="37" lean-forward="true" selection-start-line="149" selection-start-column="37" selection-end-line="149" selection-end-column="37" />
               <folding>
                 <element signature="e#110#120#0" expanded="true" />
               </folding>
@@ -120,8 +122,8 @@
         <option value="$PROJECT_DIR$/wfs-data.py" />
         <option value="$PROJECT_DIR$/testing.py" />
         <option value="$PROJECT_DIR$/wfs-gui.py" />
-        <option value="$PROJECT_DIR$/wfs-gui_H.py" />
         <option value="$PROJECT_DIR$/wfs-ard2db.py" />
+        <option value="$PROJECT_DIR$/wfs-gui_H.py" />
       </list>
     </option>
   </component>
@@ -191,7 +193,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.wfs-ard2db">
+  <component name="RunManager" selected="Python.wfs-gui_H">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -436,7 +438,7 @@
     <frame x="-8" y="-8" width="1936" height="1035" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48395377" visible="true" weight="0.2597471" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48395377" visible="true" weight="0.25922024" />
       <window_info id="Structure" order="1" sideWeight="0.5160462" side_tool="true" weight="0.38132295" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32976654" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -445,8 +447,8 @@
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.4997367" weight="0.32919255" />
-      <window_info anchor="bottom" id="Run" internal_type="SLIDING" order="6" sideWeight="0.5943098" type="SLIDING" weight="0.22580644" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.56006324" visible="true" weight="0.2204301" />
+      <window_info active="true" anchor="bottom" id="Run" internal_type="SLIDING" order="6" sideWeight="0.5943098" type="SLIDING" visible="true" weight="0.22580644" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.56006324" visible="true" weight="0.2204301" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49894625" weight="0.32903227" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.4399368" side_tool="true" weight="0.12444934" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49947312" weight="0.32903227" />
@@ -556,22 +558,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
+    <entry file="file://$PROJECT_DIR$/wfs-ard2db.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1323">
-          <caret line="590" column="14" selection-start-line="590" selection-start-column="14" selection-end-line="590" selection-end-column="14" />
+        <state relative-caret-position="439">
+          <caret line="149" column="37" lean-forward="true" selection-start-line="149" selection-start-column="37" selection-end-line="149" selection-end-column="37" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#110#120#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wfs-ard2db.py">
+    <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="643">
-          <caret line="166" lean-forward="true" selection-start-line="166" selection-end-line="166" />
+        <state relative-caret-position="255">
+          <caret line="462" column="8" lean-forward="true" selection-start-line="462" selection-start-column="8" selection-end-line="462" selection-end-column="52" />
           <folding>
-            <element signature="e#110#120#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>

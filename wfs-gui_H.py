@@ -32,12 +32,12 @@ get_max_wind4 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), IN
 get_max_wind6 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 6 HOUR)"
 
 # GRAPH
-get_graph_wind = "SELECT ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_graph_wind_id = "SELECT id FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_graph_atp = "SELECT atp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_graph_atp_id = "SELECT id FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_graph_atp_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
+get_graph_wind = "SELECT ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph_wind_id = "SELECT id FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph_atp = "SELECT atp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph_atp_id = "SELECT id FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph_atp_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
 get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps)"
@@ -142,6 +142,7 @@ def fetch_sens():
             fetch_sens.temp = "0"
             fetch_sens.hum = "0"
             fetch_sens.atp = "0"
+            fetch_sens.sens_timestamp = "0"
 
         time.sleep(1)
         # print(thread2.name)
@@ -494,6 +495,13 @@ class App(QWidget):
 
         self.sensgridatp120 = QLabel(fetch_grid.max120atp)
         self.sensorG.addWidget(self.sensgridatp120, 3, 4)
+
+        self.sensgridtimestamp = QLabel(fetch_sens.sens_timestamp)
+        self.sensorG.addWidget(self.sensgridtimestamp, 4, 0)
+
+        gps = "Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long + " Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp
+        self.sensgridgps = QLabel(gps)
+        self.sensorG.addWidget(self.sensgridgps, 5, 0)
 
         self.sensDataContainer.addLayout(self.sensorG)
         self.windContainer.addWidget(self.sensFrame2)
