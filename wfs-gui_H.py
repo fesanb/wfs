@@ -603,7 +603,6 @@ class App(QWidget):
             print(repr(e))
         # self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
         self.mainContainer.addLayout(self.graphContainer)
-
         self.mainContainer.addStretch()
 
     def update_label(self):
