@@ -307,73 +307,73 @@ def fetch_graph():
             print(repr(e))
 
 
-def fetch_grid():
-    while True:
-        try:
-            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-            cursor = cnx.cursor(buffered=True)
-
-            #   Wind History Max list
-            cursor.execute(get_max_wind01)
-            db_max_wind01 = cursor.fetchone()
-            if db_max_wind01[0] is None:
-                fetch_grid.maxwind01 = "0"
-            else:
-                fetch_grid.maxwind01 = str(round(db_max_wind01[0], 1))
-
-            cursor.execute(get_max_wind05)
-            db_max_wind05 = cursor.fetchone()
-            if db_max_wind05[0] is None:
-                fetch_grid.maxwind05 = "0"
-            else:
-                fetch_grid.maxwind05 = str(round(db_max_wind05[0], 1))
-
-            cursor.execute(get_max_wind010)
-            db_max_wind010 = cursor.fetchone()
-            if db_max_wind010[0] is None:
-                fetch_grid.maxwind010 = "0"
-            else:
-                fetch_grid.maxwind010 = str(round(db_max_wind010[0], 1))
-
-            cursor.execute(get_max_wind030)
-            db_max_wind030 = cursor.fetchone()
-            if db_max_wind030[0] is None:
-                fetch_grid.maxwind030 = "0"
-            else:
-                fetch_grid.maxwind030 = str(round(db_max_wind030[0], 1))
-
-            cursor.execute(get_max_wind1)
-            db_max_wind1 = cursor.fetchone()
-            if db_max_wind1[0] is None:
-                fetch_grid.maxwind1 = "0"
-            else:
-                fetch_grid.maxwind1 = str(round(db_max_wind1[0], 1))
-
-            cursor.execute(get_max_wind2)
-            db_max_wind2 = cursor.fetchone()
-            if db_max_wind2[0] is None:
-                fetch_grid.maxwind2 = "0"
-            else:
-                fetch_grid.maxwind2 = str(round(db_max_wind2[0], 1))
-
-            cursor.execute(get_max_wind4)
-            db_max_wind4 = cursor.fetchone()
-            if db_max_wind4[0] is None:
-                fetch_grid.maxwind4 = "0"
-            else:
-                fetch_grid.maxwind4 = str(round(db_max_wind4[0], 1))
-
-            cursor.execute(get_max_wind6)
-            db_max_wind6 = cursor.fetchone()
-            if db_max_wind6[0] is None:
-                fetch_grid.maxwind6 = "0"
-            else:
-                fetch_grid.maxwind6 = str(round(db_max_wind6[0], 1))
-
-            time.sleep(1)
-            # print(thread5.name)
-        except Exception as e:
-            print(repr(e))
+# def fetch_grid():
+#     while True:
+#         try:
+#             cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+#             cursor = cnx.cursor(buffered=True)
+#
+#             #   Wind History Max list
+#             cursor.execute(get_max_wind01)
+#             db_max_wind01 = cursor.fetchone()
+#             if db_max_wind01[0] is None:
+#                 fetch_grid.maxwind01 = "0"
+#             else:
+#                 fetch_grid.maxwind01 = str(round(db_max_wind01[0], 1))
+#
+#             cursor.execute(get_max_wind05)
+#             db_max_wind05 = cursor.fetchone()
+#             if db_max_wind05[0] is None:
+#                 fetch_grid.maxwind05 = "0"
+#             else:
+#                 fetch_grid.maxwind05 = str(round(db_max_wind05[0], 1))
+#
+#             cursor.execute(get_max_wind010)
+#             db_max_wind010 = cursor.fetchone()
+#             if db_max_wind010[0] is None:
+#                 fetch_grid.maxwind010 = "0"
+#             else:
+#                 fetch_grid.maxwind010 = str(round(db_max_wind010[0], 1))
+#
+#             cursor.execute(get_max_wind030)
+#             db_max_wind030 = cursor.fetchone()
+#             if db_max_wind030[0] is None:
+#                 fetch_grid.maxwind030 = "0"
+#             else:
+#                 fetch_grid.maxwind030 = str(round(db_max_wind030[0], 1))
+#
+#             cursor.execute(get_max_wind1)
+#             db_max_wind1 = cursor.fetchone()
+#             if db_max_wind1[0] is None:
+#                 fetch_grid.maxwind1 = "0"
+#             else:
+#                 fetch_grid.maxwind1 = str(round(db_max_wind1[0], 1))
+#
+#             cursor.execute(get_max_wind2)
+#             db_max_wind2 = cursor.fetchone()
+#             if db_max_wind2[0] is None:
+#                 fetch_grid.maxwind2 = "0"
+#             else:
+#                 fetch_grid.maxwind2 = str(round(db_max_wind2[0], 1))
+#
+#             cursor.execute(get_max_wind4)
+#             db_max_wind4 = cursor.fetchone()
+#             if db_max_wind4[0] is None:
+#                 fetch_grid.maxwind4 = "0"
+#             else:
+#                 fetch_grid.maxwind4 = str(round(db_max_wind4[0], 1))
+#
+#             cursor.execute(get_max_wind6)
+#             db_max_wind6 = cursor.fetchone()
+#             if db_max_wind6[0] is None:
+#                 fetch_grid.maxwind6 = "0"
+#             else:
+#                 fetch_grid.maxwind6 = str(round(db_max_wind6[0], 1))
+#
+#             time.sleep(1)
+#             # print(thread5.name)
+#         except Exception as e:
+#             print(repr(e))
 
 
 thread1 = threading.Thread(target=fetch_wind, args=())
@@ -392,9 +392,9 @@ thread4 = threading.Thread(target=fetch_graph, args=())
 thread4.daemon = True
 thread4.start()
 
-thread5 = threading.Thread(target=fetch_grid, args=())
-thread5.daemon = True
-thread5.start()
+# thread5 = threading.Thread(target=fetch_grid, args=())
+# thread5.daemon = True
+# thread5.start()
 
 
 class App(QWidget):
@@ -533,62 +533,62 @@ class App(QWidget):
         self.mainContainer.addLayout(self.beaufortbox)
 
         #Wind grid box
-        self.windHistoryContainer = QVBoxLayout()
-        self.windHistoryHeader = QHBoxLayout()
-        self.windHHLS = "Max Wind History:"
-        self.windHHL = QLabel(self.windHHLS)
-        self.windHHL.setFont(QFont('Arial', 15))
-        self.windHistoryHeader.addWidget(self.windHHL)
-        self.windHistoryContainer.addLayout(self.windHistoryHeader)
-
-        self.windHG = QGridLayout()
-        self.windHG.addWidget(QLabel("1min"), 0, 0)
-        self.windHG.addWidget(QLabel("5min"), 0, 1)
-        self.windHG.addWidget(QLabel("10min"), 0, 2)
-        self.windHG.addWidget(QLabel("30min"), 0, 3)
-        self.windHG.addWidget(QLabel("1hr"), 0, 4)
-        self.windHG.addWidget(QLabel("2hr"), 0, 5)
-        self.windHG.addWidget(QLabel("4hr"), 0, 6)
-        self.windHG.addWidget(QLabel("6hr"), 0, 7)
-
-        try:
-            self.windmax01 = QLabel(fetch_grid.maxwind01)
-            self.windmax01.setAlignment(Qt.AlignHCenter)
-            self.windHG.addWidget(self.windmax01, 1, 0)
-
-            self.windmax05 = QLabel(fetch_grid.maxwind05)
-            self.windmax05.setAlignment(Qt.AlignHCenter)
-            self.windHG.addWidget(self.windmax05, 1, 1)
-
-            self.windmax010 = QLabel(fetch_grid.maxwind010)
-            self.windmax010.setAlignment(Qt.AlignHCenter)
-            self.windHG.addWidget(self.windmax010, 1, 2)
-
-            self.windmax030 = QLabel(fetch_grid.maxwind030)
-            self.windmax030.setAlignment(Qt.AlignHCenter)
-            self.windHG.addWidget(self.windmax030, 1, 3)
-
-            self.windmax1 = QLabel(fetch_grid.maxwind1)
-            self.windmax1.setAlignment(Qt.AlignHCenter)
-            self.windHG.addWidget(self.windmax1, 1, 4)
-
-            self.windmax2 = QLabel(fetch_grid.maxwind2)
-            self.windmax2.setAlignment(Qt.AlignHCenter)
-            self.windHG.addWidget(self.windmax2, 1, 5)
-
-            self.windmax4 = QLabel(fetch_grid.maxwind4)
-            self.windmax4.setAlignment(Qt.AlignHCenter)
-            self.windHG.addWidget(self.windmax4, 1, 6)
-
-            self.windmax6 = QLabel(fetch_grid.maxwind6)
-            self.windmax6.setAlignment(Qt.AlignHCenter)
-            self.windHG.addWidget(self.windmax6, 1, 7)
-
-        except Exception as e:
-            print(repr(e))
-
-        self.windHistoryContainer.addLayout(self.windHG)
-        self.mainContainer.addLayout(self.windHistoryContainer)
+        # self.windHistoryContainer = QVBoxLayout()
+        # self.windHistoryHeader = QHBoxLayout()
+        # self.windHHLS = "Max Wind History:"
+        # self.windHHL = QLabel(self.windHHLS)
+        # self.windHHL.setFont(QFont('Arial', 15))
+        # self.windHistoryHeader.addWidget(self.windHHL)
+        # self.windHistoryContainer.addLayout(self.windHistoryHeader)
+        #
+        # self.windHG = QGridLayout()
+        # self.windHG.addWidget(QLabel("1min"), 0, 0)
+        # self.windHG.addWidget(QLabel("5min"), 0, 1)
+        # self.windHG.addWidget(QLabel("10min"), 0, 2)
+        # self.windHG.addWidget(QLabel("30min"), 0, 3)
+        # self.windHG.addWidget(QLabel("1hr"), 0, 4)
+        # self.windHG.addWidget(QLabel("2hr"), 0, 5)
+        # self.windHG.addWidget(QLabel("4hr"), 0, 6)
+        # self.windHG.addWidget(QLabel("6hr"), 0, 7)
+        #
+        # try:
+        #     self.windmax01 = QLabel(fetch_grid.maxwind01)
+        #     self.windmax01.setAlignment(Qt.AlignHCenter)
+        #     self.windHG.addWidget(self.windmax01, 1, 0)
+        #
+        #     self.windmax05 = QLabel(fetch_grid.maxwind05)
+        #     self.windmax05.setAlignment(Qt.AlignHCenter)
+        #     self.windHG.addWidget(self.windmax05, 1, 1)
+        #
+        #     self.windmax010 = QLabel(fetch_grid.maxwind010)
+        #     self.windmax010.setAlignment(Qt.AlignHCenter)
+        #     self.windHG.addWidget(self.windmax010, 1, 2)
+        #
+        #     self.windmax030 = QLabel(fetch_grid.maxwind030)
+        #     self.windmax030.setAlignment(Qt.AlignHCenter)
+        #     self.windHG.addWidget(self.windmax030, 1, 3)
+        #
+        #     self.windmax1 = QLabel(fetch_grid.maxwind1)
+        #     self.windmax1.setAlignment(Qt.AlignHCenter)
+        #     self.windHG.addWidget(self.windmax1, 1, 4)
+        #
+        #     self.windmax2 = QLabel(fetch_grid.maxwind2)
+        #     self.windmax2.setAlignment(Qt.AlignHCenter)
+        #     self.windHG.addWidget(self.windmax2, 1, 5)
+        #
+        #     self.windmax4 = QLabel(fetch_grid.maxwind4)
+        #     self.windmax4.setAlignment(Qt.AlignHCenter)
+        #     self.windHG.addWidget(self.windmax4, 1, 6)
+        #
+        #     self.windmax6 = QLabel(fetch_grid.maxwind6)
+        #     self.windmax6.setAlignment(Qt.AlignHCenter)
+        #     self.windHG.addWidget(self.windmax6, 1, 7)
+        #
+        # except Exception as e:
+        #     print(repr(e))
+        #
+        # self.windHistoryContainer.addLayout(self.windHG)
+        # self.mainContainer.addLayout(self.windHistoryContainer)
 
         #GRAPH
         self.graphContainer = QVBoxLayout()
@@ -619,14 +619,14 @@ class App(QWidget):
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
             # self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
 
-            self.windmax01.setText(fetch_grid.maxwind01)
-            self.windmax05.setText(fetch_grid.maxwind05)
-            self.windmax010.setText(fetch_grid.maxwind010)
-            self.windmax030.setText(fetch_grid.maxwind030)
-            self.windmax1.setText(fetch_grid.maxwind1)
-            self.windmax2.setText(fetch_grid.maxwind2)
-            self.windmax4.setText(fetch_grid.maxwind4)
-            self.windmax6.setText(fetch_grid.maxwind6)
+            # self.windmax01.setText(fetch_grid.maxwind01)
+            # self.windmax05.setText(fetch_grid.maxwind05)
+            # self.windmax010.setText(fetch_grid.maxwind010)
+            # self.windmax030.setText(fetch_grid.maxwind030)
+            # self.windmax1.setText(fetch_grid.maxwind1)
+            # self.windmax2.setText(fetch_grid.maxwind2)
+            # self.windmax4.setText(fetch_grid.maxwind4)
+            # self.windmax6.setText(fetch_grid.maxwind6)
 
             self.sensdataT.setText(fetch_sens.temp)
             self.sensdataH.setText(fetch_sens.hum)
