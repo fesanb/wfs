@@ -460,7 +460,7 @@ class App(QWidget):
         self.sensorG.addWidget(QLabel("ATP: "), 3, 0)
 
         self.sensdataT = QLabel(fetch_sens.temp)
-        self.sensdataT.setAlignment(Qt.AlignHCenter)
+        # self.sensdataT.setAlignment(Qt.AlignHCenter)
         self.sensorG.addWidget(self.sensdataT, 1, 1)
 
         self.sensdataH = QLabel(fetch_sens.hum)
@@ -469,8 +469,11 @@ class App(QWidget):
         self.sensdataA = QLabel(fetch_sens.atp)
         self.sensorG.addWidget(self.sensdataA, 3, 1)
 
-        self.sensgridTemp30 = QLabel(fetch_grid.max30temp)
-        self.sensorG.addWidget(self.sensgridTemp30, 1, 2)
+        try:
+            self.sensgridTemp30 = QLabel(fetch_grid.max30temp)
+            self.sensorG.addWidget(self.sensgridTemp30, 1, 2)
+        except Exception as e:
+            print(repr(e))
 
         self.sensgridTemp60 = QLabel(fetch_grid.max60temp)
         self.sensorG.addWidget(self.sensgridTemp60, 1, 3)
@@ -606,6 +609,22 @@ class App(QWidget):
             self.windmax2.setText(fetch_grid.maxwind2)
             self.windmax4.setText(fetch_grid.maxwind4)
             self.windmax6.setText(fetch_grid.maxwind6)
+
+            self.sensdataT.setText(fetch_sens.temp)
+            self.sensdataH.setText(fetch_sens.hum)
+            self.sensdataA.setText(fetch_sens.atp)
+            self.sensgridTemp30.setText(fetch_grid.max30temp)
+            self.sensgridTemp60.setText(fetch_grid.max60temp)
+            self.sensgridTemp120.setText(fetch_grid.max120temp)
+            self.sensgridHum30.setText(fetch_grid.max30hum)
+            self.sensgridHum60.setText(fetch_grid.max60hum)
+            self.sensgridHum120.setText(fetch_grid.max120hum)
+            self.sensgridatp30.setText(fetch_grid.max30atp)
+            self.sensgridatp60.setText(fetch_grid.max60atp)
+            self.sensgridatp120.setText(fetch_grid.max120atp)
+            self.sensgridtimestamp.setText(fetch_sens.sens_timestamp)
+            self.sensgridgps.setText("Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long + " Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp)
+
         except Exception as e:
             print(repr(e))
         QApplication.processEvents()
