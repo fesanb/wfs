@@ -539,38 +539,41 @@ class App(QWidget):
         self.windHG.addWidget(QLabel("4hr"), 0, 6)
         self.windHG.addWidget(QLabel("6hr"), 0, 7)
 
+        try:
+            self.windmax01 = QLabel(fetch_grid.maxwind01)
+            self.windmax01.setAlignment(Qt.AlignHCenter)
+            self.windHG.addWidget(self.windmax01, 1, 0)
 
-        self.windmax01 = QLabel(fetch_grid.maxwind01)
-        self.windmax01.setAlignment(Qt.AlignHCenter)
-        self.windHG.addWidget(self.windmax01, 1, 0)
+            self.windmax05 = QLabel(fetch_grid.maxwind05)
+            self.windmax05.setAlignment(Qt.AlignHCenter)
+            self.windHG.addWidget(self.windmax05, 1, 1)
 
-        self.windmax05 = QLabel(fetch_grid.maxwind05)
-        self.windmax05.setAlignment(Qt.AlignHCenter)
-        self.windHG.addWidget(self.windmax05, 1, 1)
+            self.windmax010 = QLabel(fetch_grid.maxwind010)
+            self.windmax010.setAlignment(Qt.AlignHCenter)
+            self.windHG.addWidget(self.windmax010, 1, 2)
 
-        self.windmax010 = QLabel(fetch_grid.maxwind010)
-        self.windmax010.setAlignment(Qt.AlignHCenter)
-        self.windHG.addWidget(self.windmax010, 1, 2)
+            self.windmax030 = QLabel(fetch_grid.maxwind030)
+            self.windmax030.setAlignment(Qt.AlignHCenter)
+            self.windHG.addWidget(self.windmax030, 1, 3)
 
-        self.windmax030 = QLabel(fetch_grid.maxwind030)
-        self.windmax030.setAlignment(Qt.AlignHCenter)
-        self.windHG.addWidget(self.windmax030, 1, 3)
+            self.windmax1 = QLabel(fetch_grid.maxwind1)
+            self.windmax1.setAlignment(Qt.AlignHCenter)
+            self.windHG.addWidget(self.windmax1, 1, 4)
 
-        self.windmax1 = QLabel(fetch_grid.maxwind1)
-        self.windmax1.setAlignment(Qt.AlignHCenter)
-        self.windHG.addWidget(self.windmax1, 1, 4)
+            self.windmax2 = QLabel(fetch_grid.maxwind2)
+            self.windmax2.setAlignment(Qt.AlignHCenter)
+            self.windHG.addWidget(self.windmax2, 1, 5)
 
-        self.windmax2 = QLabel(fetch_grid.maxwind2)
-        self.windmax2.setAlignment(Qt.AlignHCenter)
-        self.windHG.addWidget(self.windmax2, 1, 5)
+            self.windmax4 = QLabel(fetch_grid.maxwind4)
+            self.windmax4.setAlignment(Qt.AlignHCenter)
+            self.windHG.addWidget(self.windmax4, 1, 6)
 
-        self.windmax4 = QLabel(fetch_grid.maxwind4)
-        self.windmax4.setAlignment(Qt.AlignHCenter)
-        self.windHG.addWidget(self.windmax4, 1, 6)
+            self.windmax6 = QLabel(fetch_grid.maxwind6)
+            self.windmax6.setAlignment(Qt.AlignHCenter)
+            self.windHG.addWidget(self.windmax6, 1, 7)
 
-        self.windmax6 = QLabel(fetch_grid.maxwind6)
-        self.windmax6.setAlignment(Qt.AlignHCenter)
-        self.windHG.addWidget(self.windmax6, 1, 7)
+        except Exception as e:
+            print(repr(e))
 
         self.windHistoryContainer.addLayout(self.windHG)
         self.mainContainer.addLayout(self.windHistoryContainer)
