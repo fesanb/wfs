@@ -302,7 +302,6 @@ class App(QWidget):
 
     def initUI(self):
 
-
         self.mainContainer = QVBoxLayout(self)
 
         self.windHeader = QHBoxLayout()
