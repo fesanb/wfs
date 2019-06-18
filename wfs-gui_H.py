@@ -8,6 +8,7 @@ import mysql.connector
 import threading
 import time
 from datetime import datetime
+from datetime import timedelta
 
 sys.settrace
 #test
@@ -32,12 +33,8 @@ get_max_wind4 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), IN
 get_max_wind6 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 6 HOUR)"
 
 # GRAPH
-get_graph_wind = "SELECT ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_graph_wind_id = "SELECT id FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph_wind = "SELECT id, ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_graph_atp = "SELECT atp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_graph_atp_id = "SELECT id FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_graph_atp_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
 get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps)"
@@ -70,9 +67,12 @@ def fetch_wind():
             if cursor.rowcount > 0:
                 db_wind = cursor.fetchone()
                 fetch_wind.wind = str(db_wind[1])
-                # wind_timestamp = str(db_wind[2])
+                fetch_wind.timestamp = db_wind[2]
             else:
-                fetch_wind.wind = "0"
+                fetch_wind.wind = "-.-"
+
+            if fetch_wind.timestamp < datetime.now() - timedelta(minutes=0.2):
+                fetch_wind.wind = "-.-"
 
             cursor.execute(get_mean_wind)
             db_mean_wind = cursor.fetchone()
@@ -147,28 +147,6 @@ def fetch_sens():
                 fetch_sens.hum = "0"
                 fetch_sens.atp = "0"
                 fetch_sens.sens_timestamp = "0"
-                
-            # #   MAX
-            # cursor.execute(get_max_temp)
-            # db_max_temp = cursor.fetchone()
-            # if db_max_temp[0] is None:
-            #     fetch_sens.maxtemp = "0"
-            # else:
-            #     fetch_sens.maxtemp = str(round(db_max_temp[0], 1))
-            #
-            # cursor.execute(get_max_hum)
-            # db_max_hum = cursor.fetchone()
-            # if db_max_hum[0] is None:
-            #     fetch_sens.maxhum = "0"
-            # else:
-            #     fetch_sens.maxhum = str(round(db_max_hum[0]))
-            #
-            # cursor.execute(get_max_atp)
-            # db_max_atp = cursor.fetchone()
-            # if db_max_atp[0] is None:
-            #     fetch_sens.maxatp = "0"
-            # else:
-            #     fetch_sens.maxatp = str(round(db_max_atp[0]))
 
             #   SENS 30
             cursor.execute(get_max_temp_30)
@@ -276,104 +254,16 @@ def fetch_graph():
             cursor.execute(get_graph_wind)
             if cursor.rowcount > 0:
                 db_graph_wind = cursor.fetchall()
-                fetch_graph.graphwind_Y = np.ravel(db_graph_wind)
-            else:
-                fetch_graph.graphwind_Y = [0]
-
-            cursor.execute(get_graph_wind_id)
-            if cursor.rowcount > 0:
-                db_graph_id = cursor.fetchall()
-                fetch_graph.graphwind_X = np.ravel(db_graph_id)
+                fetch_graph.graphwind_X = np.ravel(db_graph_wind[2])
+                fetch_graph.graphwind_Y = np.ravel(db_graph_wind[1])
             else:
                 fetch_graph.graphwind_X = [0]
-
-            cursor.execute(get_graph_atp)
-            if cursor.rowcount > 0:
-                db_graph_atp = cursor.fetchall()
-                fetch_graph.graphatp_Y = np.ravel(db_graph_atp)
-            else:
-                fetch_graph.graphatp_Y = [0]
-
-            cursor.execute(get_graph_atp_id)
-            if cursor.rowcount > 0:
-                db_graph_atp_id = cursor.fetchall()
-                fetch_graph.graphatp_X = np.ravel(db_graph_atp_id)
-            else:
-                fetch_graph.graphatp_X = [0]
+                fetch_graph.graphwind_Y = [0]
 
             time.sleep(1)
             # print(thread4.name)
         except Exception as e:
             print(repr(e))
-
-
-# def fetch_grid():
-#     while True:
-#         try:
-#             cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-#             cursor = cnx.cursor(buffered=True)
-#
-#             #   Wind History Max list
-#             cursor.execute(get_max_wind01)
-#             db_max_wind01 = cursor.fetchone()
-#             if db_max_wind01[0] is None:
-#                 fetch_grid.maxwind01 = "0"
-#             else:
-#                 fetch_grid.maxwind01 = str(round(db_max_wind01[0], 1))
-#
-#             cursor.execute(get_max_wind05)
-#             db_max_wind05 = cursor.fetchone()
-#             if db_max_wind05[0] is None:
-#                 fetch_grid.maxwind05 = "0"
-#             else:
-#                 fetch_grid.maxwind05 = str(round(db_max_wind05[0], 1))
-#
-#             cursor.execute(get_max_wind010)
-#             db_max_wind010 = cursor.fetchone()
-#             if db_max_wind010[0] is None:
-#                 fetch_grid.maxwind010 = "0"
-#             else:
-#                 fetch_grid.maxwind010 = str(round(db_max_wind010[0], 1))
-#
-#             cursor.execute(get_max_wind030)
-#             db_max_wind030 = cursor.fetchone()
-#             if db_max_wind030[0] is None:
-#                 fetch_grid.maxwind030 = "0"
-#             else:
-#                 fetch_grid.maxwind030 = str(round(db_max_wind030[0], 1))
-#
-#             cursor.execute(get_max_wind1)
-#             db_max_wind1 = cursor.fetchone()
-#             if db_max_wind1[0] is None:
-#                 fetch_grid.maxwind1 = "0"
-#             else:
-#                 fetch_grid.maxwind1 = str(round(db_max_wind1[0], 1))
-#
-#             cursor.execute(get_max_wind2)
-#             db_max_wind2 = cursor.fetchone()
-#             if db_max_wind2[0] is None:
-#                 fetch_grid.maxwind2 = "0"
-#             else:
-#                 fetch_grid.maxwind2 = str(round(db_max_wind2[0], 1))
-#
-#             cursor.execute(get_max_wind4)
-#             db_max_wind4 = cursor.fetchone()
-#             if db_max_wind4[0] is None:
-#                 fetch_grid.maxwind4 = "0"
-#             else:
-#                 fetch_grid.maxwind4 = str(round(db_max_wind4[0], 1))
-#
-#             cursor.execute(get_max_wind6)
-#             db_max_wind6 = cursor.fetchone()
-#             if db_max_wind6[0] is None:
-#                 fetch_grid.maxwind6 = "0"
-#             else:
-#                 fetch_grid.maxwind6 = str(round(db_max_wind6[0], 1))
-#
-#             time.sleep(1)
-#             # print(thread5.name)
-#         except Exception as e:
-#             print(repr(e))
 
 
 thread1 = threading.Thread(target=fetch_wind, args=())
@@ -391,11 +281,6 @@ thread3.start()
 thread4 = threading.Thread(target=fetch_graph, args=())
 thread4.daemon = True
 thread4.start()
-
-# thread5 = threading.Thread(target=fetch_grid, args=())
-# thread5.daemon = True
-# thread5.start()
-
 
 class App(QWidget):
 
@@ -536,64 +421,6 @@ class App(QWidget):
         self.beaufortbox.addWidget(self.beaufortL)
         self.mainContainer.addLayout(self.beaufortbox)
 
-        #Wind grid box
-        # self.windHistoryContainer = QVBoxLayout()
-        # self.windHistoryHeader = QHBoxLayout()
-        # self.windHHLS = "Max Wind History:"
-        # self.windHHL = QLabel(self.windHHLS)
-        # self.windHHL.setFont(QFont('Arial', 15))
-        # self.windHistoryHeader.addWidget(self.windHHL)
-        # self.windHistoryContainer.addLayout(self.windHistoryHeader)
-        #
-        # self.windHG = QGridLayout()
-        # self.windHG.addWidget(QLabel("1min"), 0, 0)
-        # self.windHG.addWidget(QLabel("5min"), 0, 1)
-        # self.windHG.addWidget(QLabel("10min"), 0, 2)
-        # self.windHG.addWidget(QLabel("30min"), 0, 3)
-        # self.windHG.addWidget(QLabel("1hr"), 0, 4)
-        # self.windHG.addWidget(QLabel("2hr"), 0, 5)
-        # self.windHG.addWidget(QLabel("4hr"), 0, 6)
-        # self.windHG.addWidget(QLabel("6hr"), 0, 7)
-        #
-        # try:
-        #     self.windmax01 = QLabel(fetch_grid.maxwind01)
-        #     self.windmax01.setAlignment(Qt.AlignHCenter)
-        #     self.windHG.addWidget(self.windmax01, 1, 0)
-        #
-        #     self.windmax05 = QLabel(fetch_grid.maxwind05)
-        #     self.windmax05.setAlignment(Qt.AlignHCenter)
-        #     self.windHG.addWidget(self.windmax05, 1, 1)
-        #
-        #     self.windmax010 = QLabel(fetch_grid.maxwind010)
-        #     self.windmax010.setAlignment(Qt.AlignHCenter)
-        #     self.windHG.addWidget(self.windmax010, 1, 2)
-        #
-        #     self.windmax030 = QLabel(fetch_grid.maxwind030)
-        #     self.windmax030.setAlignment(Qt.AlignHCenter)
-        #     self.windHG.addWidget(self.windmax030, 1, 3)
-        #
-        #     self.windmax1 = QLabel(fetch_grid.maxwind1)
-        #     self.windmax1.setAlignment(Qt.AlignHCenter)
-        #     self.windHG.addWidget(self.windmax1, 1, 4)
-        #
-        #     self.windmax2 = QLabel(fetch_grid.maxwind2)
-        #     self.windmax2.setAlignment(Qt.AlignHCenter)
-        #     self.windHG.addWidget(self.windmax2, 1, 5)
-        #
-        #     self.windmax4 = QLabel(fetch_grid.maxwind4)
-        #     self.windmax4.setAlignment(Qt.AlignHCenter)
-        #     self.windHG.addWidget(self.windmax4, 1, 6)
-        #
-        #     self.windmax6 = QLabel(fetch_grid.maxwind6)
-        #     self.windmax6.setAlignment(Qt.AlignHCenter)
-        #     self.windHG.addWidget(self.windmax6, 1, 7)
-        #
-        # except Exception as e:
-        #     print(repr(e))
-        #
-        # self.windHistoryContainer.addLayout(self.windHG)
-        # self.mainContainer.addLayout(self.windHistoryContainer)
-
         #GRAPH
         self.graphContainer = QVBoxLayout()
         pg.setConfigOption('background', '#000000')
@@ -605,7 +432,7 @@ class App(QWidget):
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
         except Exception as e:
             print(repr(e))
-        # self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
+
         self.mainContainer.addLayout(self.graphContainer)
         self.mainContainer.addStretch()
 
@@ -621,16 +448,6 @@ class App(QWidget):
             self.sensdataA.setText(fetch_sens.atp)
 
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
-            # self.graph.plot(fetch_graph.graphatp_X, fetch_graph.graphatp_Y)
-
-            # self.windmax01.setText(fetch_grid.maxwind01)
-            # self.windmax05.setText(fetch_grid.maxwind05)
-            # self.windmax010.setText(fetch_grid.maxwind010)
-            # self.windmax030.setText(fetch_grid.maxwind030)
-            # self.windmax1.setText(fetch_grid.maxwind1)
-            # self.windmax2.setText(fetch_grid.maxwind2)
-            # self.windmax4.setText(fetch_grid.maxwind4)
-            # self.windmax6.setText(fetch_grid.maxwind6)
 
             self.sensdataT.setText(fetch_sens.temp)
             self.sensdataH.setText(fetch_sens.hum)
