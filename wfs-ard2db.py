@@ -119,7 +119,7 @@ while True:
 
         if wind_timepassed - wind_countertime > wind_interval:
             if pcs[0] == "w":
-                if pcs[1] != lastdatawind and int(pcs[1]) < 30:
+                if pcs[1] != lastdatawind and float(pcs[1]) < 30:
                     lastdatawind = pcs[1]
                     add_wind = (u'''INSERT INTO wind(wind) VALUES (%s)''' % (pcs[1]))
                     cursor.execute(add_wind)

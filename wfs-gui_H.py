@@ -287,7 +287,7 @@ class App(QWidget):
     def __init__(self, parent=None):
         super(App, self).__init__(parent=parent)
         self.title = "WFS - Weather Forecast Station"
-        self.setWindowIcon(QIcon("drawing.svg.png"))
+        self.setWindowIcon(QIcon("img/drawing.svg.png"))
         # self.left = 0
         # self.top = 0
         # self.width = 720
