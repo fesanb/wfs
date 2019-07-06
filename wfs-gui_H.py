@@ -232,10 +232,10 @@ def fetch_gps():
                 fetch_gps.alt = str(db_gps[3])
                 fetch_gps.gps_timestamp = str(db_gps[4])
             else:
-                fetch_gps.lat = "0"
-                fetch_gps.long = "0"
-                fetch_gps.alt = "0"
-                fetch_gps.gps_timestamp = "0"
+                fetch_gps.lat = "No gps signal"
+                fetch_gps.long = "No gps signal"
+                fetch_gps.alt = "No gps signal"
+                fetch_gps.gps_timestamp = "-"
 
             time.sleep(45)
             # print(thread3.name)
@@ -342,11 +342,14 @@ class App(QWidget):
             print(repr(e))
 
         #sens container
+        self.sensFrame1 = QFrame(self)
+        self.sensBox1 = QVBoxLayout(self.sensFrame1)
+
         self.sensFrame = QFrame(self)
         self.sensBox = QHBoxLayout(self.sensFrame)
-        self.temp = QLabel(fetch_sens.temp)
-        self.hum = QLabel(fetch_sens.hum)
-        self.atp = QLabel(fetch_sens.atp)
+        self.temp = QLabel(fetch_sens.temp + " °C")
+        self.hum = QLabel(fetch_sens.hum + "%")
+        self.atp = QLabel(fetch_sens.atp + " mbar")
         self.temp.setFont(QFont('Arial', 20))
         self.hum.setFont(QFont('Arial', 20))
         self.atp.setFont(QFont('Arial', 20))
@@ -354,7 +357,21 @@ class App(QWidget):
         self.sensBox.addWidget(self.temp)
         self.sensBox.addWidget(self.hum)
         self.sensBox.addWidget(self.atp)
-        self.windContainer.addWidget(self.sensFrame)
+        self.sensBox1.addWidget(self.sensFrame)
+
+        #GPS container
+        self.gpsFrame = QFrame(self)
+        self.gpsBox = QVBoxLayout(self.gpsFrame)
+        self.latitude = QLabel("Latitude: " + fetch_gps.lat)
+        self.longitude = QLabel("Longitude: " + fetch_gps.long)
+        self.altitude = QLabel("Altitude: " + fetch_gps.alt)
+
+        self.gpsBox.addWidget(self.latitude)
+        self.gpsBox.addWidget(self.longitude)
+        self.gpsBox.addWidget(self.altitude)
+        self.sensBox1.addWidget(self.gpsFrame)
+
+        self.windContainer.addWidget(self.sensFrame1)
 
         # self.sensFrame2 = QFrame(self)
         # self.sensDataContainer = QVBoxLayout(self.sensFrame2)
@@ -464,37 +481,27 @@ class App(QWidget):
         try:
             self.windL.setText(fetch_wind.wind)
             self.meanL.setText(str(fetch_wind.meanwind))
-            self.winddate.setText(str(fetch_wind.timestamp))
+            self.winddate.setText("W: " + str(fetch_wind.timestamp))
             self.beaufortL.setText(fetch_wind.beaufortLS)
         except Exception as e:
             print(repr(e))
         QApplication.processEvents()
 
 
-    def update_sens(selfself):
+    def update_sens(self):
         try:
-            self.sensdataT.setText(fetch_sens.temp)
-            self.sensdataH.setText(fetch_sens.hum)
-            self.sensdataA.setText(fetch_sens.atp)
+            self.temp.setText(fetch_sens.temp + " °C")
+            self.hum.setText(fetch_sens.hum + "%")
+            self.atp.setText(fetch_sens.atp + " mbar")
+
+            self.latitude.setText("Latitude: " + fetch_gps.lat)
+            self.longitude.setText("Longitude: " + fetch_gps.long)
+            self.altitude.setText("Altitude: " + fetch_gps.alt)
 
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
 
-            self.sensdataT.setText(fetch_sens.temp)
-            self.sensdataH.setText(fetch_sens.hum)
-            self.sensdataA.setText(fetch_sens.atp)
-            self.sensgridTemp30.setText(fetch_sens.max30temp)
-            self.sensgridTemp60.setText(fetch_sens.max60temp)
-            self.sensgridTemp120.setText(fetch_sens.max120temp)
-            self.sensgridHum30.setText(fetch_sens.max30hum)
-            self.sensgridHum60.setText(fetch_sens.max60hum)
-            self.sensgridHum120.setText(fetch_sens.max120hum)
-            self.sensgridatp30.setText(fetch_sens.max30atp)
-            self.sensgridatp60.setText(fetch_sens.max60atp)
-            self.sensgridatp120.setText(fetch_sens.max120atp)
-            self.sensgridtimestamp.setText(str(fetch_sens.sens_timestamp))
-            self.sensgridtimestamp.setText(str(fetch_gps.gps_timestamp))
-            self.sensgridgps.setText("Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long)
-            self.sensgridgps2.setText("Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp)
+            self.sensgridtimestamp.setText("S: " + str(fetch_sens.sens_timestamp))
+            self.sensgridtimestamp.setText("G: " + str(fetch_gps.gps_timestamp))
 
         except Exception as e:
             print(repr(e))
