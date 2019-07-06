@@ -14,15 +14,13 @@ sys.settrace
 #test
 
 get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
+get_mean_wind = "SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
+
 get_max_wind_12 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 get_max_wind_24 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
 get_max_wind = "SELECT MAX(wind) FROM wind"
-
 get_min_wind_12 = "SELECT MIN(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 get_min_wind_24 = "SELECT MIN(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-
-get_mean_wind = "SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
-
 get_max_wind01 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)"
 get_max_wind05 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)"
 get_max_wind010 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
@@ -214,7 +212,7 @@ def fetch_sens():
             else:
                 fetch_sens.max120atp = str(round(db_max_atp_120[0]))
 
-            time.sleep(1)
+            time.sleep(45)
             # print(thread2.name)
         except Exception as e:
             print(repr(e))
@@ -239,7 +237,7 @@ def fetch_gps():
                 fetch_gps.alt = "0"
                 fetch_gps.gps_timestamp = "0"
 
-            time.sleep(1)
+            time.sleep(45)
             # print(thread3.name)
         except Exception as e:
             print(repr(e))
@@ -260,7 +258,7 @@ def fetch_graph():
                 fetch_graph.graphwind_X = [0]
                 fetch_graph.graphwind_Y = [0]
 
-            time.sleep(1)
+            time.sleep(45)
             # print(thread4.name)
         except Exception as e:
             print(repr(e))
