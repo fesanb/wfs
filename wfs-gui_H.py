@@ -340,75 +340,87 @@ class App(QWidget):
         self.mean_VL.addWidget(self.meanL)
         self.windContainer.addWidget(self.meanFrame)
 
+        #sens container
+        self.sensFrame = QFrame(self)
+        self.sensBox = QHBoxLayout(self.sensFrame)
+        self.temp = QLabel(fetch_sens.temp)
+        self.hum = QLabel(fetch_sens.hum)
+        self.atp = QLabel(fetch_sens.atp)
+        self.temp.setFont(QFont('Arial', 20))
+        self.hum.setFont(QFont('Arial', 20))
+        self.atp.setFont(QFont('Arial', 20))
+
+        self.sensBox.addWidget(self.temp)
+        self.sensBox.addWidget(self.hum)
+        self.sensBox.addWidget(self.atp)
+        self.windContainer.addWidget(self.sensFrame)
+
+        # self.sensFrame2 = QFrame(self)
+        # self.sensDataContainer = QVBoxLayout(self.sensFrame2)
         #
-        self.sensFrame2 = QFrame(self)
-        self.sensDataContainer = QVBoxLayout(self.sensFrame2)
+        # self.sensorG = QGridLayout()
+        #
+        # self.sensorG.addWidget(QLabel("NOW"), 0, 1)
+        # self.sensorG.addWidget(QLabel("30min"), 0, 2)
+        # self.sensorG.addWidget(QLabel("1hr"), 0, 3)
+        # self.sensorG.addWidget(QLabel("2hr"), 0, 4)
+        #
+        # self.sensorG.addWidget(QLabel("Temp: "), 1, 0)
+        # self.sensorG.addWidget(QLabel("Hum: "), 2, 0)
+        # self.sensorG.addWidget(QLabel("ATP: "), 3, 0)
+        #
+        # try:
+        #     self.sensdataT = QLabel(fetch_sens.temp)
+        #     # self.sensdataT.setAlignment(Qt.AlignHCenter)
+        #     self.sensorG.addWidget(self.sensdataT, 1, 1)
+        #
+        #     self.sensdataH = QLabel(fetch_sens.hum)
+        #     self.sensorG.addWidget(self.sensdataH, 2, 1)
+        #
+        #     self.sensdataA = QLabel(fetch_sens.atp)
+        #     self.sensorG.addWidget(self.sensdataA, 3, 1)
+        #
+        #     self.sensgridTemp30 = QLabel(fetch_sens.max30temp)
+        #     self.sensorG.addWidget(self.sensgridTemp30, 1, 2)
+        #
+        #     self.sensgridTemp60 = QLabel(fetch_sens.max60temp)
+        #     self.sensorG.addWidget(self.sensgridTemp60, 1, 3)
+        #
+        #     self.sensgridTemp120 = QLabel(fetch_sens.max120temp)
+        #     self.sensorG.addWidget(self.sensgridTemp120, 1, 4)
+        #
+        #     self.sensgridHum30 = QLabel(fetch_sens.max30hum)
+        #     self.sensorG.addWidget(self.sensgridHum30, 2, 2)
+        #
+        #     self.sensgridHum60 = QLabel(fetch_sens.max60hum)
+        #     self.sensorG.addWidget(self.sensgridHum60, 2, 3)
+        #
+        #     self.sensgridHum120 = QLabel(fetch_sens.max120hum)
+        #     self.sensorG.addWidget(self.sensgridHum120, 2, 4)
+        #
+        #     self.sensgridatp30 = QLabel(fetch_sens.max30atp)
+        #     self.sensorG.addWidget(self.sensgridatp30, 3, 2)
+        #
+        #     self.sensgridatp60 = QLabel(fetch_sens.max60atp)
+        #     self.sensorG.addWidget(self.sensgridatp60, 3, 3)
+        #
+        #     self.sensgridatp120 = QLabel(fetch_sens.max120atp)
+        #     self.sensorG.addWidget(self.sensgridatp120, 3, 4)
+        #
+        #     gps = "Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long
+        #     self.sensgridgps = QLabel(gps)
+        #     self.sensorG.addWidget(self.sensgridgps, 5, 0, 1, 4)
+        #
+        #     gps2 = "Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp
+        #     self.sensgridgps2 = QLabel(gps2)
+        #     self.sensorG.addWidget(self.sensgridgps2, 6, 0, 1, 4)
+        #
+        # except Exception as e:
+        #     print(repr(e))
+        #
+        # self.sensDataContainer.addLayout(self.sensorG)
+        # self.windContainer.addWidget(self.sensFrame2)
 
-        self.sensorG = QGridLayout()
-
-        self.sensorG.addWidget(QLabel("NOW"), 0, 1)
-        self.sensorG.addWidget(QLabel("30min"), 0, 2)
-        self.sensorG.addWidget(QLabel("1hr"), 0, 3)
-        self.sensorG.addWidget(QLabel("2hr"), 0, 4)
-
-        self.sensorG.addWidget(QLabel("Temp: "), 1, 0)
-        self.sensorG.addWidget(QLabel("Hum: "), 2, 0)
-        self.sensorG.addWidget(QLabel("ATP: "), 3, 0)
-
-        try:
-            self.sensdataT = QLabel(fetch_sens.temp)
-            # self.sensdataT.setAlignment(Qt.AlignHCenter)
-            self.sensorG.addWidget(self.sensdataT, 1, 1)
-
-            self.sensdataH = QLabel(fetch_sens.hum)
-            self.sensorG.addWidget(self.sensdataH, 2, 1)
-
-            self.sensdataA = QLabel(fetch_sens.atp)
-            self.sensorG.addWidget(self.sensdataA, 3, 1)
-
-            self.sensgridTemp30 = QLabel(fetch_sens.max30temp)
-            self.sensorG.addWidget(self.sensgridTemp30, 1, 2)
-
-            self.sensgridTemp60 = QLabel(fetch_sens.max60temp)
-            self.sensorG.addWidget(self.sensgridTemp60, 1, 3)
-
-            self.sensgridTemp120 = QLabel(fetch_sens.max120temp)
-            self.sensorG.addWidget(self.sensgridTemp120, 1, 4)
-
-            self.sensgridHum30 = QLabel(fetch_sens.max30hum)
-            self.sensorG.addWidget(self.sensgridHum30, 2, 2)
-
-            self.sensgridHum60 = QLabel(fetch_sens.max60hum)
-            self.sensorG.addWidget(self.sensgridHum60, 2, 3)
-
-            self.sensgridHum120 = QLabel(fetch_sens.max120hum)
-            self.sensorG.addWidget(self.sensgridHum120, 2, 4)
-
-            self.sensgridatp30 = QLabel(fetch_sens.max30atp)
-            self.sensorG.addWidget(self.sensgridatp30, 3, 2)
-
-            self.sensgridatp60 = QLabel(fetch_sens.max60atp)
-            self.sensorG.addWidget(self.sensgridatp60, 3, 3)
-
-            self.sensgridatp120 = QLabel(fetch_sens.max120atp)
-            self.sensorG.addWidget(self.sensgridatp120, 3, 4)
-
-            self.sensgridtimestamp = QLabel(fetch_sens.sens_timestamp)
-            self.sensorG.addWidget(self.sensgridtimestamp, 4, 0, 1, 4)
-
-            gps = "Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long
-            self.sensgridgps = QLabel(gps)
-            self.sensorG.addWidget(self.sensgridgps, 5, 0, 1, 4)
-
-            gps2 = "Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp
-            self.sensgridgps2 = QLabel(gps2)
-            self.sensorG.addWidget(self.sensgridgps2, 6, 0, 1, 4)
-
-        except Exception as e:
-            print(repr(e))
-
-        self.sensDataContainer.addLayout(self.sensorG)
-        self.windContainer.addWidget(self.sensFrame2)
         self.mainContainer.addLayout(self.windContainer)
 
         #Bauforth box
@@ -435,13 +447,31 @@ class App(QWidget):
         self.mainContainer.addLayout(self.graphContainer)
         self.mainContainer.addStretch()
 
-    def update_label(self):
+        #footer box
+        self.footerbox = QHBoxLayout()
+        self.credit = QLabel("Creator: Stefan Bahrawy")
+        self.winddate = QLabel("W: " + str(fetch_wind.timestamp))
+        self.sensdate = QLabel("S: " + str(fetch_sens.sens_timestamp))
+        self.gpsdate = QLabel("G: " + str(fetch_gps.gps_timestamp))
+        self.footerbox.addWidget(self.credit)
+        self.footerbox.addWidget(self.winddate)
+        self.footerbox.addWidget(self.sensdate)
+        self.footerbox.addWidget(self.gpsdate)
+        self.mainContainer.addLayout((self.footerbox))
+
+    def update_wind(self):
         try:
             self.windL.setText(fetch_wind.wind)
             self.meanL.setText(str(fetch_wind.meanwind))
-
+            self.winddate.setText(str(fetch_wind.timestamp))
             self.beaufortL.setText(fetch_wind.beaufortLS)
+        except Exception as e:
+            print(repr(e))
+        QApplication.processEvents()
 
+
+    def update_sens(selfself):
+        try:
             self.sensdataT.setText(fetch_sens.temp)
             self.sensdataH.setText(fetch_sens.hum)
             self.sensdataA.setText(fetch_sens.atp)
@@ -460,7 +490,8 @@ class App(QWidget):
             self.sensgridatp30.setText(fetch_sens.max30atp)
             self.sensgridatp60.setText(fetch_sens.max60atp)
             self.sensgridatp120.setText(fetch_sens.max120atp)
-            self.sensgridtimestamp.setText(fetch_sens.sens_timestamp)
+            self.sensgridtimestamp.setText(str(fetch_sens.sens_timestamp))
+            self.sensgridtimestamp.setText(str(fetch_gps.gps_timestamp))
             self.sensgridgps.setText("Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long)
             self.sensgridgps2.setText("Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp)
 
@@ -474,8 +505,12 @@ if __name__ == '__main__':
     ex = App()
     ex.show()
 
-    timer = QTimer()
-    timer.timeout.connect(ex.update_label)
-    timer.start(1000)
+    timer1 = QTimer()
+    timer1.timeout.connect(ex.update_wind)
+    timer1.start(1000)
+
+    timer2 = QTimer()
+    timer2.timeout.connect(ex.update_sens)
+    timer2.start(60000)
 
     sys.exit(app.exec_())
