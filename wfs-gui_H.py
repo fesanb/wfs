@@ -10,50 +10,17 @@ import time
 from datetime import datetime
 from datetime import timedelta
 
-sys.settrace
-#test
-
+#Wind
 get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_mean_wind = "SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
-
-get_max_wind_12 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_max_wind_24 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_max_wind = "SELECT MAX(wind) FROM wind"
-get_min_wind_12 = "SELECT MIN(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_min_wind_24 = "SELECT MIN(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
-get_max_wind01 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)"
-get_max_wind05 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)"
-get_max_wind010 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
-get_max_wind030 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)"
-get_max_wind1 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
-get_max_wind2 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2 HOUR)"
-get_max_wind4 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 4 HOUR)"
-get_max_wind6 = "SELECT MAX(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 6 HOUR)"
 
 # GRAPH
 get_graph_wind = "SELECT id, ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 
+#SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
 get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps)"
-
-# TEMP
-get_max_temp_30 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)"
-get_max_temp_60 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
-get_max_temp_120 = "SELECT MAX(temp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2 HOUR)"
-get_max_temp = "SELECT MAX(temp) FROM sens"
-
-# HUM
-get_max_hum_30 = "SELECT MAX(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)"
-get_max_hum_60 = "SELECT MAX(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
-get_max_hum_120 = "SELECT MAX(hum) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2 HOUR)"
-get_max_hum = "SELECT MAX(hum) FROM sens"
-
-# ATP
-get_max_atp_30 = "SELECT MAX(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 30 MINUTE)"
-get_max_atp_60 = "SELECT MAX(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
-get_max_atp_120 = "SELECT MAX(atp) FROM sens  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2 HOUR)"
-get_max_atp = "SELECT MAX(atp) FROM sens"
 
 def fetch_wind():
     while True:
@@ -69,7 +36,7 @@ def fetch_wind():
             else:
                 fetch_wind.wind = "-.-"
 
-            if fetch_wind.timestamp < datetime.now() - timedelta(minutes=0.2):
+            if fetch_wind.timestamp < datetime.now() - timedelta(minutes=1):
                 fetch_wind.wind = "-.-"
 
             cursor.execute(get_mean_wind)
@@ -145,72 +112,6 @@ def fetch_sens():
                 fetch_sens.hum = "0"
                 fetch_sens.atp = "0"
                 fetch_sens.sens_timestamp = "0"
-
-            #   SENS 30
-            cursor.execute(get_max_temp_30)
-            db_max_temp_30 = cursor.fetchone()
-            if db_max_temp_30[0] is None:
-                fetch_sens.max30temp = "0"
-            else:
-                fetch_sens.max30temp = str(round(db_max_temp_30[0], 1))
-
-            cursor.execute(get_max_hum_30)
-            db_max_hum_30 = cursor.fetchone()
-            if db_max_hum_30[0] is None:
-                fetch_sens.max30hum = "0"
-            else:
-                fetch_sens.max30hum = str(round(db_max_hum_30[0]))
-
-            cursor.execute(get_max_atp_30)
-            db_max_atp_30 = cursor.fetchone()
-            if db_max_atp_30[0] is None:
-                fetch_sens.max30atp = "0"
-            else:
-                fetch_sens.max30atp = str(round(db_max_atp_30[0]))
-
-            #   SENS 60
-            cursor.execute(get_max_temp_60)
-            db_max_temp_60 = cursor.fetchone()
-            if db_max_temp_60[0] is None:
-                fetch_sens.max60temp = "0"
-            else:
-                fetch_sens.max60temp = str(round(db_max_temp_60[0], 1))
-
-            cursor.execute(get_max_hum_60)
-            db_max_hum_60 = cursor.fetchone()
-            if db_max_hum_60[0] is None:
-                fetch_sens.max60hum = "0"
-            else:
-                fetch_sens.max60hum = str(round(db_max_hum_60[0]))
-
-            cursor.execute(get_max_atp_60)
-            db_max_atp_60 = cursor.fetchone()
-            if db_max_atp_60[0] is None:
-                fetch_sens.max60atp = "0"
-            else:
-                fetch_sens.max60atp = str(round(db_max_atp_60[0]))
-
-            #   SENS 120
-            cursor.execute(get_max_temp_120)
-            db_max_temp_120 = cursor.fetchone()
-            if db_max_temp_120[0] is None:
-                fetch_sens.max120temp = "0"
-            else:
-                fetch_sens.max120temp = str(round(db_max_temp_120[0], 1))
-
-            cursor.execute(get_max_hum_120)
-            db_max_hum_120 = cursor.fetchone()
-            if db_max_hum_120[0] is None:
-                fetch_sens.max120hum = "0"
-            else:
-                fetch_sens.max120hum = str(round(db_max_hum_120[0]))
-
-            cursor.execute(get_max_atp_120)
-            db_max_atp_120 = cursor.fetchone()
-            if db_max_atp_120[0] is None:
-                fetch_sens.max120atp = "0"
-            else:
-                fetch_sens.max120atp = str(round(db_max_atp_120[0]))
 
             time.sleep(45)
             # print(thread2.name)
@@ -300,7 +201,9 @@ class App(QWidget):
 
     def initUI(self):
 
-        self.mainContainer = QVBoxLayout(self)
+        self.O1 = QVBoxLayout(self)
+        self.mainContainer = QHBoxLayout(self)
+        self.windContainer = QVBoxLayout(self)
 
         try:
             self.windHeader = QHBoxLayout()
@@ -316,9 +219,9 @@ class App(QWidget):
             self.sensHL.setFont(QFont('Arial', 20))
             self.sensHL.setAlignment(Qt.AlignCenter)
             self.windHeader.addWidget(self.sensHL)
-            self.mainContainer.addLayout(self.windHeader)
+            self.windContainer.addLayout(self.windHeader)
 
-            self.windContainer = QHBoxLayout()
+            self.windBox = QHBoxLayout()
             self.windFrame = QFrame(self)
             self.wind_VL = QVBoxLayout(self.windFrame)
             self.windL = QLabel(fetch_wind.wind, self.windFrame)
@@ -327,7 +230,7 @@ class App(QWidget):
             self.windL.setMinimumHeight(200)
             self.windL.setFont(QFont('Arial', 50))
             self.wind_VL.addWidget(self.windL)
-            self.windContainer.addWidget(self.windFrame)
+            self.windBox.addWidget(self.windFrame)
 
             self.meanFrame = QFrame(self)
             self.mean_VL = QVBoxLayout(self.meanFrame)
@@ -337,9 +240,37 @@ class App(QWidget):
             self.meanL.setMinimumHeight(200)
             self.meanL.setFont(QFont('Arial', 50))
             self.mean_VL.addWidget(self.meanL)
-            self.windContainer.addWidget(self.meanFrame)
+            self.windBox.addWidget(self.meanFrame)
+
+            self.windContainer.addLayout(self.windBox)
+
         except Exception as e:
             print(repr(e))
+
+        #Bauforth box
+        self.beaufortbox = QHBoxLayout()
+        self.beaufortL = QLabel(str(fetch_wind.beaufortLS))
+        self.beaufortL.setAlignment(Qt.AlignHCenter)
+        self.beaufortL.setMinimumHeight(50)
+        self.beaufortL.setFont(QFont('Arial', 20))
+        self.beaufortbox.addWidget(self.beaufortL)
+        self.mainContainer.addLayout(self.beaufortbox)
+
+        #GRAPH
+        self.graphContainer = QVBoxLayout()
+        pg.setConfigOption('background', '#000000')
+        self.graph = pg.PlotWidget()
+        self.graphContainer.addWidget(self.graph)
+        x = [1, 3, 6, 8, 9]
+        y = [3, 6, 1, 7, 9]
+        try:
+            self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
+        except Exception as e:
+            print(repr(e))
+
+        self.windContainer.addLayout(self.graphContainer)
+        self.windContainer.addStretch()
+        self.mainContainer.addLayout(self.windContainer)
 
         #sens container
         self.sensFrame1 = QFrame(self)
@@ -371,99 +302,9 @@ class App(QWidget):
         self.gpsBox.addWidget(self.altitude)
         self.sensBox1.addWidget(self.gpsFrame)
 
-        self.windContainer.addWidget(self.sensFrame1)
+        self.mainContainer.addWidget(self.sensFrame1)
 
-        # self.sensFrame2 = QFrame(self)
-        # self.sensDataContainer = QVBoxLayout(self.sensFrame2)
-        #
-        # self.sensorG = QGridLayout()
-        #
-        # self.sensorG.addWidget(QLabel("NOW"), 0, 1)
-        # self.sensorG.addWidget(QLabel("30min"), 0, 2)
-        # self.sensorG.addWidget(QLabel("1hr"), 0, 3)
-        # self.sensorG.addWidget(QLabel("2hr"), 0, 4)
-        #
-        # self.sensorG.addWidget(QLabel("Temp: "), 1, 0)
-        # self.sensorG.addWidget(QLabel("Hum: "), 2, 0)
-        # self.sensorG.addWidget(QLabel("ATP: "), 3, 0)
-        #
-        # try:
-        #     self.sensdataT = QLabel(fetch_sens.temp)
-        #     # self.sensdataT.setAlignment(Qt.AlignHCenter)
-        #     self.sensorG.addWidget(self.sensdataT, 1, 1)
-        #
-        #     self.sensdataH = QLabel(fetch_sens.hum)
-        #     self.sensorG.addWidget(self.sensdataH, 2, 1)
-        #
-        #     self.sensdataA = QLabel(fetch_sens.atp)
-        #     self.sensorG.addWidget(self.sensdataA, 3, 1)
-        #
-        #     self.sensgridTemp30 = QLabel(fetch_sens.max30temp)
-        #     self.sensorG.addWidget(self.sensgridTemp30, 1, 2)
-        #
-        #     self.sensgridTemp60 = QLabel(fetch_sens.max60temp)
-        #     self.sensorG.addWidget(self.sensgridTemp60, 1, 3)
-        #
-        #     self.sensgridTemp120 = QLabel(fetch_sens.max120temp)
-        #     self.sensorG.addWidget(self.sensgridTemp120, 1, 4)
-        #
-        #     self.sensgridHum30 = QLabel(fetch_sens.max30hum)
-        #     self.sensorG.addWidget(self.sensgridHum30, 2, 2)
-        #
-        #     self.sensgridHum60 = QLabel(fetch_sens.max60hum)
-        #     self.sensorG.addWidget(self.sensgridHum60, 2, 3)
-        #
-        #     self.sensgridHum120 = QLabel(fetch_sens.max120hum)
-        #     self.sensorG.addWidget(self.sensgridHum120, 2, 4)
-        #
-        #     self.sensgridatp30 = QLabel(fetch_sens.max30atp)
-        #     self.sensorG.addWidget(self.sensgridatp30, 3, 2)
-        #
-        #     self.sensgridatp60 = QLabel(fetch_sens.max60atp)
-        #     self.sensorG.addWidget(self.sensgridatp60, 3, 3)
-        #
-        #     self.sensgridatp120 = QLabel(fetch_sens.max120atp)
-        #     self.sensorG.addWidget(self.sensgridatp120, 3, 4)
-        #
-        #     gps = "Lat: " + fetch_gps.lat + " Lon: " + fetch_gps.long
-        #     self.sensgridgps = QLabel(gps)
-        #     self.sensorG.addWidget(self.sensgridgps, 5, 0, 1, 4)
-        #
-        #     gps2 = "Alt: " + fetch_gps.alt + " Time: " + fetch_gps.gps_timestamp
-        #     self.sensgridgps2 = QLabel(gps2)
-        #     self.sensorG.addWidget(self.sensgridgps2, 6, 0, 1, 4)
-        #
-        # except Exception as e:
-        #     print(repr(e))
-        #
-        # self.sensDataContainer.addLayout(self.sensorG)
-        # self.windContainer.addWidget(self.sensFrame2)
-
-        self.mainContainer.addLayout(self.windContainer)
-
-        #Bauforth box
-        self.beaufortbox = QHBoxLayout()
-        self.beaufortL = QLabel(str(fetch_wind.beaufortLS))
-        self.beaufortL.setAlignment(Qt.AlignHCenter)
-        self.beaufortL.setMinimumHeight(50)
-        self.beaufortL.setFont(QFont('Arial', 20))
-        self.beaufortbox.addWidget(self.beaufortL)
-        self.mainContainer.addLayout(self.beaufortbox)
-
-        #GRAPH
-        self.graphContainer = QVBoxLayout()
-        pg.setConfigOption('background', '#000000')
-        self.graph = pg.PlotWidget()
-        self.graphContainer.addWidget(self.graph)
-        x = [1, 3, 6, 8, 9]
-        y = [3, 6, 1, 7, 9]
-        try:
-            self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
-        except Exception as e:
-            print(repr(e))
-
-        self.mainContainer.addLayout(self.graphContainer)
-        self.mainContainer.addStretch()
+        self.O1.addLayout(self.mainContainer)
 
         #footer box
         self.footerbox = QHBoxLayout()
@@ -475,7 +316,7 @@ class App(QWidget):
         self.footerbox.addWidget(self.winddate)
         self.footerbox.addWidget(self.sensdate)
         self.footerbox.addWidget(self.gpsdate)
-        self.mainContainer.addLayout((self.footerbox))
+        self.O1.addLayout((self.footerbox))
 
     def update_wind(self):
         try:

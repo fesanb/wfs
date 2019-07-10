@@ -81,7 +81,7 @@ int handshake = 0;
 // ===============
 
 void setup() {
-  Serial.begin(19200);
+  Serial3.begin(19200);
   Serial2.begin(19200);
   ss.begin(GPSBaud);
   dht.begin();
@@ -98,12 +98,12 @@ void serialhandshake() {
   while (handshake == 0) {
 
     if ((millis() - handshakemillis) > 1000) {
-      Serial.println(handshakecode);
+      Serial3.println(handshakecode);
       handshakemillis = millis();
     }
     
-    while(Serial.available()) {
-      receive = Serial.read();
+    while(Serial3.available()) {
+      receive = Serial3.read();
       if(receive = handshakecode){
         handshake = 1;
       }
@@ -111,66 +111,66 @@ void serialhandshake() {
 }
 
 void loop() {
-  if (handshake == 0) { // makes sure the serial connection between the Androind and RPI is established before startting. 
-    serialhandshake();
-  } else {
+//  if (handshake == 0) { // makes sure the serial connection between the Androind and RPI is established before startting. 
+//    serialhandshake();
+//  } else {
 
-    if ((millis() - GPSMillis) > GPSinterval) {
-      readgpsdata();
-      gpsserial += "GPS,";
-      gpsserial += gpslat;
-      gpsserial += ",";
-      gpsserial += gpslong;
-      gpsserial += ",";
-      gpsserial += gpsalt;
-      gpsserial += ",";
-      gpsserial += gpssat;
-      Serial.println(gpsserial);
-      gpsserial = "";
-      GPSMillis = millis();
-      if (GPSinterval < 3840000) {
-        if (gpslat > 0.00) {
-          GPSinterval = GPSinterval * 2;
-        }
-      }
+if ((millis() - GPSMillis) > GPSinterval) {
+  readgpsdata();
+  gpsserial += "GPS,";
+  gpsserial += gpslat;
+  gpsserial += ",";
+  gpsserial += gpslong;
+  gpsserial += ",";
+  gpsserial += gpsalt;
+  gpsserial += ",";
+  gpsserial += gpssat;
+  Serial3.println(gpsserial);
+  gpsserial = "";
+  GPSMillis = millis();
+  if (GPSinterval < 3840000) {
+    if (gpslat > 0.00) {
+      GPSinterval = GPSinterval * 2;
     }
-
-
-    if (sensdoboot == 1) {
-      readsensors();
-      sensorserial += "SENS,";
-      sensorserial += temp;
-      sensorserial += ",";
-      sensorserial += hum;
-      sensorserial += ",";
-      sensorserial += atp;
-      Serial.println(sensorserial);
-      sensorserial = "";
-      sensdoboot = 0;
-    }
-
-    if ((millis() - sensorMillis) > sensorinterval) {
-      readsensors();
-      sensorserial += "SENS,";
-      sensorserial += temp;
-      sensorserial += ",";
-      sensorserial += hum;
-      sensorserial += ",";
-      sensorserial += atp;
-      Serial.println(sensorserial);
-      sensorserial = "";
-      sensorMillis = millis();
-    }
-
-    recvWithStartEndMarkers();
-    if (newData == true) {
-      strcpy(tempChars, receivedChars);
-      parseData();
-      newData = false;
-      showParsedData();
-    }
-
   }
+}
+
+
+if (sensdoboot == 1) {
+  readsensors();
+  sensorserial += "SENS,";
+  sensorserial += temp;
+  sensorserial += ",";
+  sensorserial += hum;
+  sensorserial += ",";
+  sensorserial += atp;
+  Serial3.println(sensorserial);
+  sensorserial = "";
+  sensdoboot = 0;
+}
+
+if ((millis() - sensorMillis) > sensorinterval) {
+  readsensors();
+  sensorserial += "SENS,";
+  sensorserial += temp;
+  sensorserial += ",";
+  sensorserial += hum;
+  sensorserial += ",";
+  sensorserial += atp;
+  Serial3.println(sensorserial);
+  sensorserial = "";
+  sensorMillis = millis();
+}
+
+recvWithStartEndMarkers();
+if (newData == true) {
+  strcpy(tempChars, receivedChars);
+  parseData();
+  newData = false;
+  showParsedData();
+}
+
+  //}
 }
   //============
 
@@ -233,6 +233,6 @@ void loop() {
     windserial += "w,";
     windserial += wind;
     windserial += "";
-    Serial.println(windserial);
+    Serial3.println(windserial);
     windserial = "";
   }

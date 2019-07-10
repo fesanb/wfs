@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/arch/bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/arch/bak.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ard/WFS_v0.3/WFS_v0.3.ino" beforeDir="false" afterPath="$PROJECT_DIR$/ard/WFS_v0.3/WFS_v0.3.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/serial_read.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/serial_read.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs-gui_H.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gui_H.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,11 +35,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="583">
-              <caret line="341" column="26" selection-start-line="341" selection-start-column="26" selection-end-line="341" selection-end-column="26" />
+            <state relative-caret-position="272">
+              <caret line="205" column="23" selection-start-line="205" selection-start-column="23" selection-end-line="205" selection-end-column="23" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ard/WFS_v0.3/WFS_v0.3.ino">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2074">
+              <caret line="122" column="23" selection-start-line="122" selection-start-column="23" selection-end-line="122" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -48,6 +61,15 @@
               <folding>
                 <element signature="e#110#120#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/serial_read.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -67,11 +89,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/arch/bak.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1717">
-              <caret line="103" selection-start-line="103" selection-end-line="103" />
-              <folding>
-                <element signature="e#331#369#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="634">
+              <caret line="64" column="55" selection-start-line="64" selection-start-column="55" selection-end-line="64" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -124,6 +143,8 @@
         <option value="$PROJECT_DIR$/testing.py" />
         <option value="$PROJECT_DIR$/wfs-gui.py" />
         <option value="$PROJECT_DIR$/wfs-ard2db.py" />
+        <option value="$PROJECT_DIR$/test/serial_read.py" />
+        <option value="$PROJECT_DIR$/arch/bak.py" />
         <option value="$PROJECT_DIR$/wfs-gui_H.py" />
       </list>
     </option>
@@ -153,6 +174,22 @@
               <item name="wfs" type="b2602c69:ProjectViewProjectNode" />
               <item name="wfs" type="462c0819:PsiDirectoryNode" />
               <item name="arch" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfs" type="462c0819:PsiDirectoryNode" />
+              <item name="ard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfs" type="462c0819:PsiDirectoryNode" />
+              <item name="ard" type="462c0819:PsiDirectoryNode" />
+              <item name="WFS_v0.3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfs" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfs" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="wfs" type="b2602c69:ProjectViewProjectNode" />
@@ -522,13 +559,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/serial_read.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wfs190704.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -542,6 +572,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ard/WFS_v0.3/WFS_v0.3.ino">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2074">
+          <caret line="122" column="23" selection-start-line="122" selection-start-column="23" selection-end-line="122" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/wfs-ard2db.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2125">
@@ -549,6 +586,13 @@
           <folding>
             <element signature="e#110#120#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/serial_read.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -564,18 +608,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/arch/bak.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1717">
-          <caret line="103" selection-start-line="103" selection-end-line="103" />
-          <folding>
-            <element signature="e#331#369#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="634">
+          <caret line="64" column="55" selection-start-line="64" selection-start-column="55" selection-end-line="64" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="583">
-          <caret line="341" column="26" selection-start-line="341" selection-start-column="26" selection-end-line="341" selection-end-column="26" />
+        <state relative-caret-position="272">
+          <caret line="205" column="23" selection-start-line="205" selection-start-column="23" selection-end-line="205" selection-end-column="23" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
