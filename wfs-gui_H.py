@@ -216,10 +216,6 @@ class App(QWidget):
             self.meanHL.setFont(QFont('Arial', 20))
             self.meanHL.setAlignment(Qt.AlignCenter)
             self.windHeader.addWidget(self.meanHL)
-            self.sensHL = QLabel("SENSOR")
-            self.sensHL.setFont(QFont('Arial', 20))
-            self.sensHL.setAlignment(Qt.AlignCenter)
-            self.windHeader.addWidget(self.sensHL)
             self.windContainer.addLayout(self.windHeader)
 
             self.windBox = QHBoxLayout()
@@ -255,7 +251,7 @@ class App(QWidget):
         self.beaufortL.setMinimumHeight(50)
         self.beaufortL.setFont(QFont('Arial', 20))
         self.beaufortbox.addWidget(self.beaufortL)
-        self.mainContainer.addLayout(self.beaufortbox)
+        self.windContainer.addLayout(self.beaufortbox)
 
         #GRAPH
         self.graphContainer = QVBoxLayout()
@@ -274,11 +270,19 @@ class App(QWidget):
         self.mainContainer.addLayout(self.windContainer)
 
         #sens container
-        self.sensFrame1 = QFrame(self)
-        self.sensBox1 = QVBoxLayout(self.sensFrame1)
-
         self.sensFrame = QFrame(self)
-        self.sensBox = QHBoxLayout(self.sensFrame)
+        self.sensBox = QVBoxLayout(self.sensFrame)
+
+        # self.sensheaderFrame =  QFrame(self)
+        self.sensheaderBox = QHBoxLayout(self.sensFrame)
+        self.sensHL = QLabel("SENSOR")
+        self.sensHL.setFont(QFont('Arial', 20))
+        self.sensHL.setMinimumHeight(50)
+        self.sensHL.setAlignment(Qt.AlignCenter)
+        self.sensheaderBox.addWidget(self.sensHL)
+        self.sensBox.addLayout(self.sensheaderBox)
+
+        self.sensdispBox = QVBoxLayout(self.sensFrame)
         self.temp = QLabel(fetch_sens.temp + " °C")
         self.hum = QLabel(fetch_sens.hum + "%")
         self.atp = QLabel(fetch_sens.atp + " mbar")
@@ -286,14 +290,13 @@ class App(QWidget):
         self.hum.setFont(QFont('Arial', 20))
         self.atp.setFont(QFont('Arial', 20))
 
-        self.sensBox.addWidget(self.temp)
-        self.sensBox.addWidget(self.hum)
-        self.sensBox.addWidget(self.atp)
-        self.sensBox1.addWidget(self.sensFrame)
+        self.sensdispBox.addWidget(self.temp)
+        self.sensdispBox.addWidget(self.hum)
+        self.sensdispBox.addWidget(self.atp)
+        self.sensBox.addLayout(self.sensdispBox)
 
         #GPS container
-        self.gpsFrame = QFrame(self)
-        self.gpsBox = QVBoxLayout(self.gpsFrame)
+        self.gpsBox = QVBoxLayout(self.sensFrame)
         self.latitude = QLabel("Latitude: " + fetch_gps.lat)
         self.longitude = QLabel("Longitude: " + fetch_gps.long)
         self.altitude = QLabel("Altitude: " + fetch_gps.alt)
@@ -301,9 +304,10 @@ class App(QWidget):
         self.gpsBox.addWidget(self.latitude)
         self.gpsBox.addWidget(self.longitude)
         self.gpsBox.addWidget(self.altitude)
-        self.sensBox1.addWidget(self.gpsFrame)
+        self.sensBox.addLayout(self.gpsBox)
 
-        self.mainContainer.addWidget(self.sensFrame1)
+        self.sensBox.addStretch()
+        self.mainContainer.addWidget(self.sensFrame)
 
         self.O1.addLayout(self.mainContainer)
 
