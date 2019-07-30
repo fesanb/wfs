@@ -10,10 +10,9 @@ import time
 from datetime import datetime
 from datetime import timedelta
 
-#test
 #Wind
 get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
-get_mean_wind = "SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
+get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
 # GRAPH
 get_graph_wind = "SELECT id, ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
@@ -39,6 +38,16 @@ def fetch_wind():
 
             if fetch_wind.timestamp < datetime.now() - timedelta(minutes=1):
                 fetch_wind.wind = "-.-"
+
+            time.sleep(1)
+        except Exception as e:
+            print(repr(e))
+
+def fetch_mean():
+    while True:
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor(buffered=True)
 
             cursor.execute(get_mean_wind)
             db_mean_wind = cursor.fetchone()
@@ -90,10 +99,10 @@ def fetch_wind():
             elif float(fetch_wind.meanwind) > 0.3:
                 fetch_wind.beaufortLS = beaufort[1]
 
-            time.sleep(1)
+            time.sleep(59)
+
         except Exception as e:
             print(repr(e))
-
 
 def fetch_sens():
     while True:
@@ -165,6 +174,29 @@ def fetch_graph():
         except Exception as e:
             print(repr(e))
 
+def db_cleanup():
+    while True:
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.xursor(buffered=True)
+
+            cursor.execute("SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)")
+            if cursor.rowcount > 0:
+                db_mean_wind_1min = cursor.fetchall()
+
+                add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (db_mean_wind_1min[1]))
+                cursor.execute(add_mean)
+                emp_no = cursor.lastrowid
+                cnx.commit()
+
+                wind_cleanup = ("DELETE FROM wind WHERE wind < 1")
+                cursor.execute(wind_cleanup())
+                emp_no = cursor.lastrowid
+                cnx.commit()
+
+            time.sleep(60)
+        except Exception as e:
+            print(repr(e))
 
 thread1 = threading.Thread(target=fetch_wind, args=())
 thread1.daemon = True
@@ -181,6 +213,10 @@ thread3.start()
 thread4 = threading.Thread(target=fetch_graph, args=())
 thread4.daemon = True
 thread4.start()
+
+thread5 = threading.Thread(target=db_cleanup, args=())
+thread5.daemon = True
+thread5.start()
 
 class App(QWidget):
 
