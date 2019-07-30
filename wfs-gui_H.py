@@ -148,6 +148,11 @@ def fetch_gps():
                 fetch_gps.alt = "No gps signal"
                 fetch_gps.gps_timestamp = "-"
 
+            if fetch_gps.gps_timestamp < datetime.now() - timedelta(minutes=65):
+                fetch_gps.lat = "No gps signal"
+                fetch_gps.long = "No gps signal"
+                fetch_gps.alt = "No gps signal"
+
             time.sleep(45)
             # print(thread3.name)
         except Exception as e:
