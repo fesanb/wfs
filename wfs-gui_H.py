@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -15,8 +15,8 @@ get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
 # GRAPH
-get_graph_wind = "SELECT id, ROUND(wind, 0) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph_wind = "SELECT id, ROUND(mean, 0) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 
 #SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
@@ -41,6 +41,9 @@ def fetch_wind():
 
             time.sleep(1)
         except Exception as e:
+            cnx.close()
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
 def fetch_mean():
@@ -52,56 +55,44 @@ def fetch_mean():
             cursor.execute(get_mean_wind)
             db_mean_wind = cursor.fetchone()
             if db_mean_wind[0] is None:  # cursor.rowcount is 0 and
-                fetch_wind.meanwind = "0"
+                fetch_mean.meanwind = 0
             else:
                 # print(db_mean_wind[0])
-                fetch_wind.meanwind = round(float(db_mean_wind[0]), 0)
+                fetch_mean.meanwind = round(float(db_mean_wind[0]), 0)
 
-            beaufort = [
-                "Beaufort 0 - Calm",
-                "Beaufort 1 - Light Air",
-                "Beaufort 2 - Light breeze",
-                "Beaufort 3 - Gentle breeze",
-                "Beaufort 4 - Moderate breeze",
-                "Beaufort 5 - Fresh breeze",
-                "Beaufort 6 - Strong breeze",
-                "Beaufort 7 - Moderate gale",
-                "Beaufort 8 - Fresh Gale",
-                "Beaufort 9 - Strong Gale",
-                "Beaufort 10 - Storm",
-                "Beaufort 11 - Violent Storm",
-                "Beaufort 12 - Hurricane"]
-
-            if float(fetch_wind.meanwind) < 0.3:
-                fetch_wind.beaufortLS = beaufort[0]
-            elif float(fetch_wind.meanwind) > 32.7:
-                fetch_wind.beaufortLS = beaufort[12]
-            elif float(fetch_wind.meanwind) > 28.5:
-                fetch_wind.beaufortLS = beaufort[11]
-            elif float(fetch_wind.meanwind) > 24.5:
-                fetch_wind.beaufortLS = beaufort[10]
-            elif float(fetch_wind.meanwind) > 20.8:
-                fetch_wind.beaufortLS = beaufort[9]
-            elif float(fetch_wind.meanwind) > 17.2:
-                fetch_wind.beaufortLS = beaufort[8]
-            elif float(fetch_wind.meanwind) > 13.9:
-                fetch_wind.beaufortLS = beaufort[7]
-            elif float(fetch_wind.meanwind) > 10.8:
-                fetch_wind.beaufortLS = beaufort[6]
-            elif float(fetch_wind.meanwind) > 8.0:
-                fetch_wind.beaufortLS = beaufort[5]
-            elif float(fetch_wind.meanwind) > 5.5:
-                fetch_wind.beaufortLS = beaufort[4]
-            elif float(fetch_wind.meanwind) > 3.4:
-                fetch_wind.beaufortLS = beaufort[3]
-            elif float(fetch_wind.meanwind) > 1.6:
-                fetch_wind.beaufortLS = beaufort[2]
-            elif float(fetch_wind.meanwind) > 0.3:
-                fetch_wind.beaufortLS = beaufort[1]
+            if float(fetch_mean.meanwind) < 0.3:
+                fetch_mean.beaufortLS = "Beaufort 0 - Calm"
+            elif float(fetch_mean.meanwind) > 32.7:
+                fetch_mean.beaufortLS = "Beaufort 12 - Hurricane"
+            elif float(fetch_mean.meanwind) > 28.5:
+                fetch_mean.beaufortLS = "Beaufort 11 - Violent Storm"
+            elif float(fetch_mean.meanwind) > 24.5:
+                fetch_mean.beaufortLS = "Beaufort 10 - Storm"
+            elif float(fetch_mean.meanwind) > 20.8:
+                fetch_mean.beaufortLS = "Beaufort 9 - Strong Gale"
+            elif float(fetch_mean.meanwind) > 17.2:
+                fetch_mean.beaufortLS = "Beaufort 8 - Fresh Gale"
+            elif float(fetch_mean.meanwind) > 13.9:
+                fetch_mean.beaufortLS = "Beaufort 7 - Moderate gale"
+            elif float(fetch_mean.meanwind) > 10.8:
+                fetch_mean.beaufortLS = "Beaufort 6 - Strong breeze"
+            elif float(fetch_mean.meanwind) > 8.0:
+                fetch_mean.beaufortLS = "Beaufort 5 - Fresh breeze"
+            elif float(fetch_mean.meanwind) > 5.5:
+                fetch_mean.beaufortLS = "Beaufort 4 - Moderate breeze"
+            elif float(fetch_mean.meanwind) > 3.4:
+                fetch_mean.beaufortLS = "Beaufort 3 - Gentle breeze"
+            elif float(fetch_mean.meanwind) > 1.6:
+                fetch_mean.beaufortLS = "Beaufort 2 - Light breeze"
+            elif float(fetch_mean.meanwind) > 0.3:
+                fetch_mean.beaufortLS = "Beaufort 1 - Light Air"
 
             time.sleep(59)
 
         except Exception as e:
+            cnx.close()
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
 def fetch_sens():
@@ -126,6 +117,9 @@ def fetch_sens():
             time.sleep(45)
             # print(thread2.name)
         except Exception as e:
+            cnx.close()
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
 
@@ -141,21 +135,24 @@ def fetch_gps():
                 fetch_gps.lat = str(db_gps[1])
                 fetch_gps.long = str(db_gps[2])
                 fetch_gps.alt = str(db_gps[3])
-                fetch_gps.gps_timestamp = str(db_gps[4])
+                fetch_gps.gps_timestamp = db_gps[4]
             else:
                 fetch_gps.lat = "No gps signal"
                 fetch_gps.long = "No gps signal"
                 fetch_gps.alt = "No gps signal"
                 fetch_gps.gps_timestamp = "-"
 
-            if fetch_gps.gps_timestamp < datetime.now() - timedelta(minutes=65):
-                fetch_gps.lat = "No gps signal"
-                fetch_gps.long = "No gps signal"
-                fetch_gps.alt = "No gps signal"
+            # if fetch_gps.gps_timestamp < datetime.now() - timedelta(minutes=65):
+            #     fetch_gps.lat = "No gps signal"
+            #     fetch_gps.long = "No gps signal"
+            #     fetch_gps.alt = "No gps signal"
 
             time.sleep(45)
             # print(thread3.name)
         except Exception as e:
+            cnx.close()
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
 
@@ -168,7 +165,7 @@ def fetch_graph():
             cursor.execute(get_graph_wind)
             if cursor.rowcount > 0:
                 db_graph_wind = cursor.fetchall()
-                fetch_graph.graphwind_X = np.ravel(db_graph_wind[2])
+                fetch_graph.graphwind_X = np.ravel(db_graph_wind[0])
                 fetch_graph.graphwind_Y = np.ravel(db_graph_wind[1])
             else:
                 fetch_graph.graphwind_X = [0]
@@ -177,13 +174,16 @@ def fetch_graph():
             time.sleep(45)
             # print(thread4.name)
         except Exception as e:
+            cnx.close()
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
 def db_cleanup():
     while True:
         try:
             cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-            cursor = cnx.xursor(buffered=True)
+            cursor = cnx.cursor(buffered=True)
 
             cursor.execute("SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)")
             if cursor.rowcount > 0:
@@ -201,11 +201,18 @@ def db_cleanup():
 
             time.sleep(60)
         except Exception as e:
+            cnx.close()
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
 thread1 = threading.Thread(target=fetch_wind, args=())
 thread1.daemon = True
 thread1.start()
+
+thread_mean = threading.Thread(target=fetch_mean, args=())
+thread_mean.daemon = True
+thread_mean.start()
 
 thread2 = threading.Thread(target=fetch_sens, args=())
 thread2.daemon = True
@@ -219,9 +226,9 @@ thread4 = threading.Thread(target=fetch_graph, args=())
 thread4.daemon = True
 thread4.start()
 
-thread5 = threading.Thread(target=db_cleanup, args=())
-thread5.daemon = True
-thread5.start()
+# thread5 = threading.Thread(target=db_cleanup, args=())
+# thread5.daemon = True
+# thread5.start()
 
 class App(QWidget):
 
@@ -272,7 +279,7 @@ class App(QWidget):
 
             self.meanFrame = QFrame(self)
             self.mean_VL = QVBoxLayout(self.meanFrame)
-            self.meanL = QLabel(str(fetch_wind.meanwind), self.meanFrame)
+            self.meanL = QLabel(str(fetch_mean.meanwind), self.meanFrame)
             self.meanL.setStyleSheet("background-image: url('img/wind-circle.png'); background-repeat: no-repeat; background-position: center")
             self.meanL.setAlignment(Qt.AlignCenter)
             self.meanL.setMinimumHeight(200)
@@ -283,11 +290,13 @@ class App(QWidget):
             self.windContainer.addLayout(self.windBox)
 
         except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
         #Bauforth box
         self.beaufortbox = QHBoxLayout()
-        self.beaufortL = QLabel(str(fetch_wind.beaufortLS))
+        self.beaufortL = QLabel(str(fetch_mean.beaufortLS))
         self.beaufortL.setAlignment(Qt.AlignHCenter)
         self.beaufortL.setMinimumHeight(50)
         self.beaufortL.setFont(QFont('Arial', 20))
@@ -304,6 +313,8 @@ class App(QWidget):
         try:
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
         except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
         self.windContainer.addLayout(self.graphContainer)
@@ -367,11 +378,14 @@ class App(QWidget):
     def update_wind(self):
         try:
             self.windL.setText(fetch_wind.wind)
-            self.meanL.setText(str(fetch_wind.meanwind))
+            self.meanL.setText(str(fetch_mean.meanwind))
             self.winddate.setText("W: " + str(fetch_wind.timestamp))
-            self.beaufortL.setText(fetch_wind.beaufortLS)
+            self.beaufortL.setText(fetch_mean.beaufortLS)
         except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
+
         QApplication.processEvents()
 
 
@@ -391,7 +405,10 @@ class App(QWidget):
             self.sensgridtimestamp.setText("G: " + str(fetch_gps.gps_timestamp))
 
         except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
+
         QApplication.processEvents()
 
 
