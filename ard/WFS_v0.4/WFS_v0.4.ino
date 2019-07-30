@@ -117,7 +117,7 @@ void loop() {
 //  } else {
 
 if ((millis() - GPSMillis) > GPSinterval) {
-  readgpsdata();
+  readgpsdata(1000);
   gpsserial += "GPS,";
   gpsserial += gpslat;
   gpsserial += ",";
@@ -175,15 +175,19 @@ if (newData == true) {
 }
   //============
 
-  void readgpsdata() {
-    while (Serial1.available() > 0) {
-      Serial.println(Serial1.read());
-      if (gps.encode(Serial1.read()))
+  static void readgpsdata(unsigned long ms) {
+    unsigned long start = millis();
+    do
+    {
+      while (Serial1.available() > 0)
+        gps.encode(Serial1.read());
         gpslat = gps.location.lat();
         gpslong = gps.location.lng();
         gpsalt = gps.altitude.meters();
         gpssat = gps.satellites.value();
+        //Serial.println(gpslat);
     }
+    while (millis() - start < ms);
   }
 
   void readsensors() {
