@@ -84,6 +84,7 @@ void setup() {
   Serial3.begin(19200);
   Serial2.begin(19200);
   Serial1.begin(GPSBaud);
+  Serial.begin(9600);
   dht.begin();
   bme.begin();
 
@@ -176,6 +177,7 @@ if (newData == true) {
 
   void readgpsdata() {
     while (Serial1.available() > 0) {
+      Serial.println(Serial1.read());
       if (gps.encode(Serial1.read()))
         gpslat = gps.location.lat();
         gpslong = gps.location.lng();
