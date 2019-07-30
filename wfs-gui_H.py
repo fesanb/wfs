@@ -10,6 +10,7 @@ import time
 from datetime import datetime
 from datetime import timedelta
 
+
 #Wind
 get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
