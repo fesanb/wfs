@@ -226,7 +226,7 @@ def fetch_graph():
             print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
-        time.sleep(45)
+        time.sleep(15)
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
 thread_fetch_wind.daemon = True
