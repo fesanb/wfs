@@ -37,7 +37,7 @@ def fetch_wind():
             else:
                 fetch_wind.wind = "-.-"
 
-            if fetch_wind.timestamp < datetime.now() - timedelta(minutes=1):
+            if fetch_wind.timestamp < datetime.now() - timedelta(minutes=0.25):
                 fetch_wind.wind = "-.-"
 
             time.sleep(1)
@@ -46,6 +46,50 @@ def fetch_wind():
             exc_type, exc_obj, exc_tb = sys.exc_info()
             print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
+
+def make_mean():
+    while True:
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor(buffered=True)
+
+            cursor.execute("SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)")
+            db_mean_wind_1min = cursor.fetchone()
+            if db_mean_wind_1min[0] is None:
+                pass
+            else:
+                add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (db_mean_wind_1min[0]))
+                cursor.execute(add_mean)
+                emp_no = cursor.lastrowid
+                cnx.commit()
+        except Exception as e:
+            cnx.close()
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
+            print(repr(e))
+
+        time.sleep(60)
+
+
+def db_cleanup():
+    while True:
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor(buffered=True)
+
+            wind_cleanup = ("DELETE FROM wind WHERE wind < 1")
+            cursor.execute(wind_cleanup)
+            emp_no = cursor.lastrowid
+            cnx.commit()
+
+        except Exception as e:
+            cnx.close()
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
+            print(repr(e))
+
+        time.sleep(60)
+
 
 def fetch_mean():
     while True:
@@ -59,7 +103,7 @@ def fetch_mean():
                 fetch_mean.meanwind = 0
             else:
                 # print(db_mean_wind[0])
-                fetch_mean.meanwind = round(float(db_mean_wind[0]), 0)
+                fetch_mean.meanwind = round(float(db_mean_wind[0]), 1)
 
             if float(fetch_mean.meanwind) < 0.3:
                 fetch_mean.beaufortLS = "Beaufort 0 - Calm"
@@ -88,13 +132,13 @@ def fetch_mean():
             elif float(fetch_mean.meanwind) > 0.3:
                 fetch_mean.beaufortLS = "Beaufort 1 - Light Air"
 
-            time.sleep(59)
-
         except Exception as e:
             cnx.close()
             exc_type, exc_obj, exc_tb = sys.exc_info()
             print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
+
+        time.sleep(5)
 
 def fetch_sens():
     while True:
@@ -115,7 +159,7 @@ def fetch_sens():
                 fetch_sens.atp = "0"
                 fetch_sens.sens_timestamp = "0"
 
-            time.sleep(45)
+
             # print(thread2.name)
         except Exception as e:
             cnx.close()
@@ -123,6 +167,7 @@ def fetch_sens():
             print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
+        time.sleep(45)
 
 def fetch_gps():
     while True:
@@ -148,7 +193,7 @@ def fetch_gps():
             #     fetch_gps.long = "No gps signal"
             #     fetch_gps.alt = "No gps signal"
 
-            time.sleep(45)
+
             # print(thread3.name)
         except Exception as e:
             cnx.close()
@@ -156,6 +201,7 @@ def fetch_gps():
             print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
+        time.sleep(45)
 
 def fetch_graph():
     while True:
@@ -172,7 +218,7 @@ def fetch_graph():
                 fetch_graph.graphwind_X = [0]
                 fetch_graph.graphwind_Y = [0]
 
-            time.sleep(45)
+
             # print(thread4.name)
         except Exception as e:
             cnx.close()
@@ -180,56 +226,35 @@ def fetch_graph():
             print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
 
-def db_cleanup():
-    while True:
-        try:
-            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-            cursor = cnx.cursor(buffered=True)
+        time.sleep(45)
 
-            cursor.execute("SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)")
-            if cursor.rowcount > 0:
-                db_mean_wind_1min = cursor.fetchall()
+thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
+thread_fetch_wind.daemon = True
+thread_fetch_wind.start()
 
-                add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (db_mean_wind_1min[1]))
-                cursor.execute(add_mean)
-                emp_no = cursor.lastrowid
-                cnx.commit()
-
-                wind_cleanup = ("DELETE FROM wind WHERE wind < 1")
-                cursor.execute(wind_cleanup())
-                emp_no = cursor.lastrowid
-                cnx.commit()
-
-            time.sleep(60)
-        except Exception as e:
-            cnx.close()
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
-
-thread1 = threading.Thread(target=fetch_wind, args=())
-thread1.daemon = True
-thread1.start()
+thread_make_mean = threading.Thread(target=make_mean, args=())
+thread_make_mean.daemon = True
+thread_make_mean.start()
 
 thread_mean = threading.Thread(target=fetch_mean, args=())
 thread_mean.daemon = True
 thread_mean.start()
 
-thread2 = threading.Thread(target=fetch_sens, args=())
-thread2.daemon = True
-thread2.start()
+thread_fetch_sens = threading.Thread(target=fetch_sens, args=())
+thread_fetch_sens.daemon = True
+thread_fetch_sens.start()
 
-thread3 = threading.Thread(target=fetch_gps, args=())
-thread3.daemon = True
-thread3.start()
+thread_fetch_gps = threading.Thread(target=fetch_gps, args=())
+thread_fetch_gps.daemon = True
+thread_fetch_gps.start()
 
-thread4 = threading.Thread(target=fetch_graph, args=())
-thread4.daemon = True
-thread4.start()
+thread_fetch_graph = threading.Thread(target=fetch_graph, args=())
+thread_fetch_graph.daemon = True
+thread_fetch_graph.start()
 
-# thread5 = threading.Thread(target=db_cleanup, args=())
-# thread5.daemon = True
-# thread5.start()
+thread_db_cleanup = threading.Thread(target=db_cleanup, args=())
+thread_db_cleanup.daemon = True
+thread_db_cleanup.start()
 
 class App(QWidget):
 
@@ -402,8 +427,8 @@ class App(QWidget):
 
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
 
-            self.sensgridtimestamp.setText("S: " + str(fetch_sens.sens_timestamp))
-            self.sensgridtimestamp.setText("G: " + str(fetch_gps.gps_timestamp))
+            self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
+            self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
