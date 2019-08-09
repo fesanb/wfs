@@ -224,7 +224,6 @@ def fetch_graph():
                 fetch_graph.graphwind_X = [0]
                 fetch_graph.graphwind_Y = [0]
 
-            # print(thread4.name)
         except Exception as e:
             cnx.close()
             exc_type, exc_obj, exc_tb = sys.exc_info()
