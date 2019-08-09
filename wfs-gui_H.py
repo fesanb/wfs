@@ -58,7 +58,7 @@ def make_mean():
             if db_mean_wind_1min[0] is None:
                 pass
             else:
-                add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (db_mean_wind_1min[0]))
+                add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (round(db_mean_wind_1min[0],2)))
                 cursor.execute(add_mean)
                 emp_no = cursor.lastrowid
                 cnx.commit()
