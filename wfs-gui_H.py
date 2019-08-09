@@ -16,7 +16,7 @@ get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
 # GRAPH
-get_graph_wind = "SELECT id, ROUND(mean, 0) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph_wind = "SELECT * FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 
 #SENS
@@ -212,12 +212,17 @@ def fetch_graph():
             cursor.execute(get_graph_wind)
             if cursor.rowcount > 0:
                 db_graph_wind = cursor.fetchall()
-                fetch_graph.graphwind_X = np.ravel(db_graph_wind[0])
-                fetch_graph.graphwind_Y = np.ravel(db_graph_wind[1])
+
+                fetch_graph.graphwind_X = []
+                fetch_graph.graphwind_Y = []
+
+                for i in db_graph_wind:
+                    fetch_graph.graphwind_X.append(i[0])
+                    fetch_graph.graphwind_Y.append(i[1])
+
             else:
                 fetch_graph.graphwind_X = [0]
                 fetch_graph.graphwind_Y = [0]
-
 
             # print(thread4.name)
         except Exception as e:
