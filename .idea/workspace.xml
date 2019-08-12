@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/wfs-gui_H.py" line="219" />
+    <bookmark url="file://$PROJECT_DIR$/wfs-gui_H.py" line="232" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
@@ -35,8 +35,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="231" column="26" lean-forward="true" selection-start-line="231" selection-start-column="26" selection-end-line="231" selection-end-column="26" />
+            <state relative-caret-position="469">
+              <caret line="414" column="26" selection-start-line="414" selection-start-column="26" selection-end-line="414" selection-end-column="26" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -147,8 +147,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="953" />
-    <option name="width" value="974" />
+    <option name="x" value="737" />
+    <option name="width" value="1190" />
     <option name="height" value="1026" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -448,10 +448,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="953" y="0" width="974" height="1026" extended-state="0" />
+    <frame x="737" y="0" width="1190" height="1026" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48395377" visible="true" weight="0.18162394" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48395377" visible="true" weight="0.14756945" />
       <window_info id="Structure" order="1" sideWeight="0.5160462" side_tool="true" weight="0.38132295" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32976654" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -460,7 +460,7 @@
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="5" sideWeight="0.4997367" weight="0.32919255" />
-      <window_info anchor="bottom" id="Run" internal_type="SLIDING" order="6" sideWeight="0.5943098" type="SLIDING" weight="0.22801302" />
+      <window_info active="true" anchor="bottom" id="Run" internal_type="SLIDING" order="6" sideWeight="0.5943098" type="SLIDING" visible="true" weight="0.22801302" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.56006324" visible="true" weight="0.22258414" />
       <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49894625" weight="0.32903227" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.4399368" side_tool="true" weight="0.12444934" />
@@ -597,8 +597,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wfs-gui_H.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="231" column="26" lean-forward="true" selection-start-line="231" selection-start-column="26" selection-end-line="231" selection-end-column="26" />
+        <state relative-caret-position="469">
+          <caret line="414" column="26" selection-start-line="414" selection-start-column="26" selection-end-line="414" selection-end-column="26" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>

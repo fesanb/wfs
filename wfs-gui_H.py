@@ -401,13 +401,18 @@ class App(QWidget):
         self.sensBox.addLayout(self.gpsBox)
 
         self.sensBox.addStretch()
+        try:
+            self.maxBox = QVBoxLayout(self.sensFrame)
+            self.maxwind12 = QLabel("Max 12hrs: " + fetch_sens.maxwind12)
+            self.maxwind1 = QLabel("Max 1hrs: " + fetch_sens.maxwind1)
+            self.maxBox.addWidget(self.maxwind1)
+            self.maxBox.addWidget(self.maxwind12)
+            self.sensBox.addLayout(self.maxBox)
 
-        self.maxBox = QVBoxLayout(self.sensFrame)
-        self.maxwind12 = QLabel("Max 12hrs: " + fetch_sens.maxwind12)
-        self.maxwind1 = QLabel("Max 1hrs: " + fetch_sens.maxwind1)
-        self.maxBox.addWidget(self.maxwind1)
-        self.maxBox.addWidget(self.maxwind12)
-        self.sensBox.addLayout(self.maxBox)
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
+            print(repr(e))
 
         self.sensBox.addStretch()
         self.mainContainer.addWidget(self.sensFrame)
