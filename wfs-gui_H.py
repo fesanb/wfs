@@ -21,7 +21,11 @@ get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM mean WHERE tmestmp
 
 #SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
-get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps)"
+get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 65 MINUTE))"
+
+#Max
+get_max_wind12 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_max_wind1 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
 
 def fetch_wind():
     while True:
@@ -159,6 +163,20 @@ def fetch_sens():
                 fetch_sens.atp = "0"
                 fetch_sens.sens_timestamp = "0"
 
+            cursor.execute(get_max_wind12)
+            if cursor.rowcount > 0:
+                maxwindDB = cursor.fetchone()
+                fetch_sens.maxwind12 = str(maxwindDB[0])
+            else:
+                fetch_sens.maxwind12 = "0"
+
+            cursor.execute(get_max_wind1)
+            if cursor.rowcount > 0:
+                maxwindDB = cursor.fetchone()
+                fetch_sens.maxwind1 = str(maxwindDB[0])
+            else:
+                fetch_sens.maxwind1 = "0"
+
 
             # print(thread2.name)
         except Exception as e:
@@ -181,17 +199,12 @@ def fetch_gps():
                 fetch_gps.lat = str(db_gps[1])
                 fetch_gps.long = str(db_gps[2])
                 fetch_gps.alt = str(db_gps[3])
-                fetch_gps.gps_timestamp = db_gps[4]
+                fetch_gps.gps_timestamp = datetime.datetime.strptime(db_gps[4],'%Y-%m-%d %H:%M:%S.%f')
             else:
                 fetch_gps.lat = "No gps signal"
                 fetch_gps.long = "No gps signal"
                 fetch_gps.alt = "No gps signal"
                 fetch_gps.gps_timestamp = "-"
-
-            # if fetch_gps.gps_timestamp < datetime.now() - timedelta(minutes=65):
-            #     fetch_gps.lat = "No gps signal"
-            #     fetch_gps.long = "No gps signal"
-            #     fetch_gps.alt = "No gps signal"
 
 
             # print(thread3.name)
@@ -338,8 +351,7 @@ class App(QWidget):
         pg.setConfigOption('background', '#000000')
         self.graph = pg.PlotWidget()
         self.graphContainer.addWidget(self.graph)
-        x = [1, 3, 6, 8, 9]
-        y = [3, 6, 1, 7, 9]
+
         try:
             self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
         except Exception as e:
@@ -389,6 +401,15 @@ class App(QWidget):
         self.sensBox.addLayout(self.gpsBox)
 
         self.sensBox.addStretch()
+
+        self.maxBox = QVBoxLayout(self.sensFrame)
+        self.maxwind12 = QLabel("Max 12hrs: " + fetch_sens.maxwind12)
+        self.maxwind1 = QLabel("Max 1hrs: " + fetch_sens.maxwind1)
+        self.maxBox.addWidget(self.maxwind1)
+        self.maxBox.addWidget(self.maxwind12)
+        self.sensBox.addLayout(self.maxBox)
+
+        self.sensBox.addStretch()
         self.mainContainer.addWidget(self.sensFrame)
 
         self.O1.addLayout(self.mainContainer)
@@ -433,6 +454,9 @@ class App(QWidget):
 
             self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
             self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
+
+            self.maxwind1.setText("Max 1hrs: " + fetch_sens.maxwind1)
+            self.maxwind1.setText("Max 12hrs: " + fetch_sens.maxwind12)
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
