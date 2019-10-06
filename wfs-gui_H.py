@@ -21,11 +21,13 @@ get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM mean WHERE tmestmp
 
 #SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
-get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 65 MINUTE))"
+get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 65 MINUTE)"
 
 #Max
 get_max_wind12 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 get_max_wind1 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
+
+gbp = 1
 
 def fetch_wind():
     while True:
@@ -106,7 +108,6 @@ def fetch_mean():
             if db_mean_wind[0] is None:  # cursor.rowcount is 0 and
                 fetch_mean.meanwind = 0
             else:
-                # print(db_mean_wind[0])
                 fetch_mean.meanwind = round(float(db_mean_wind[0]), 1)
 
             if float(fetch_mean.meanwind) < 0.3:
@@ -178,7 +179,6 @@ def fetch_sens():
                 fetch_sens.maxwind1 = "0"
 
 
-            # print(thread2.name)
         except Exception as e:
             cnx.close()
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -199,7 +199,7 @@ def fetch_gps():
                 fetch_gps.lat = str(db_gps[1])
                 fetch_gps.long = str(db_gps[2])
                 fetch_gps.alt = str(db_gps[3])
-                fetch_gps.gps_timestamp = datetime.datetime.strptime(db_gps[4],'%Y-%m-%d %H:%M:%S.%f')
+                fetch_gps.gps_timestamp = str(db_gps[4])
             else:
                 fetch_gps.lat = "No gps signal"
                 fetch_gps.long = "No gps signal"
@@ -207,7 +207,6 @@ def fetch_gps():
                 fetch_gps.gps_timestamp = "-"
 
 
-            # print(thread3.name)
         except Exception as e:
             cnx.close()
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -288,7 +287,6 @@ class App(QWidget):
         # self.setGeometry(self.left, self.top, self.width, self.height)
         self.setStyleSheet("color: white; background-color: #000000;")
         self.initUI()
-
         self.win = QWidget()
 
     def initUI(self):
@@ -377,16 +375,40 @@ class App(QWidget):
         self.sensBox.addLayout(self.sensheaderBox)
 
         self.sensdispBox = QVBoxLayout(self.sensFrame)
-        self.temp = QLabel(fetch_sens.temp + " °C")
-        self.hum = QLabel(fetch_sens.hum + "%")
-        self.atp = QLabel(fetch_sens.atp + " mbar")
-        self.temp.setFont(QFont('Arial', 20))
-        self.hum.setFont(QFont('Arial', 20))
-        self.atp.setFont(QFont('Arial', 20))
 
-        self.sensdispBox.addWidget(self.temp)
-        self.sensdispBox.addWidget(self.hum)
-        self.sensdispBox.addWidget(self.atp)
+        self.tempBox = QHBoxLayout(self.sensFrame)
+        self.tempICO = QLabel("ICO")
+        pixmap = QPixmap('img/ico_temp.png')
+        pixmap = pixmap.scaledToHeight(40)
+        self.tempICO.setPixmap(pixmap)
+        self.temp = QLabel(fetch_sens.temp + " °C")
+        self.temp.setFont(QFont('Arial', 20))
+        self.tempBox.addWidget(self.tempICO)
+        self.tempBox.addWidget(self.temp)
+        self.sensdispBox.addLayout(self.tempBox)
+
+        self.humBox = QHBoxLayout(self.sensFrame)
+        self.humICO = QLabel("ICO")
+        pixmap = QPixmap('img/hum.png')
+        pixmap = pixmap.scaledToHeight(30)
+        self.humICO.setPixmap(pixmap)
+        self.hum = QLabel(fetch_sens.hum + "%")
+        self.hum.setFont(QFont('Arial', 20))
+        self.humBox.addWidget(self.humICO)
+        self.humBox.addWidget(self.hum)
+        self.sensdispBox.addLayout(self.humBox)
+
+        self.atpBox = QHBoxLayout(self.sensFrame)
+        self.atpICO = QLabel("ICO")
+        pixmap = QPixmap('img/ico_atp.png')
+        pixmap = pixmap.scaledToHeight(30)
+        self.atpICO.setPixmap(pixmap)
+        self.atp = QLabel(fetch_sens.atp + " mbar")
+        self.atp.setFont(QFont('Arial', 20))
+        self.atpBox.addWidget(self.atpICO)
+        self.atpBox.addWidget(self.atp)
+        self.sensdispBox.addLayout(self.atpBox)
+
         self.sensBox.addLayout(self.sensdispBox)
 
         #GPS container
@@ -401,18 +423,27 @@ class App(QWidget):
         self.sensBox.addLayout(self.gpsBox)
 
         self.sensBox.addStretch()
-        try:
-            self.maxBox = QVBoxLayout(self.sensFrame)
-            self.maxwind12 = QLabel("Max 12hrs: " + fetch_sens.maxwind12)
-            self.maxwind1 = QLabel("Max 1hrs: " + fetch_sens.maxwind1)
-            self.maxBox.addWidget(self.maxwind1)
-            self.maxBox.addWidget(self.maxwind12)
-            self.sensBox.addLayout(self.maxBox)
 
-        except Exception as e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+        self.gbp = 2
+        self.graphbutton = QPushButton()
+        self.graphbutton.setText("GRAPH")
+        self.graphbutton.setStyleSheet("background-color: grey")
+        self.graphbutton.setCheckable(True)
+        self.graphbutton.clicked.connect(self.graphbutton_clicked)
+        self.sensBox.addWidget(self.graphbutton)
+
+        # try:
+        #     self.maxBox = QVBoxLayout(self.sensFrame)
+        #     self.maxwind12 = QLabel("Max 12hrs: " + fetch_sens.maxwind12)
+        #     self.maxwind1 = QLabel("Max 1hrs: " + fetch_sens.maxwind1)
+        #     self.maxBox.addWidget(self.maxwind1)
+        #     self.maxBox.addWidget(self.maxwind12)
+        #     self.sensBox.addLayout(self.maxBox)
+        #
+        # except Exception as e:
+        #     exc_type, exc_obj, exc_tb = sys.exc_info()
+        #     print(exc_type, exc_tb.tb_lineno)
+        #     print(repr(e))
 
         self.sensBox.addStretch()
         self.mainContainer.addWidget(self.sensFrame)
@@ -430,6 +461,24 @@ class App(QWidget):
         self.footerbox.addWidget(self.sensdate)
         self.footerbox.addWidget(self.gpsdate)
         self.O1.addLayout((self.footerbox))
+
+    def graphbutton_clicked(self):
+        try:
+            if self.gbp == 1:
+                self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
+                self.gbp = 2
+            elif self.gbp == 2 :
+                x = 2, 5, 6, 10
+                y = 1, 2, 3, 6
+                self.graph.plot(x, y, clear=True)
+                self.gbp = 1
+
+        except Exception as e:
+            exc_type, exc_obj, exc_tb = sys.exc_info()
+            print(exc_type, exc_tb.tb_lineno)
+            print(repr(e))
+
+        QApplication.processEvents()
 
     def update_wind(self):
         try:
