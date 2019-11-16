@@ -18,7 +18,7 @@ def parseGPS(gpsstr):
             print(repr(e))
 
 
-ser = serial.Serial("/dev/ttyS0", 9600)
+ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
 
 while True:
     try:
@@ -29,4 +29,4 @@ while True:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         print(exc_type, exc_tb.tb_lineno)
         print(repr(e))
-    sleep(1)
+    sleep(2)
