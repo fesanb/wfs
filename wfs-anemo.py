@@ -25,6 +25,7 @@ def db_insert(wind):
     cursor.execute(u'''INSERT INTO wind(wind) VALUES (%s)''' % wind)
     emp_no = cursor.lastrowid
     cnx.commit()
+    print("SQL insert done")
 
 
 g.add_event_detect(16, g.RISING, callback=increv)
