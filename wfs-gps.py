@@ -22,11 +22,9 @@ ser = serial.Serial("/dev/ttyS0", 9600)
 while True:
     try:
         gpsstr = ser.readline()
+        print(gpsstr)
+        parseGPS(gpsstr)
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         print(exc_type, exc_tb.tb_lineno)
         print(repr(e))
-
-    print(gpsstr)
-    parseGPS(gpsstr)
-
