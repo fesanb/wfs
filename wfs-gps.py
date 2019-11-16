@@ -1,7 +1,7 @@
 # WFS - Weather Forecast Station
 # Written by Stefan Bahrawy
 
-import serial
+import sys
 import pynmea2
 import serial
 
