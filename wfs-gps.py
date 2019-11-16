@@ -17,6 +17,7 @@ serialPort = serial.Serial("/dev/ttyS0", 9600)
 while True:
     try:
         gpsstr = serialPort.readline()
+        print(gpsstr)
         parseGPS(gpsstr)
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
