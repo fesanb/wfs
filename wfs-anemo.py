@@ -23,21 +23,25 @@ def db_insert(wind):
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
     cursor.execute(u'''INSERT INTO wind(wind) VALUES (%s)''' % wind)
-    emp_no = cursor.lastrowid
     cnx.commit()
     print("SQL insert done")
 
 
 g.add_event_detect(16, g.RISING, callback=increv)
 
+last_wind = 0
+
 while True:
     try:
         sleep(1)
         wind = anemo * 0.1
-        print("Frequency: {0}Hz".format(anemo))
-        print("Wind: {0}m/s".format(wind))
-        db_insert(wind)
-        anemo = 0
+        if wind == last_wind:
+            print("Wind: {0}m/s".format(wind), end="\r")
+        else:
+            db_insert(wind)
+            print("SQL insert - Wind: {0}m/s".format(wind), end="\r")
+            last_wind = wind
+            anemo = 0
 
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()

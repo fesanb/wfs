@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/wfs-gps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-anemo.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-anemo.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +68,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.wfs-anemo">
+  <component name="RunManager" selected="Python.wfs-gps">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -193,7 +195,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="wfs-cmdgui" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="wfs-gps" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -205,7 +207,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/arch/wfs-cmdgui.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs-gps.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -260,19 +262,19 @@
       <item itemvalue="Python.testing" />
       <item itemvalue="Python.wfs-ard2db" />
       <item itemvalue="Python.wfs-gui" />
-      <item itemvalue="Python.wfs-cmdgui" />
       <item itemvalue="Python.wfs-gui_H" />
       <item itemvalue="Python.button" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.wfs-anemo" />
+      <item itemvalue="Python.wfs-gps" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.wfs-gps" />
         <item itemvalue="Python.wfs-anemo" />
         <item itemvalue="Python.wfs-gui_H" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.button" />
-        <item itemvalue="Python.wfs-cmdgui" />
       </list>
     </recent_temporary>
   </component>
