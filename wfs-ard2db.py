@@ -156,5 +156,7 @@ while True:
                     sens_countertime = time.perf_counter()
         sens_timepassed = time.perf_counter()
 
-    except:
-        print("Error in serial read")
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        print(exc_type, exc_tb.tb_lineno)
+        print(repr(e))
