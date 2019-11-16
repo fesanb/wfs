@@ -32,7 +32,7 @@ g.add_event_detect(16, g.rising, callback=increv)
 while True:
     try:
         sleep(1)
-        wind = (525000 / anemo) * 0.1
+        wind = anemo * 0.1
         print("Frequency: {0}Hz".format(anemo))
         print("Wind: {0}m/s".format(wind))
         db_insert(wind)
