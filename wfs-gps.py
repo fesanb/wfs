@@ -18,7 +18,7 @@ def parseGPS(gpsstr):
             print(repr(e))
 
 
-ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
+ser = serial.Serial("/dev/ttyAMA0", 9600, timeout=0.5)
 
 while True:
     try:
