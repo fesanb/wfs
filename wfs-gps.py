@@ -17,10 +17,14 @@ def parseGPS(gpsstr):
             print(repr(e))
 
 
-serialPort = serial.Serial("/dev/ttyS0", 9600)
+ser = serial.Serial("/dev/ttyS0", 9600)
 
 while True:
-    gpsstr = serialPort.readline()
+    try:
+        gpsstr = ser.readline()
+    except:
+        print("fail")
+
     print(gpsstr)
     parseGPS(gpsstr)
 
