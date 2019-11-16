@@ -10,50 +10,20 @@ import time
 from datetime import datetime
 from datetime import timedelta
 
+cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+cursor = cnx.cursor(buffered=True)
 
-class Color(QWidget):
+cursor.execute("SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)")
+if cursor.rowcount > 0:
+    db_graph_wind = cursor.fetchone()
 
-    def __init__(self, color, *args, **kwargs):
-        super(Color, self).__init__(*args, **kwargs)
-        self.setAutoFillBackground(True)
+    print(db_graph_wind[2])
 
-        palette = self.palette()
-        palette.setColor(QPalette.Window, QColor(color))
-        self.setPalette(palette)
+    print(time.mktime(db_graph_wind[2].timetuple()))
 
-
-def graph():
-    x = 2, 5, 6, 10
-    y = 1, 2, 3, 6
-    graph.data_X = x
-    graph.data_Y = y
-
-
-class MainWindow(QMainWindow):
-
-    def __init__(self, parent=None):
-        super(MainWindow, self).__init__(parent=parent)
-
-        self.setWindowTitle("My Awesome App")
-
-        self.layout = QVBoxLayout()
-
-        self.button = QPushButton("OK", self)
-        self.button.setCheckable(True)
-        self.button.resize(50, 32)
-        self.button.move(50, 50)
-        self.button.clicked.connect(self.clickMethod)
-
-        x = 2, 5, 6, 10
-        y = 1, 2, 3, 6
-        self.layout.addWidget(pg.plot(x, y))
-        self.layout.addWidget(self.button)
-
-    def clickMethod(self):
-        MainWindow.initUI.l.setText("CHANGE")
-
-
-app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-app.exec_()
+    # graphwind_X = []
+    # graphwind_Y = []
+    #
+    # for i in db_graph_wind:
+    #     graphwind_X.append(time.mktime(i[0].timetouple))
+    #     graphwind_Y.append(i[1])

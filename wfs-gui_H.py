@@ -16,8 +16,11 @@ get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
 # GRAPH
-get_graph_wind = "SELECT * FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_graph_wind_timestamp = "SELECT CAST(tmestmp AS CHAR) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+get_graph = []
+get_graph.append("SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1500 HOUR)")
+get_graph.append("SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1500 HOUR)")
+get_graph.append("SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1500 HOUR)")
+get_graph.append("SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1500 HOUR)")
 
 #SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
@@ -27,7 +30,7 @@ get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps) AND tmestmp >= D
 get_max_wind12 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 get_max_wind1 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
 
-gbp = 1
+gbp = 0
 
 def fetch_wind():
     while True:
@@ -221,20 +224,21 @@ def fetch_graph():
             cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
             cursor = cnx.cursor(buffered=True)
 
-            cursor.execute(get_graph_wind)
+            print(gbp)
+            cursor.execute(get_graph[gbp])
             if cursor.rowcount > 0:
                 db_graph_wind = cursor.fetchall()
 
-                fetch_graph.graphwind_X = []
-                fetch_graph.graphwind_Y = []
+                fetch_graph.graph_X = []
+                fetch_graph.graph_Y = []
 
                 for i in db_graph_wind:
-                    fetch_graph.graphwind_X.append(i[0])
-                    fetch_graph.graphwind_Y.append(i[1])
+                    fetch_graph.graph_X.append(i[1])
+                    fetch_graph.graph_Y.append(i[0])
 
             else:
-                fetch_graph.graphwind_X = [0]
-                fetch_graph.graphwind_Y = [0]
+                fetch_graph.graph_X = [0]
+                fetch_graph.graph_Y = [0]
 
         except Exception as e:
             cnx.close()
@@ -351,7 +355,8 @@ class App(QWidget):
         self.graphContainer.addWidget(self.graph)
 
         try:
-            self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y)
+            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y)
+
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             print(exc_type, exc_tb.tb_lineno)
@@ -426,9 +431,9 @@ class App(QWidget):
 
         self.gbp = 2
         self.graphbutton = QPushButton()
-        self.graphbutton.setText("GRAPH")
+        self.graphbutton.setText("WIND")
         self.graphbutton.setStyleSheet("background-color: grey")
-        self.graphbutton.setCheckable(True)
+        self.graphbutton.setCheckable(False)
         self.graphbutton.clicked.connect(self.graphbutton_clicked)
         self.sensBox.addWidget(self.graphbutton)
 
@@ -464,14 +469,22 @@ class App(QWidget):
 
     def graphbutton_clicked(self):
         try:
-            if self.gbp == 1:
-                self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
-                self.gbp = 2
+            if gbp == 0:
+                self.graphbutton.setText("WIND")
+                self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
+                gbp += 1
             elif self.gbp == 2 :
-                x = 2, 5, 6, 10
-                y = 1, 2, 3, 6
-                self.graph.plot(x, y, clear=True)
-                self.gbp = 1
+                self.graphbutton.setText("ATP")
+                self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
+                self.gbp += 1
+            elif self.gbp == 3 :
+                self.graphbutton.setText("TEMP")
+                self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
+                self.gbp += 1
+            elif gbp == 4 :
+                self.graphbutton.setText("HUM")
+                self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
+                self.gbp = 0
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -504,13 +517,15 @@ class App(QWidget):
             self.longitude.setText("Longitude: " + fetch_gps.long)
             self.altitude.setText("Altitude: " + fetch_gps.alt)
 
-            self.graph.plot(fetch_graph.graphwind_X, fetch_graph.graphwind_Y, clear=True)
+            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
+            self.graphbutton.setText("WIND")
+            self.gbp = 1
 
             self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
             self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
 
-            self.maxwind1.setText("Max 1hrs: " + fetch_sens.maxwind1)
-            self.maxwind1.setText("Max 12hrs: " + fetch_sens.maxwind12)
+            # self.maxwind1.setText("Max 1hrs: " + fetch_sens.maxwind1)
+            # self.maxwind1.setText("Max 12hrs: " + fetch_sens.maxwind12)
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
