@@ -15,5 +15,10 @@ def parseGPS(str):
 serialPort = serial.Serial("/dev/ttyS0", 9600)
 
 while True:
-    str = serialPort.readline()
-    parseGPS(str)
+    try:
+        str = serialPort.readline()
+        parseGPS(str)
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        print(exc_type, exc_tb.tb_lineno)
+        print(repr(e))
