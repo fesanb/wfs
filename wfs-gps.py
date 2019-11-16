@@ -4,6 +4,7 @@
 import sys
 import pynmea2
 import serial
+from time import sleep
 
 
 def parseGPS(gpsstr):
@@ -28,3 +29,4 @@ while True:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         print(exc_type, exc_tb.tb_lineno)
         print(repr(e))
+    sleep(1)
