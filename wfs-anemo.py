@@ -27,7 +27,7 @@ def db_insert(wind):
     cnx.commit()
 
 
-g.add_event_detect(16, g.rising, callback=increv)
+g.add_event_detect(16, g.RISING, callback=increv)
 
 while True:
     try:
