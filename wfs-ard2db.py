@@ -48,7 +48,7 @@ cursor = cnx.cursor()
 i = 0
 handshake = 0
 ports = list(port_list.comports())
-serial_port = "/dev/ttyS0"
+serial_port = "/dev/ttyAMA0"
 beauti_sleep = 1
 
 
