@@ -22,7 +22,7 @@ ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
 
 while True:
     try:
-        str = ser.readline()
+        str = ser.readline().decode()
         print(str)
         parseGPS(str)
     except Exception as e:
