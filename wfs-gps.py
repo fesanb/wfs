@@ -4,6 +4,7 @@
 import sys
 import pynmea2
 import serial
+import mysql.connector
 from time import sleep
 
 sleep_time = 60
@@ -30,7 +31,7 @@ def parseGPS(str):
                 lat = msg.lat
                 lon = msg.lon
                 alt = msg.altitude
-                print(lat, lon)
+                print(lat, lon, alt)
                 db_insert(lat, lon, alt)
             # print("Timestamp: %s -- Lat: %s %s -- Lon: %s %s -- Altitude: %s %s" % (msg.timestamp, msg.lat, msg.lat_dir, msg.lon, msg.lon_dir, msg.altitude, msg.altitude_units))
         except Exception as e:
