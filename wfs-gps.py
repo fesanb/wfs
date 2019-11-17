@@ -15,8 +15,13 @@ def db_insert(lat, lon, alt):
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
     print(lat, lon, alt)
-    cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES (%s, %s, %s)''' % lat, lon, alt)
-    cnx.commit()
+    try:
+        cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES (%s, %s, %s)''' % lat, lon, alt)
+        cnx.commit()
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        print(exc_type, exc_tb.tb_lineno)
+        print(repr(e))
     print("SQL insert done")
 
 
