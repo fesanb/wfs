@@ -16,6 +16,7 @@ def db_insert(lat, lon, alt):
     cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES (%s)''' % lat, lon, alt)
     # cnx.commit()
     print("SQL insert done")
+    global sleep_time
     sleep_time = 3600
 
 
