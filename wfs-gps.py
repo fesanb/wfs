@@ -16,7 +16,7 @@ def db_insert(lat, lon, alt):
     cursor = cnx.cursor()
     cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES (%s)''' % lat, lon, alt)
     cnx.commit()
-    # print("SQL insert done")
+    print("SQL insert done")
 
 
 def parseGPS(str):
@@ -27,7 +27,7 @@ def parseGPS(str):
                 # print("pass")
                 pass
             else:
-                # print("GGA received")
+                print("GGA received")
                 lat = msg.latitude
                 lon = msg.longitude
                 alt = msg.altitude
@@ -58,7 +58,7 @@ while True:
         str = ser.readline().decode()
         #print(str)
         parseGPS(str)
-        # print(sleep_time)
+        print(sleep_time)
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         print(exc_type, exc_tb.tb_lineno)
