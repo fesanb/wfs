@@ -15,8 +15,8 @@ def db_insert(lat, lon, alt):
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
     cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES (%s)''' % lat, lon, alt)
-    # cnx.commit()
-    print("SQL insert done")
+    cnx.commit()
+    # print("SQL insert done")
 
 
 def parseGPS(str):
@@ -24,20 +24,20 @@ def parseGPS(str):
         try:
             msg = pynmea2.parse(str)
             if msg.lat is None:
-                print("pass")
-                # pass
+                # print("pass")
+                pass
             else:
-                print("GGA received")
+                # print("GGA received")
                 lat = msg.latitude
                 lon = msg.longitude
                 alt = msg.altitude
                 sats = msg.num_sats
-                print(lat, lon, alt, sats)
+                # print(lat, lon, alt, sats)
                 db_insert(lat, lon, alt)
                 global sleep_time
                 global sleep_time2
                 if int(sats) < 6:
-                    sleep_time = 60
+                    sleep_time = 30
                 elif sleep_time2 < 3600:
                     sleep_time2 += 300
                     sleep_time = sleep_time2
@@ -47,7 +47,7 @@ def parseGPS(str):
             print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
     else:
-        sleep_time = 1
+        sleep_time = 0.5
 
 
 ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
@@ -58,7 +58,7 @@ while True:
         str = ser.readline().decode()
         #print(str)
         parseGPS(str)
-        print(sleep_time)
+        # print(sleep_time)
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         print(exc_type, exc_tb.tb_lineno)
