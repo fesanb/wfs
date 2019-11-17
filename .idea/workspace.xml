@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/wfs-bme680.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/bme680-1.0.5.dist-info/DESCRIPTION.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/bme680-1.0.5.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/bme680-1.0.5.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/bme680-1.0.5.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/bme680-1.0.5.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/bme680-1.0.5.dist-info/metadata.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/bme680-1.0.5.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/bme680/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/Lib/site-packages/bme680/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-anemo.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-anemo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-gps.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-bme680.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-bme680.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +76,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.wfs-gps">
+  <component name="RunManager" selected="Python.wfs-bme680">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -83,27 +90,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs-ard2db.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="button" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="wfs" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="/usr/bin/python3.5" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/button.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -196,6 +182,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="wfs-bme680" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="wfs" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs-bme680.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="wfs-gps" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -264,18 +271,18 @@
       <item itemvalue="Python.wfs-ard2db" />
       <item itemvalue="Python.wfs-gui" />
       <item itemvalue="Python.wfs-gui_H" />
-      <item itemvalue="Python.button" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.wfs-anemo" />
       <item itemvalue="Python.wfs-gps" />
+      <item itemvalue="Python.wfs-bme680" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.wfs-bme680" />
         <item itemvalue="Python.wfs-gps" />
         <item itemvalue="Python.wfs-anemo" />
         <item itemvalue="Python.wfs-gui_H" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.button" />
       </list>
     </recent_temporary>
   </component>
