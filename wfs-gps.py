@@ -28,10 +28,11 @@ def parseGPS(str):
                 # pass
             else:
                 print("GGA received")
-                lat = msg.lat
-                lon = msg.lon
+                lat = msg.latitude
+                lon = msg.longitude
                 alt = msg.altitude
-                print(lat, lon, alt)
+                sats = msg.num_sats
+                print(lat, lon, alt, sats)
                 db_insert(lat, lon, alt)
             # print("Timestamp: %s -- Lat: %s %s -- Lon: %s %s -- Altitude: %s %s" % (msg.timestamp, msg.lat, msg.lat_dir, msg.lon, msg.lon_dir, msg.altitude, msg.altitude_units))
         except Exception as e:
