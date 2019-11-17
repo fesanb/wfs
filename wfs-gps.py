@@ -14,6 +14,7 @@ sleep_time2 = 0
 def db_insert(lat, lon, alt):
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
+    print(lat, lon, alt)
     cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES (%s)''' % lat, lon, alt)
     cnx.commit()
     print("SQL insert done")
