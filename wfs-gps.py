@@ -32,11 +32,11 @@ def parseGPS(str):
                 lon = msg.longitude
                 alt = msg.altitude
                 sats = msg.num_sats
-                # print(lat, lon, alt, sats)
+                print(lat, lon, alt, sats)
                 db_insert(lat, lon, alt)
                 global sleep_time
                 global sleep_time2
-                if sats < 6:
+                if int(sats) < 6:
                     sleep_time = 60
                 elif sleep_time2 < 3600:
                     sleep_time2 += 300
