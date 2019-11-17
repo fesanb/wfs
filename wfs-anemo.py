@@ -22,7 +22,7 @@ def increv(channel):
 def db_insert(wind):
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
-    cursor.execute(u'''INSERT INTO wind(wind) VALUES (%s)''' % wind)
+    cursor.execute(u'''INSERT INTO wind(wind) VALUES ({0})'''.format(wind))
     cnx.commit()
     print("SQL insert done")
 
