@@ -16,7 +16,7 @@ def db_insert(lat, lon, alt):
     cursor = cnx.cursor()
     print(lat, lon, alt)
     try:
-        cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES (%s, %s, %s)''' % lat, lon, alt)
+        cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES ({0}, {1}, {2})'''.format(lat, lon, alt))
         cnx.commit()
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
