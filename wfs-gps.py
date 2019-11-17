@@ -8,7 +8,7 @@ import mysql.connector
 from time import sleep
 
 sleep_time = 30
-sleep_time2 = 300
+sleep_time2 = 0
 
 
 def db_insert(lat, lon, alt):
