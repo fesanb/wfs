@@ -29,9 +29,9 @@ def parseGPS(str):
                 print("GGA received")
                 lat = msg.lat
                 lon = msg.lon
-                alt = msg.alt
-                print(lat, lon, alt)
-                db_insert(lat, lon, alt)
+                # alt = msg.alt
+                print(lat, lon)
+                db_insert(lat, lon)
             # print("Timestamp: %s -- Lat: %s %s -- Lon: %s %s -- Altitude: %s %s" % (msg.timestamp, msg.lat, msg.lat_dir, msg.lon, msg.lon_dir, msg.altitude, msg.altitude_units))
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
