@@ -8,6 +8,7 @@ import mysql.connector
 from time import sleep
 
 sleep_time = 30
+sleep_time2 = 300
 
 
 def db_insert(lat, lon, alt):
@@ -34,15 +35,19 @@ def parseGPS(str):
                 # print(lat, lon, alt, sats)
                 db_insert(lat, lon, alt)
                 global sleep_time
+                global sleep_time2
                 if sats < 6:
                     sleep_time = 60
-                elif sleep_time < 3600:
-                    sleep_time += 240
+                elif sleep_time2 < 3600:
+                    sleep_time2 += 300
+                    sleep_time = sleep_time2
             # print("Timestamp: %s -- Lat: %s %s -- Lon: %s %s -- Altitude: %s %s" % (msg.timestamp, msg.lat, msg.lat_dir, msg.lon, msg.lon_dir, msg.altitude, msg.altitude_units))
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             print(exc_type, exc_tb.tb_lineno)
             print(repr(e))
+    else:
+        sleep_time = 1
 
 
 ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
