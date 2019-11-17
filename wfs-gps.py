@@ -7,7 +7,7 @@ import serial
 import mysql.connector
 from time import sleep
 
-sleep_time = 60
+sleep_time = 30
 
 
 def db_insert(lat, lon, alt):
@@ -16,8 +16,6 @@ def db_insert(lat, lon, alt):
     cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES (%s)''' % lat, lon, alt)
     # cnx.commit()
     print("SQL insert done")
-    global sleep_time
-    sleep_time = 3600
 
 
 def parseGPS(str):
@@ -35,6 +33,11 @@ def parseGPS(str):
                 sats = msg.num_sats
                 # print(lat, lon, alt, sats)
                 db_insert(lat, lon, alt)
+                global sleep_time
+                if sats < 6:
+                    sleep_time = 60
+                elif sleep_time < 3600:
+                    sleep_time += 240
             # print("Timestamp: %s -- Lat: %s %s -- Lon: %s %s -- Altitude: %s %s" % (msg.timestamp, msg.lat, msg.lat_dir, msg.lon, msg.lon_dir, msg.altitude, msg.altitude_units))
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -46,7 +49,7 @@ ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
 
 while True:
     try:
-        sleep(2)
+        sleep(sleep_time)
         str = ser.readline().decode()
         #print(str)
         parseGPS(str)
