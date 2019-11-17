@@ -13,7 +13,7 @@ def db_insert(lat, lon, alt):
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
     cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES (%s)''' % lat, lon, alt)
-    cnx.commit()
+    # cnx.commit()
     print("SQL insert done")
     sleep_time = 3600
 
@@ -23,11 +23,14 @@ def parseGPS(str):
         try:
             msg = pynmea2.parse(str)
             if msg.lat is None:
-                pass
+                print("pass")
+                # pass
             else:
+                print("GGA received")
                 lat = msg.lat
                 lon = msg.lon
                 alt = msg.alt
+                print(lat, lon, alt)
                 db_insert(lat, lon, alt)
             # print("Timestamp: %s -- Lat: %s %s -- Lon: %s %s -- Altitude: %s %s" % (msg.timestamp, msg.lat, msg.lat_dir, msg.lon, msg.lon_dir, msg.altitude, msg.altitude_units))
         except Exception as e:
@@ -40,7 +43,7 @@ ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
 
 while True:
     try:
-        sleep(sleep_time)
+        sleep(2)
         str = ser.readline().decode()
         #print(str)
         parseGPS(str)
