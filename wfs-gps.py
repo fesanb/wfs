@@ -49,6 +49,7 @@ while True:
         str = ser.readline().decode()
         #print(str)
         parseGPS(str)
+        print(sleep_time)
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         print(exc_type, exc_tb.tb_lineno)
