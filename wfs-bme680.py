@@ -1,5 +1,10 @@
+# WFS - Weather Forecast Station
+# Written by Stefan Bahrawy
+
 import bme680
 import time
+import mysql.connector
+import sys
 
 sensor = bme680.BME680()
 
@@ -13,14 +18,26 @@ sensor = bme680.BME680()
 # sensor.set_gas_heater_duration(150)
 # sensor.select_gas_heater_profile(0)
 
+
+def db_insert(temp, hum, atp):
+    cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+    cursor = cnx.cursor()
+    try:
+        cursor.execute(u'''INSERT INTO sens(temp, hum, atp) VALUES ({0}, {1}, {2})'''.format(temp, hum, atp))
+        cnx.commit()
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        print(exc_type, exc_tb.tb_lineno)
+        print(repr(e))
+    print("SQL insert done")
+
+
 while True:
-    if sensor.get_sensor_data():
-        output = "{0:.2f} C,{1:.2f} hPa,{2:.2f} %RH".format(sensor.data.temperature, sensor.data.pressure, sensor.data.humidity)
-
-        if sensor.data.heat_stable:
-            print("{0},{1} Ohms".format(output, sensor.data.gas_resistance))
-
-        else:
-            print(output)
-
-    time.sleep(1)
+    if sensor.get_sensor_data() is None:
+        pass
+    else:
+        temp = sensor.data.temperature
+        hum = sensor.data.humidity
+        atp = sensor.data.pressure
+        db_insert(temp, hum, atp)
+        time.sleep(300)
