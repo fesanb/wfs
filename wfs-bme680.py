@@ -40,4 +40,4 @@ while True:
         hum = sensor.data.humidity
         atp = sensor.data.pressure
         db_insert(temp, hum, atp)
-        time.sleep(300)
+        time.sleep(600)

@@ -17,10 +17,10 @@ get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), IN
 
 # GRAPH
 get_graph = []
-get_graph.append("SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1500 HOUR)")
-get_graph.append("SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1500 HOUR)")
-get_graph.append("SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1500 HOUR)")
-get_graph.append("SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1500 HOUR)")
+get_graph.append("SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2300 HOUR)")
+get_graph.append("SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2300 HOUR)")
+get_graph.append("SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2300 HOUR)")
+get_graph.append("SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2300 HOUR)")
 
 #SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
@@ -30,6 +30,7 @@ get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps) AND tmestmp >= D
 get_max_wind12 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 get_max_wind1 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
 
+global gbp
 gbp = 0
 
 def fetch_wind():
@@ -219,12 +220,12 @@ def fetch_gps():
         time.sleep(45)
 
 def fetch_graph():
+    global gbp
     while True:
         try:
             cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
             cursor = cnx.cursor(buffered=True)
 
-            print(gbp)
             cursor.execute(get_graph[gbp])
             if cursor.rowcount > 0:
                 db_graph_wind = cursor.fetchall()
@@ -282,13 +283,13 @@ class App(QWidget):
         super(App, self).__init__(parent=parent)
         self.title = "WFS - Weather Forecast Station"
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
-        # self.left = 0
-        # self.top = 0
-        # self.width = 720
-        # self.height = 480
-        self.showFullScreen()
+        self.left = 0
+        self.top = 0
+        self.width = 720
+        self.height = 480
+        #self.showFullScreen()
         self.setWindowTitle(self.title)
-        # self.setGeometry(self.left, self.top, self.width, self.height)
+        self.setGeometry(self.left, self.top, self.width, self.height)
         self.setStyleSheet("color: white; background-color: #000000;")
         self.initUI()
         self.win = QWidget()
@@ -468,23 +469,16 @@ class App(QWidget):
         self.O1.addLayout((self.footerbox))
 
     def graphbutton_clicked(self):
+        global gbp
+        if gbp < 3:
+            gbp += 1
+        else:
+            gbp = 0
+        print("GBP:{0}".format(gbp))
         try:
-            if gbp == 0:
-                self.graphbutton.setText("WIND")
-                self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
-                gbp += 1
-            elif self.gbp == 2 :
-                self.graphbutton.setText("ATP")
-                self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
-                self.gbp += 1
-            elif self.gbp == 3 :
-                self.graphbutton.setText("TEMP")
-                self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
-                self.gbp += 1
-            elif gbp == 4 :
-                self.graphbutton.setText("HUM")
-                self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
-                self.gbp = 0
+            blabel = ["WIND", "ATP", "TEMP", "HUM"]
+            self.graphbutton.setText(blabel[gbp])
+            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -518,8 +512,8 @@ class App(QWidget):
             self.altitude.setText("Altitude: " + fetch_gps.alt)
 
             self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
-            self.graphbutton.setText("WIND")
-            self.gbp = 1
+            # self.graphbutton.setText("WIND")
+            # self.gbp = 1
 
             self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
             self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
