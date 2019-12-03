@@ -17,10 +17,10 @@ get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), IN
 
 # GRAPH
 get_graph = []
-get_graph.append("SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2300 HOUR)")
-get_graph.append("SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2300 HOUR)")
-get_graph.append("SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2300 HOUR)")
-get_graph.append("SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2300 HOUR)")
+get_graph.append("SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2500 HOUR)")
+get_graph.append("SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2500 HOUR)")
+get_graph.append("SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2500 HOUR)")
+get_graph.append("SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2500 HOUR)")
 
 #SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
@@ -50,7 +50,7 @@ def fetch_wind():
             if fetch_wind.timestamp < datetime.now() - timedelta(minutes=0.25):
                 fetch_wind.wind = "-.-"
 
-            time.sleep(1)
+            time.sleep(0.9 )
         except Exception as e:
             cnx.close()
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -150,104 +150,102 @@ def fetch_mean():
         time.sleep(5)
 
 def fetch_sens():
-    while True:
-        try:
-            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-            cursor = cnx.cursor(buffered=True)
+    try:
+        cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+        cursor = cnx.cursor(buffered=True)
 
-            cursor.execute(get_sens)
-            if cursor.rowcount > 0:
-                db_sens = cursor.fetchone()
-                fetch_sens.temp = str(db_sens[1])
-                fetch_sens.hum = str(round(db_sens[2]))
-                fetch_sens.atp = str(db_sens[3])
-                fetch_sens.sens_timestamp = str(db_sens[4])
-            else:
-                fetch_sens.temp = "0"
-                fetch_sens.hum = "0"
-                fetch_sens.atp = "0"
-                fetch_sens.sens_timestamp = "0"
+        cursor.execute(get_sens)
+        if cursor.rowcount > 0:
+            db_sens = cursor.fetchone()
+            fetch_sens.temp = str(db_sens[1])
+            fetch_sens.hum = str(round(db_sens[2]))
+            fetch_sens.atp = str(db_sens[3])
+            fetch_sens.sens_timestamp = str(db_sens[4])
+        else:
+            fetch_sens.temp = "0"
+            fetch_sens.hum = "0"
+            fetch_sens.atp = "0"
+            fetch_sens.sens_timestamp = "0"
 
-            cursor.execute(get_max_wind12)
-            if cursor.rowcount > 0:
-                maxwindDB = cursor.fetchone()
-                fetch_sens.maxwind12 = str(maxwindDB[0])
-            else:
-                fetch_sens.maxwind12 = "0"
+        cursor.execute(get_max_wind12)
+        if cursor.rowcount > 0:
+            maxwindDB = cursor.fetchone()
+            fetch_sens.maxwind12 = str(maxwindDB[0])
+        else:
+            fetch_sens.maxwind12 = "0"
 
-            cursor.execute(get_max_wind1)
-            if cursor.rowcount > 0:
-                maxwindDB = cursor.fetchone()
-                fetch_sens.maxwind1 = str(maxwindDB[0])
-            else:
-                fetch_sens.maxwind1 = "0"
+        cursor.execute(get_max_wind1)
+        if cursor.rowcount > 0:
+            maxwindDB = cursor.fetchone()
+            fetch_sens.maxwind1 = str(maxwindDB[0])
+        else:
+            fetch_sens.maxwind1 = "0"
 
 
-        except Exception as e:
-            cnx.close()
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+    except Exception as e:
+        cnx.close()
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        print(exc_type, exc_tb.tb_lineno)
+        print(repr(e))
 
-        time.sleep(45)
 
 def fetch_gps():
-    while True:
-        try:
-            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-            cursor = cnx.cursor(buffered=True)
+    try:
+        cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+        cursor = cnx.cursor(buffered=True)
 
-            cursor.execute(get_gps)
-            if cursor.rowcount > 0:
-                db_gps = cursor.fetchone()
-                fetch_gps.lat = str(db_gps[1])
-                fetch_gps.long = str(db_gps[2])
-                fetch_gps.alt = str(db_gps[3])
-                fetch_gps.gps_timestamp = str(db_gps[4])
-            else:
-                fetch_gps.lat = "No gps signal"
-                fetch_gps.long = "No gps signal"
-                fetch_gps.alt = "No gps signal"
-                fetch_gps.gps_timestamp = "-"
+        cursor.execute(get_gps)
+        if cursor.rowcount > 0:
+            db_gps = cursor.fetchone()
+            fetch_gps.lat = str(db_gps[1])
+            fetch_gps.long = str(db_gps[2])
+            fetch_gps.alt = str(db_gps[3])
+            fetch_gps.gps_timestamp = str(db_gps[4])
+        else:
+            fetch_gps.lat = "No gps signal"
+            fetch_gps.long = "No gps signal"
+            fetch_gps.alt = "No gps signal"
+            fetch_gps.gps_timestamp = "-"
 
 
-        except Exception as e:
-            cnx.close()
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+    except Exception as e:
+        cnx.close()
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        print(exc_type, exc_tb.tb_lineno)
+        print(repr(e))
 
-        time.sleep(45)
 
 def fetch_graph():
     global gbp
-    while True:
-        try:
-            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-            cursor = cnx.cursor(buffered=True)
+    try:
+        cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+        cursor = cnx.cursor(buffered=True)
 
-            cursor.execute(get_graph[gbp])
-            if cursor.rowcount > 0:
-                db_graph_wind = cursor.fetchall()
+        cursor.execute(get_graph[gbp])
+        if cursor.rowcount > 0:
+            db_graph_wind = cursor.fetchall()
 
-                fetch_graph.graph_X = []
-                fetch_graph.graph_Y = []
+            fetch_graph.graph_X = []
+            fetch_graph.graph_Y = []
 
-                for i in db_graph_wind:
-                    fetch_graph.graph_X.append(i[1])
-                    fetch_graph.graph_Y.append(i[0])
+            for i in db_graph_wind:
+                fetch_graph.graph_X.append(i[1])
+                fetch_graph.graph_Y.append(i[0])
 
-            else:
-                fetch_graph.graph_X = [0]
-                fetch_graph.graph_Y = [0]
+        else:
+            fetch_graph.graph_X = [0]
+            fetch_graph.graph_Y = [0]
 
-        except Exception as e:
-            cnx.close()
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+    except Exception as e:
+        cnx.close()
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        print(exc_type, exc_tb.tb_lineno)
+        print(repr(e))
 
-        time.sleep(15)
+
+def plot_graph(y,x):
+
+
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
 thread_fetch_wind.daemon = True
@@ -356,7 +354,7 @@ class App(QWidget):
         self.graphContainer.addWidget(self.graph)
 
         try:
-            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y)
+            self.graph.plot_graph(fetch_graph.graph_X, fetch_graph.graph_Y)
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -475,8 +473,9 @@ class App(QWidget):
         else:
             gbp = 0
         print("GBP:{0}".format(gbp))
+        fetch_graph()
         try:
-            blabel = ["WIND", "ATP", "TEMP", "HUM"]
+            blabel = ["WIND", "ATP", "HUM", "TEMP"]
             self.graphbutton.setText(blabel[gbp])
             self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
 
@@ -503,6 +502,10 @@ class App(QWidget):
 
     def update_sens(self):
         try:
+            fetch_graph()
+            fetch_sens()
+            fetch_gps()
+
             self.temp.setText(fetch_sens.temp + " °C")
             self.hum.setText(fetch_sens.hum + "%")
             self.atp.setText(fetch_sens.atp + " mbar")
