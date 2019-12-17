@@ -1,3 +1,6 @@
+# WFS - Weather Forecast Station
+# Written by Stefan Bahrawy
+
 import sys, os
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -428,13 +431,33 @@ class App(QWidget):
 
         self.sensBox.addStretch()
 
-        self.gbp = 2
+        # self.gbp = 2
         self.graphbutton = QPushButton()
         self.graphbutton.setText("WIND")
-        self.graphbutton.setStyleSheet("background-color: grey")
+        self.graphbutton.setStyleSheet("background-color: #444444; color: black; font-weight:600")
         self.graphbutton.setCheckable(False)
         self.graphbutton.clicked.connect(self.graphbutton_clicked)
         self.sensBox.addWidget(self.graphbutton)
+
+        self.sensBox.addStretch()
+
+        # footer box
+        self.footerbox = QVBoxLayout()
+        self.credit = QLabel("Creator: Stefan Bahrawy")
+        self.winddate = QLabel("W: " + str(fetch_wind.timestamp))
+        self.sensdate = QLabel("S: " + str(fetch_sens.sens_timestamp))
+        self.gpsdate = QLabel("G: " + str(fetch_gps.gps_timestamp))
+
+        self.credit.setFont(QFont('Arial', 6))
+        self.winddate.setFont(QFont('Arial', 6))
+        self.sensdate.setFont(QFont('Arial', 6))
+        self.gpsdate.setFont(QFont('Arial', 6))
+
+        self.footerbox.addWidget(self.credit)
+        self.footerbox.addWidget(self.winddate)
+        self.footerbox.addWidget(self.sensdate)
+        self.footerbox.addWidget(self.gpsdate)
+        self.sensBox.addLayout(self.footerbox)
 
         self.sensBox.addStretch()
         self.mainContainer.addWidget(self.sensFrame)
@@ -442,16 +465,16 @@ class App(QWidget):
         self.O1.addLayout(self.mainContainer)
 
         #footer box
-        self.footerbox = QHBoxLayout()
-        self.credit = QLabel("Creator: Stefan Bahrawy")
-        self.winddate = QLabel("W: " + str(fetch_wind.timestamp))
-        self.sensdate = QLabel("S: " + str(fetch_sens.sens_timestamp))
-        self.gpsdate = QLabel("G: " + str(fetch_gps.gps_timestamp))
-        self.footerbox.addWidget(self.credit)
-        self.footerbox.addWidget(self.winddate)
-        self.footerbox.addWidget(self.sensdate)
-        self.footerbox.addWidget(self.gpsdate)
-        self.O1.addLayout((self.footerbox))
+        # self.footerbox = QHBoxLayout()
+        # self.credit = QLabel("Creator: Stefan Bahrawy")
+        # self.winddate = QLabel("W: " + str(fetch_wind.timestamp))
+        # self.sensdate = QLabel("S: " + str(fetch_sens.sens_timestamp))
+        # self.gpsdate = QLabel("G: " + str(fetch_gps.gps_timestamp))
+        # self.footerbox.addWidget(self.credit)
+        # self.footerbox.addWidget(self.winddate)
+        # self.footerbox.addWidget(self.sensdate)
+        # self.footerbox.addWidget(self.gpsdate)
+        # self.O1.addLayout((self.footerbox))
 
     def graphbutton_clicked(self):
         global gbp

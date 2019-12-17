@@ -29,7 +29,7 @@ def db_insert(temp, hum, atp):
         exc_type, exc_obj, exc_tb = sys.exc_info()
         print(exc_type, exc_tb.tb_lineno)
         print(repr(e))
-    print("SQL insert done")
+    # print("SQL insert done")
 
 
 while True:

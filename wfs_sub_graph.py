@@ -1,3 +1,6 @@
+# WFS - Weather Forecast Station
+# Written by Stefan Bahrawy
+
 import pyqtgraph as pg
 from datetime import datetime
 

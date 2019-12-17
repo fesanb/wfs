@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-bme680.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-bme680.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-gui_H.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gui_H.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs_sub_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_sub_graph.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -401,29 +404,29 @@
     <option name="LAST_COMMIT_MESSAGE" value="Timestamp on graph x-axis worknig." />
   </component>
   <component name="WindowStateProjectService">
-    <state x="967" y="107" key="CommitChangelistDialog2" timestamp="1576592184152">
+    <state x="967" y="107" key="CommitChangelistDialog2" timestamp="1576592593658">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592184152" />
-    <state width="1159" height="208" key="GridCell.Tab.0.bottom" timestamp="1576592395838">
+    <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592593658" />
+    <state width="1159" height="208" key="GridCell.Tab.0.bottom" timestamp="1576595795405">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592395838" />
-    <state width="1159" height="208" key="GridCell.Tab.0.center" timestamp="1576592395838">
+    <state width="1159" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595795405" />
+    <state width="1159" height="208" key="GridCell.Tab.0.center" timestamp="1576595795405">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.center/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592395838" />
-    <state width="1159" height="208" key="GridCell.Tab.0.left" timestamp="1576592395838">
+    <state width="1159" height="208" key="GridCell.Tab.0.center/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595795405" />
+    <state width="1159" height="208" key="GridCell.Tab.0.left" timestamp="1576595795405">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.left/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592395838" />
-    <state width="1159" height="208" key="GridCell.Tab.0.right" timestamp="1576592395838">
+    <state width="1159" height="208" key="GridCell.Tab.0.left/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595795405" />
+    <state width="1159" height="208" key="GridCell.Tab.0.right" timestamp="1576595795405">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.right/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592395838" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1576592185560">
+    <state width="1159" height="208" key="GridCell.Tab.0.right/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595795405" />
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1576592596129">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592185560" />
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592596129" />
   </component>
 </project>
