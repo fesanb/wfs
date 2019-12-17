@@ -283,7 +283,7 @@ class App(QWidget):
         # self.height = 480
         self.showFullScreen()
         self.setWindowTitle(self.title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
+        # self.setGeometry(self.left, self.top, self.width, self.height)
         self.setStyleSheet("color: white; background-color: #000000;")
         self.initUI()
         self.win = QWidget()
