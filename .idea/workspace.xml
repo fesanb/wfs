@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/install/wfs.service" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-bme680.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-bme680.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-gui_H.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gui_H.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs_sub_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_sub_graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-gui_H.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,8 +35,8 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/wfs.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/test.py" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/wfs-gui_H.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/arch/wfs-gui.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/test/testing.py" root0="SKIP_INSPECTION" />
   </component>
@@ -253,13 +253,13 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.test" />
       <item itemvalue="Python.testing" />
       <item itemvalue="Python.wfs-ard2db" />
+      <item itemvalue="Python.wfs-bme680" />
+      <item itemvalue="Python.wfs-gps" />
       <item itemvalue="Python.wfs-gui" />
       <item itemvalue="Python.wfs-gui_H" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.wfs-gps" />
-      <item itemvalue="Python.wfs-bme680" />
       <item itemvalue="Python.wfs_sub_graph" />
     </list>
     <recent_temporary>
@@ -404,29 +404,33 @@
     <option name="LAST_COMMIT_MESSAGE" value="Timestamp on graph x-axis worknig." />
   </component>
   <component name="WindowStateProjectService">
-    <state x="967" y="107" key="CommitChangelistDialog2" timestamp="1576592593658">
+    <state x="1071" y="315" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576597209367">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592593658" />
-    <state width="1159" height="208" key="GridCell.Tab.0.bottom" timestamp="1576595795405">
+    <state x="1071" y="315" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576597209367" />
+    <state x="967" y="107" key="CommitChangelistDialog2" timestamp="1576595933058">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595795405" />
-    <state width="1159" height="208" key="GridCell.Tab.0.center" timestamp="1576595795405">
+    <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595933058" />
+    <state width="1159" height="208" key="GridCell.Tab.0.bottom" timestamp="1576604498519">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.center/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595795405" />
-    <state width="1159" height="208" key="GridCell.Tab.0.left" timestamp="1576595795405">
+    <state width="1159" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604498519" />
+    <state width="1159" height="208" key="GridCell.Tab.0.center" timestamp="1576604498519">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.left/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595795405" />
-    <state width="1159" height="208" key="GridCell.Tab.0.right" timestamp="1576595795405">
+    <state width="1159" height="208" key="GridCell.Tab.0.center/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604498519" />
+    <state width="1159" height="208" key="GridCell.Tab.0.left" timestamp="1576604498519">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.right/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595795405" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1576592596129">
+    <state width="1159" height="208" key="GridCell.Tab.0.left/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604498519" />
+    <state width="1159" height="208" key="GridCell.Tab.0.right" timestamp="1576604498519">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576592596129" />
+    <state width="1159" height="208" key="GridCell.Tab.0.right/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604498519" />
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1576595935034">
+      <screen x="0" y="0" width="1920" height="1019" />
+    </state>
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576595935034" />
   </component>
 </project>
