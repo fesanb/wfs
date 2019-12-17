@@ -5,7 +5,7 @@ from datetime import datetime
 class TimeAxisItem(pg.AxisItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.setLabel(text='Time', units=None)
+        # self.setLabel(text='Time', units=None)
         self.enableAutoSIPrefix(False)
 
     def tickStrings(self, values, scale, spacing):
