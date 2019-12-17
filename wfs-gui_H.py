@@ -7,8 +7,10 @@ import pyqtgraph as pg
 import mysql.connector
 import threading
 import time
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
+#custom imports
+from wfs_sub_graph import TimeAxisItem
+
 
 
 #Wind
@@ -16,11 +18,13 @@ get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
 # GRAPH
-get_graph = []
-get_graph.append("SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2500 HOUR)")
-get_graph.append("SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2500 HOUR)")
-get_graph.append("SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2500 HOUR)")
-get_graph.append("SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 2500 HOUR)")
+interval = 12
+get_graph = [
+"SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval),
+"SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval),
+"SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval),
+"SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
+]
 
 #SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
@@ -80,7 +84,6 @@ def make_mean():
 
         time.sleep(60)
 
-
 def db_cleanup():
     while True:
         try:
@@ -99,7 +102,6 @@ def db_cleanup():
             print(repr(e))
 
         time.sleep(60)
-
 
 def fetch_mean():
     while True:
@@ -188,7 +190,6 @@ def fetch_sens():
         print(exc_type, exc_tb.tb_lineno)
         print(repr(e))
 
-
 def fetch_gps():
     try:
         cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
@@ -214,7 +215,6 @@ def fetch_gps():
         print(exc_type, exc_tb.tb_lineno)
         print(repr(e))
 
-
 def fetch_graph():
     global gbp
     try:
@@ -233,18 +233,14 @@ def fetch_graph():
                 fetch_graph.graph_Y.append(i[0])
 
         else:
-            fetch_graph.graph_X = [0]
-            fetch_graph.graph_Y = [0]
+            fetch_graph.graph_X = []
+            fetch_graph.graph_Y = []
 
     except Exception as e:
         cnx.close()
         exc_type, exc_obj, exc_tb = sys.exc_info()
         print(exc_type, exc_tb.tb_lineno)
         print(repr(e))
-
-
-def plot_graph(y,x):
-
 
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
@@ -314,7 +310,7 @@ class App(QWidget):
             self.windFrame = QFrame(self)
             self.wind_VL = QVBoxLayout(self.windFrame)
             self.windL = QLabel(fetch_wind.wind, self.windFrame)
-            self.windL.setStyleSheet("background-image: url('img/wind-circle.png'); background-repeat: no-repeat; background-position: center")
+            self.windL.setStyleSheet("background-image: url(img/wind-circle.png); background-repeat: no-repeat; background-position: center")
             self.windL.setAlignment(Qt.AlignCenter)
             self.windL.setMinimumHeight(200)
             self.windL.setFont(QFont('Arial', 50))
@@ -350,11 +346,15 @@ class App(QWidget):
         #GRAPH
         self.graphContainer = QVBoxLayout()
         pg.setConfigOption('background', '#000000')
-        self.graph = pg.PlotWidget()
+        self.graph = pg.PlotWidget(
+            axisItems={'bottom': TimeAxisItem(orientation='bottom')}
+        )
+        self.graph.showGrid(x=True, y=True)
+
         self.graphContainer.addWidget(self.graph)
 
         try:
-            self.graph.plot_graph(fetch_graph.graph_X, fetch_graph.graph_Y)
+            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, pen='y')
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -436,19 +436,6 @@ class App(QWidget):
         self.graphbutton.clicked.connect(self.graphbutton_clicked)
         self.sensBox.addWidget(self.graphbutton)
 
-        # try:
-        #     self.maxBox = QVBoxLayout(self.sensFrame)
-        #     self.maxwind12 = QLabel("Max 12hrs: " + fetch_sens.maxwind12)
-        #     self.maxwind1 = QLabel("Max 1hrs: " + fetch_sens.maxwind1)
-        #     self.maxBox.addWidget(self.maxwind1)
-        #     self.maxBox.addWidget(self.maxwind12)
-        #     self.sensBox.addLayout(self.maxBox)
-        #
-        # except Exception as e:
-        #     exc_type, exc_obj, exc_tb = sys.exc_info()
-        #     print(exc_type, exc_tb.tb_lineno)
-        #     print(repr(e))
-
         self.sensBox.addStretch()
         self.mainContainer.addWidget(self.sensFrame)
 
@@ -477,7 +464,7 @@ class App(QWidget):
         try:
             blabel = ["WIND", "ATP", "HUM", "TEMP"]
             self.graphbutton.setText(blabel[gbp])
-            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
+            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True, pen='y')
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -499,7 +486,6 @@ class App(QWidget):
 
         QApplication.processEvents()
 
-
     def update_sens(self):
         try:
             fetch_graph()
@@ -514,15 +500,10 @@ class App(QWidget):
             self.longitude.setText("Longitude: " + fetch_gps.long)
             self.altitude.setText("Altitude: " + fetch_gps.alt)
 
-            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True)
-            # self.graphbutton.setText("WIND")
-            # self.gbp = 1
+            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True, pen='y')
 
             self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
             self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
-
-            # self.maxwind1.setText("Max 1hrs: " + fetch_sens.maxwind1)
-            # self.maxwind1.setText("Max 12hrs: " + fetch_sens.maxwind12)
 
         except Exception as e:
             exc_type, exc_obj, exc_tb = sys.exc_info()
