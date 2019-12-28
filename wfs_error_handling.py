@@ -1,7 +1,7 @@
 import sys
 
 
-def error_handle():
+def error_handle(e):
     try:
         cnx
     except NameError:

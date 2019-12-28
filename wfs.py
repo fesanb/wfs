@@ -60,7 +60,7 @@ def fetch_wind():
 
             time.sleep(0.9 )
         except Exception as e:
-            error_handle()
+            error_handle(e)
 
 def make_mean():
     while True:
@@ -78,23 +78,7 @@ def make_mean():
                 emp_no = cursor.lastrowid
                 cnx.commit()
         except Exception as e:
-            error_handle()
-
-        time.sleep(60)
-
-def db_cleanup():
-    while True:
-        try:
-            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-            cursor = cnx.cursor(buffered=True)
-
-            wind_cleanup = ("DELETE FROM wind WHERE wind < 1")
-            cursor.execute(wind_cleanup)
-            emp_no = cursor.lastrowid
-            cnx.commit()
-
-        except Exception as e:
-            error_handle()
+            error_handle(e)
 
         time.sleep(60)
 
@@ -139,7 +123,7 @@ def fetch_mean():
                 fetch_mean.beaufortLS = "Beaufort 1 - Light Air"
 
         except Exception as e:
-            error_handle()
+            error_handle(e)
 
         time.sleep(5)
 
@@ -177,7 +161,7 @@ def fetch_sens():
 
 
     except Exception as e:
-        error_handle()
+        error_handle(e)
 
 def fetch_gps():
     try:
@@ -199,7 +183,7 @@ def fetch_gps():
 
 
     except Exception as e:
-        error_handle()
+        error_handle(e)
 
 def fetch_graph():
     global gbp
@@ -225,8 +209,23 @@ def fetch_graph():
             fetch_graph.graph_Y.append(0)
 
     except Exception as e:
-        error_handle()
+        error_handle(e)
 
+def db_cleanup():
+    while True:
+        try:
+            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+            cursor = cnx.cursor(buffered=True)
+
+            wind_cleanup = ("DELETE FROM wind WHERE wind < 1")
+            cursor.execute(wind_cleanup)
+            emp_no = cursor.lastrowid
+            cnx.commit()
+
+        except Exception as e:
+            error_handle(e)
+
+        time.sleep(60)
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
 thread_fetch_wind.daemon = True
@@ -315,7 +314,7 @@ class App(QWidget):
             self.windContainer.addLayout(self.windBox)
 
         except Exception as e:
-            error_handle()
+            error_handle(e)
 
         #Bauforth box
         self.beaufortbox = QHBoxLayout()
@@ -437,7 +436,6 @@ class App(QWidget):
             gbp += 1
         else:
             gbp = 0
-        print("GBP:{0}".format(gbp))
         fetch_graph()
         try:
             blabel = ["WIND", "ATP", "HUM", "TEMP"]
@@ -446,7 +444,7 @@ class App(QWidget):
             self.graph
 
         except Exception as e:
-            error_handle()
+            error_handle(e)
 
         QApplication.processEvents()
 
@@ -457,7 +455,7 @@ class App(QWidget):
             self.winddate.setText("W: " + str(fetch_wind.timestamp))
             self.beaufortL.setText(fetch_mean.beaufortLS)
         except Exception as e:
-            error_handle()
+            error_handle(e)
 
         QApplication.processEvents()
 
@@ -482,7 +480,7 @@ class App(QWidget):
             self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
 
         except Exception as e:
-            error_handle()
+            error_handle(e)
 
         QApplication.processEvents()
 
