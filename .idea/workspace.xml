@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/install/wfs.log.anemo.service" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/install/wfs.log.bme680.service" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/install/wfs.log.gps.service" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wfs_error_handling.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.service" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.service" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs_sub_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_sub_graph.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +64,7 @@
       <recent name="C:\Users\stefa\PycharmProjects\wfs\arch" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.wfs-gui_H">
+  <component name="RunManager" selected="Python.wfs">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -78,6 +78,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs-ard2db.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="wfs" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -170,27 +191,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="wfs-gps" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="wfs" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="/usr/bin/python3.5" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs-gps.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="wfs-gui" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -233,7 +233,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="wfs_sub_graph" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="wfs" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -245,7 +245,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs_sub_graph.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -260,17 +260,17 @@
       <item itemvalue="Python.wfs-gui" />
       <item itemvalue="Python.wfs-gui_H" />
       <item itemvalue="Python.test" />
-      <item itemvalue="Python.wfs-gps" />
       <item itemvalue="Python.wfs-bme680" />
-      <item itemvalue="Python.wfs_sub_graph" />
+      <item itemvalue="Python.wfs" />
+      <item itemvalue="Python.test (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.wfs" />
+        <item itemvalue="Python.test (1)" />
+        <item itemvalue="Python.wfs-bme680" />
         <item itemvalue="Python.wfs-gui_H" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.wfs_sub_graph" />
-        <item itemvalue="Python.wfs-bme680" />
-        <item itemvalue="Python.wfs-gps" />
       </list>
     </recent_temporary>
   </component>
@@ -410,29 +410,55 @@
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="1071" y="315" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576597209367" />
-    <state x="967" y="107" key="CommitChangelistDialog2" timestamp="1576604858221">
+    <state x="967" y="107" key="CommitChangelistDialog2" timestamp="1577265657318">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604858221" />
-    <state width="1159" height="208" key="GridCell.Tab.0.bottom" timestamp="1576604498519">
+    <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577265657318" />
+    <state width="1159" height="205" key="GridCell.Tab.0.bottom" timestamp="1577537452716">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604498519" />
-    <state width="1159" height="208" key="GridCell.Tab.0.center" timestamp="1576604498519">
+    <state width="1159" height="205" key="GridCell.Tab.0.bottom/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577537452716" />
+    <state width="1159" height="205" key="GridCell.Tab.0.center" timestamp="1577537452716">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.center/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604498519" />
-    <state width="1159" height="208" key="GridCell.Tab.0.left" timestamp="1576604498519">
+    <state width="1159" height="205" key="GridCell.Tab.0.center/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577537452716" />
+    <state width="1159" height="205" key="GridCell.Tab.0.left" timestamp="1577537452716">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.left/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604498519" />
-    <state width="1159" height="208" key="GridCell.Tab.0.right" timestamp="1576604498519">
+    <state width="1159" height="205" key="GridCell.Tab.0.left/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577537452716" />
+    <state width="1159" height="205" key="GridCell.Tab.0.right" timestamp="1577537452716">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state width="1159" height="208" key="GridCell.Tab.0.right/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604498519" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1576604860178">
+    <state width="1159" height="205" key="GridCell.Tab.0.right/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577537452716" />
+    <state width="1159" height="244" key="GridCell.Tab.1.bottom" timestamp="1577536614320">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576604860178" />
+    <state width="1159" height="244" key="GridCell.Tab.1.bottom/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577536614320" />
+    <state width="1159" height="244" key="GridCell.Tab.1.center" timestamp="1577536614320">
+      <screen x="0" y="0" width="1920" height="1019" />
+    </state>
+    <state width="1159" height="244" key="GridCell.Tab.1.center/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577536614320" />
+    <state width="1159" height="244" key="GridCell.Tab.1.left" timestamp="1577536614319">
+      <screen x="0" y="0" width="1920" height="1019" />
+    </state>
+    <state width="1159" height="244" key="GridCell.Tab.1.left/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577536614319" />
+    <state width="1159" height="244" key="GridCell.Tab.1.right" timestamp="1577536614320">
+      <screen x="0" y="0" width="1920" height="1019" />
+    </state>
+    <state width="1159" height="244" key="GridCell.Tab.1.right/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577536614320" />
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1577265659407">
+      <screen x="0" y="0" width="1920" height="1019" />
+    </state>
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577265659407" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/venv/Lib/site-packages/bme680/__init__.py</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

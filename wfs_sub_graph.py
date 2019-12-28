@@ -13,3 +13,17 @@ class TimeAxisItem(pg.AxisItem):
 
     def tickStrings(self, values, scale, spacing):
         return [datetime.fromtimestamp(value).strftime("%H:%M") for value in values]
+
+
+def graph_plot(x, y):
+    pg.setConfigOption('background', '#000000')
+    graph = pg.PlotWidget(axisItems={'bottom': TimeAxisItem(orientation='bottom')})
+    graph.showGrid(x=True, y=True)
+
+    graph.plot(x, y, clear=True, pen='y')
+    return graph
+
+
+def graph_update(self, x, y):
+    self.graph.plot(x, y, clear=True, pen='y')
+    return self.graph

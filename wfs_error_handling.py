@@ -1,5 +1,6 @@
 import sys
 
+
 def error_handle():
     try:
         cnx
@@ -12,8 +13,3 @@ def error_handle():
     exc_type, exc_obj, exc_tb = sys.exc_info()
     print(exc_type, exc_obj, " - on line:", exc_tb.tb_lineno)
     print(repr(e))
-
-try:
-    print(hello)
-except Exception as e:
-    error_handle()
