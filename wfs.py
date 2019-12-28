@@ -12,7 +12,8 @@ import threading
 import time
 from datetime import datetime, timedelta
 #custom imports
-from wfs_sub_graph import TimeAxisItem
+from wfs_sub_graph import *
+from wfs_error_handling import error_handle
 
 
 
@@ -59,10 +60,7 @@ def fetch_wind():
 
             time.sleep(0.9 )
         except Exception as e:
-            cnx.close()
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+            error_handle()
 
 def make_mean():
     while True:
@@ -80,10 +78,7 @@ def make_mean():
                 emp_no = cursor.lastrowid
                 cnx.commit()
         except Exception as e:
-            cnx.close()
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+            error_handle()
 
         time.sleep(60)
 
@@ -99,10 +94,7 @@ def db_cleanup():
             cnx.commit()
 
         except Exception as e:
-            cnx.close()
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+            error_handle()
 
         time.sleep(60)
 
@@ -147,10 +139,7 @@ def fetch_mean():
                 fetch_mean.beaufortLS = "Beaufort 1 - Light Air"
 
         except Exception as e:
-            cnx.close()
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+            error_handle()
 
         time.sleep(5)
 
@@ -188,10 +177,7 @@ def fetch_sens():
 
 
     except Exception as e:
-        cnx.close()
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        print(exc_type, exc_tb.tb_lineno)
-        print(repr(e))
+        error_handle()
 
 def fetch_gps():
     try:
@@ -213,10 +199,7 @@ def fetch_gps():
 
 
     except Exception as e:
-        cnx.close()
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        print(exc_type, exc_tb.tb_lineno)
-        print(repr(e))
+        error_handle()
 
 def fetch_graph():
     global gbp
@@ -238,12 +221,11 @@ def fetch_graph():
         else:
             fetch_graph.graph_X = []
             fetch_graph.graph_Y = []
+            fetch_graph.graph_X.append(time.time())
+            fetch_graph.graph_Y.append(0)
 
     except Exception as e:
-        cnx.close()
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        print(exc_type, exc_tb.tb_lineno)
-        print(repr(e))
+        error_handle()
 
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
@@ -297,7 +279,7 @@ class App(QWidget):
         self.mainContainer = QHBoxLayout(self)
         self.windContainer = QVBoxLayout(self)
 
-        try:
+        try: #Wind box
             self.windHeader = QHBoxLayout()
             self.windHL = QLabel("WIND")
             self.windHL.setFont(QFont('Arial', 20))
@@ -333,9 +315,7 @@ class App(QWidget):
             self.windContainer.addLayout(self.windBox)
 
         except Exception as e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+            error_handle()
 
         #Bauforth box
         self.beaufortbox = QHBoxLayout()
@@ -348,22 +328,8 @@ class App(QWidget):
 
         #GRAPH
         self.graphContainer = QVBoxLayout()
-        pg.setConfigOption('background', '#000000')
-        self.graph = pg.PlotWidget(
-            axisItems={'bottom': TimeAxisItem(orientation='bottom')}
-        )
-        self.graph.showGrid(x=True, y=True)
-
+        self.graph = graph_plot(fetch_graph.graph_X,fetch_graph.graph_Y)
         self.graphContainer.addWidget(self.graph)
-
-        try:
-            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, pen='y')
-
-        except Exception as e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
-
         self.windContainer.addLayout(self.graphContainer)
         self.windContainer.addStretch()
         self.mainContainer.addLayout(self.windContainer)
@@ -464,17 +430,6 @@ class App(QWidget):
 
         self.O1.addLayout(self.mainContainer)
 
-        #footer box
-        # self.footerbox = QHBoxLayout()
-        # self.credit = QLabel("Creator: Stefan Bahrawy")
-        # self.winddate = QLabel("W: " + str(fetch_wind.timestamp))
-        # self.sensdate = QLabel("S: " + str(fetch_sens.sens_timestamp))
-        # self.gpsdate = QLabel("G: " + str(fetch_gps.gps_timestamp))
-        # self.footerbox.addWidget(self.credit)
-        # self.footerbox.addWidget(self.winddate)
-        # self.footerbox.addWidget(self.sensdate)
-        # self.footerbox.addWidget(self.gpsdate)
-        # self.O1.addLayout((self.footerbox))
 
     def graphbutton_clicked(self):
         global gbp
@@ -487,12 +442,11 @@ class App(QWidget):
         try:
             blabel = ["WIND", "ATP", "HUM", "TEMP"]
             self.graphbutton.setText(blabel[gbp])
-            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True, pen='y')
+            graph_update(self, fetch_graph.graph_X, fetch_graph.graph_Y)
+            self.graph
 
         except Exception as e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+            error_handle()
 
         QApplication.processEvents()
 
@@ -503,9 +457,7 @@ class App(QWidget):
             self.winddate.setText("W: " + str(fetch_wind.timestamp))
             self.beaufortL.setText(fetch_mean.beaufortLS)
         except Exception as e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+            error_handle()
 
         QApplication.processEvents()
 
@@ -523,15 +475,14 @@ class App(QWidget):
             self.longitude.setText("Longitude: " + fetch_gps.long)
             self.altitude.setText("Altitude: " + fetch_gps.alt)
 
-            self.graph.plot(fetch_graph.graph_X, fetch_graph.graph_Y, clear=True, pen='y')
+            graph_update(self, fetch_graph.graph_X, fetch_graph.graph_Y)
+            self.graph
 
             self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
             self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
 
         except Exception as e:
-            exc_type, exc_obj, exc_tb = sys.exc_info()
-            print(exc_type, exc_tb.tb_lineno)
-            print(repr(e))
+            error_handle()
 
         QApplication.processEvents()
 
