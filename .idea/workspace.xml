@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/wfs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/wfs.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs_error_handling.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_error_handling.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -407,14 +403,14 @@
     <option name="LAST_COMMIT_MESSAGE" value="Error fixing and simplifying." />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1071" y="315" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1576597209367">
+    <state x="1071" y="315" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1577543158660">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="1071" y="315" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1576597209367" />
-    <state x="967" y="107" key="CommitChangelistDialog2" timestamp="1577538797723">
+    <state x="1071" y="315" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577543158660" />
+    <state x="967" y="107" key="CommitChangelistDialog2" timestamp="1577541747670">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577538797723" />
+    <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577541747670" />
     <state width="1199" height="205" key="GridCell.Tab.0.bottom" timestamp="1577540314054">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
@@ -451,10 +447,10 @@
       <screen x="1920" y="0" width="1920" height="1019" />
     </state>
     <state x="2027" y="123" key="SettingsEditor/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577539714876" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1577538802890">
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1577541754118">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577538802890" />
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577541754118" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
