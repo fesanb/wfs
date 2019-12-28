@@ -3,7 +3,7 @@ Description=WFS-anemo
 After=multi-user.target
 
 [Service]
-User=wfs
+User=pi
 ExecStart=/usr/bin/python3 /home/pi/wfs/wfs-gps.py
 
 [Install]
