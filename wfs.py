@@ -411,7 +411,7 @@ class App(QWidget):
         self.humico.setPixmap(self.humimg)
         self.humvalue = QLabel(fetch_sens.hum + " %")
         self.humvalue.setFont(QFont('Arial', 20))
-        self.humimg = QPixmap(path + '/img/arrow_up.png')
+        self.humimg = QPixmap(path + '/img/' + sens_arrow(2))
         self.humarrow = QLabel()
         self.humarrow.setPixmap(self.tempimg)
 
@@ -424,7 +424,7 @@ class App(QWidget):
         self.atpico.setPixmap(self.atpimg)
         self.atpvalue = QLabel(fetch_sens.atp + " mBar")
         self.atpvalue.setFont(QFont('Arial', 20))
-        self.atpimg = QPixmap(path + '/img/arrow_up.png')
+        self.atpimg = QPixmap(path + '/img/' + sens_arrow(3))
         self.atparrow = QLabel()
         self.atparrow.setPixmap(self.tempimg)
 
