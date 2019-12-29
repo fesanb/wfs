@@ -392,13 +392,13 @@ class App(QWidget):
         self.sensBox.addLayout(self.sensgrid)
 
 
-        self.tempimg = QPixmap(path + 'img/ico-generic.png')
+        self.tempimg = QPixmap(path + '/img/ico-generic.png')
         self.tempico = QLabel()
         self.tempico.setPixmap(self.tempimg)
         self.tempvalue = QLabel(fetch_sens.temp + " °C")
         self.tempvalue.setFont(QFont('Arial', 20))
-        self.tempimg = QPixmap(path + 'img/' + sens_arrow(1))
-        print(path + 'img/' + sens_arrow(1))
+        self.tempimg = QPixmap(path + '/img/' + sens_arrow(1))
+        print(path + '/img/' + sens_arrow(1))
         self.temparrow = QLabel()
         self.temparrow.setPixmap(self.tempimg)
 
@@ -406,12 +406,12 @@ class App(QWidget):
         self.sensgrid.addWidget(self.tempvalue, 0, 1, Qt.AlignCenter)
         self.sensgrid.addWidget(self.temparrow, 0, 2, Qt.AlignCenter)
 
-        self.humimg = QPixmap(path + 'img/ico-generic.png')
+        self.humimg = QPixmap(path + '/img/ico-generic.png')
         self.humico = QLabel()
         self.humico.setPixmap(self.humimg)
         self.humvalue = QLabel(fetch_sens.hum + " %")
         self.humvalue.setFont(QFont('Arial', 20))
-        self.humimg = QPixmap(path + 'img/arrow_up.png')
+        self.humimg = QPixmap(path + '/img/arrow_up.png')
         self.humarrow = QLabel()
         self.humarrow.setPixmap(self.tempimg)
 
@@ -419,12 +419,12 @@ class App(QWidget):
         self.sensgrid.addWidget(self.humvalue, 1, 1, Qt.AlignCenter)
         self.sensgrid.addWidget(self.humarrow, 1, 2, Qt.AlignCenter)
 
-        self.atpimg = QPixmap(path + 'img/ico-generic.png')
+        self.atpimg = QPixmap(path + '/img/ico-generic.png')
         self.atpico = QLabel()
         self.atpico.setPixmap(self.atpimg)
         self.atpvalue = QLabel(fetch_sens.atp + " mBar")
         self.atpvalue.setFont(QFont('Arial', 20))
-        self.atpimg = QPixmap(path + 'img/arrow_up.png')
+        self.atpimg = QPixmap(path + '/img/arrow_up.png')
         self.atparrow = QLabel()
         self.atparrow.setPixmap(self.tempimg)
 
