@@ -11,7 +11,7 @@ import mysql.connector
 import threading
 import time
 from datetime import datetime, timedelta
-from pathlib import Path as path
+from pathlib import Path
 #custom imports
 from wfs_sub_graph import *
 from wfs_error_handling import error_handle
@@ -275,6 +275,8 @@ class App(QWidget):
 
     def initUI(self):
 
+        path = str(Path(__file__).parent.absolute())
+
         self.O1 = QVBoxLayout(self)
         self.mainContainer = QHBoxLayout(self)
         self.windContainer = QVBoxLayout(self)
@@ -295,7 +297,10 @@ class App(QWidget):
             self.windFrame = QFrame(self)
             self.wind_VL = QVBoxLayout(self.windFrame)
             self.windL = QLabel(fetch_wind.wind, self.windFrame)
-            self.windL.setStyleSheet("background-image: url(/home/pi/wfs/img/wind-circle.png); background-repeat: no-repeat; background-position: center")
+            img = "/img/wind-circle.png"
+            self.windL.setStyleSheet("background-image: url({}); "
+                                     "background-repeat: no-repeat; "
+                                     "background-position: center".format(path + img))
             self.windL.setAlignment(Qt.AlignCenter)
             self.windL.setMinimumHeight(200)
             self.windL.setFont(QFont('Arial', 50))
@@ -305,10 +310,9 @@ class App(QWidget):
             self.meanFrame = QFrame(self)
             self.mean_VL = QVBoxLayout(self.meanFrame)
             self.meanL = QLabel(str(fetch_mean.meanwind), self.meanFrame)
-            imgpath = str(path(__file__).parent.absolute()) + "/img/wind-circle.png"
             self.meanL.setStyleSheet("background-image: url({}); "
                                      "background-repeat: no-repeat; "
-                                     "background-position: center".format(imgpath))
+                                     "background-position: center".format(path + img))
             # print(imgpath)
             # print("background-image: url({}); "
             #                          "background-repeat: no-repeat; "
