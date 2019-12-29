@@ -294,7 +294,7 @@ class App(QWidget):
             self.windFrame = QFrame(self)
             self.wind_VL = QVBoxLayout(self.windFrame)
             self.windL = QLabel(fetch_wind.wind, self.windFrame)
-            self.windL.setStyleSheet("background-image: url(./img/wind-circle.png); background-repeat: no-repeat; background-position: center")
+            self.windL.setStyleSheet("background-image: url(/home/pi/wfs/img/wind-circle.png); background-repeat: no-repeat; background-position: center")
             self.windL.setAlignment(Qt.AlignCenter)
             self.windL.setMinimumHeight(200)
             self.windL.setFont(QFont('Arial', 50))
