@@ -249,6 +249,8 @@ def sens_arrow(sens_number):
 
     last_sens = db_last_sens[sens_number]
     current_sens = fetch_sens.current_sens[sens_number]
+    print(last_sens)
+    print(current_sens)
     if last_sens < current_sens:
         img = "arrow_up.png"
         return img
@@ -397,10 +399,9 @@ class App(QWidget):
         self.tempico.setPixmap(self.tempimg)
         self.tempvalue = QLabel(fetch_sens.temp + " °C")
         self.tempvalue.setFont(QFont('Arial', 20))
-        self.tempimg = QPixmap(path + '/img/' + sens_arrow(1))
-        print(path + '/img/' + sens_arrow(1))
+        self.tempimgarrow = QPixmap(path + '/img/' + sens_arrow(1))
         self.temparrow = QLabel()
-        self.temparrow.setPixmap(self.tempimg)
+        self.temparrow.setPixmap(self.tempimgarrow)
 
         self.sensgrid.addWidget(self.tempico, 0, 0, Qt.AlignCenter)
         self.sensgrid.addWidget(self.tempvalue, 0, 1, Qt.AlignCenter)
@@ -411,10 +412,9 @@ class App(QWidget):
         self.humico.setPixmap(self.humimg)
         self.humvalue = QLabel(fetch_sens.hum + " %")
         self.humvalue.setFont(QFont('Arial', 20))
-        self.humimg = QPixmap(path + '/img/' + sens_arrow(2))
-        print(path + '/img/' + sens_arrow(2))
+        self.humimgarrow = QPixmap(path + '/img/' + sens_arrow(2))
         self.humarrow = QLabel()
-        self.humarrow.setPixmap(self.tempimg)
+        self.humarrow.setPixmap(self.humimgarrow)
 
         self.sensgrid.addWidget(self.humico, 1, 0, Qt.AlignCenter)
         self.sensgrid.addWidget(self.humvalue, 1, 1, Qt.AlignCenter)
@@ -425,10 +425,9 @@ class App(QWidget):
         self.atpico.setPixmap(self.atpimg)
         self.atpvalue = QLabel(fetch_sens.atp + " mBar")
         self.atpvalue.setFont(QFont('Arial', 20))
-        self.atpimg = QPixmap(path + '/img/' + sens_arrow(3))
-        print(path + '/img/' + sens_arrow(3))
+        self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(3))
         self.atparrow = QLabel()
-        self.atparrow.setPixmap(self.tempimg)
+        self.atparrow.setPixmap(self.atpimgarrow)
 
         self.sensgrid.addWidget(self.atpico, 2, 0, Qt.AlignCenter)
         self.sensgrid.addWidget(self.atpvalue, 2, 1, Qt.AlignCenter)
