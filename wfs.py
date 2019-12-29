@@ -257,8 +257,9 @@ def sens_arrow(sens_number):
         return img
     elif last_sens == current_sens:
         img = "arrow_flat.png"
+        return img
 
-    print(img)
+    # print(img)
 
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
@@ -346,10 +347,6 @@ class App(QWidget):
             self.meanL.setStyleSheet("background-image: url({}); "
                                      "background-repeat: no-repeat; "
                                      "background-position: center".format(path + img))
-            # print(imgpath)
-            # print("background-image: url({}); "
-            #                          "background-repeat: no-repeat; "
-            #                          "background-position: center".format(imgpath))
             self.meanL.setAlignment(Qt.AlignCenter)
             self.meanL.setMinimumHeight(200)
             self.meanL.setFont(QFont('Arial', 50))
@@ -415,6 +412,7 @@ class App(QWidget):
         self.humvalue = QLabel(fetch_sens.hum + " %")
         self.humvalue.setFont(QFont('Arial', 20))
         self.humimg = QPixmap(path + '/img/' + sens_arrow(2))
+        print(path + '/img/' + sens_arrow(2))
         self.humarrow = QLabel()
         self.humarrow.setPixmap(self.tempimg)
 
@@ -428,6 +426,7 @@ class App(QWidget):
         self.atpvalue = QLabel(fetch_sens.atp + " mBar")
         self.atpvalue.setFont(QFont('Arial', 20))
         self.atpimg = QPixmap(path + '/img/' + sens_arrow(3))
+        print(path + '/img/' + sens_arrow(3))
         self.atparrow = QLabel()
         self.atparrow.setPixmap(self.tempimg)
 
