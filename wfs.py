@@ -305,7 +305,7 @@ class App(QWidget):
             self.meanFrame = QFrame(self)
             self.mean_VL = QVBoxLayout(self.meanFrame)
             self.meanL = QLabel(str(fetch_mean.meanwind), self.meanFrame)
-            imgpath = str(path().absolute()) + "/img/wind-circle.png"
+            imgpath = str(path(__file__).parent.absolute()) + "/img/wind-circle.png"
             self.meanL.setStyleSheet("background-image: url({}); "
                                      "background-repeat: no-repeat; "
                                      "background-position: center".format(imgpath))
