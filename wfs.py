@@ -249,12 +249,15 @@ def sens_arrow(sens_number):
 
     last_sens = db_last_sens[sens_number]
     current_sens = fetch_sens.current_sens[sens_number]
-    if last_sens > current_sens:
+    if last_sens < current_sens:
         img = "arrow_up.png"
         return img
-    else:
+    elif last_sens > current_sens:
         img = "arrow_down.png"
         return img
+    elif last_sens == current_sens:
+        img = "arrow_flat.png"
+
     print(img)
 
 
