@@ -140,6 +140,11 @@ def fetch_sens():
             fetch_sens.hum = str(round(db_sens[2]))
             fetch_sens.atp = str(db_sens[3])
             fetch_sens.sens_timestamp = str(db_sens[4])
+            fetch_sens.current_sens = []
+            for i in db_sens:
+                fetch_sens.current_sens.append(i)
+
+
         else:
             fetch_sens.temp = "0"
             fetch_sens.hum = "0"
@@ -181,7 +186,6 @@ def fetch_gps():
             fetch_gps.long = "No gps signal"
             fetch_gps.alt = "No gps signal"
             fetch_gps.gps_timestamp = "-"
-
 
     except Exception as e:
         error_handle(e)
@@ -227,6 +231,32 @@ def db_cleanup():
             error_handle(e)
 
         time.sleep(60)
+
+def sens_arrow(sens_number):
+    fetch_last_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id)-1 FROM sens)"
+    try:
+        cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+        cursor = cnx.cursor(buffered=True)
+
+        cursor.execute(fetch_last_sens)
+        if cursor.rowcount > 0:
+            db_last_sens = cursor.fetchone()
+            temp = str(db_last_sens[1])
+            hum = str(round(db_last_sens[2]))
+            atp = str(db_last_sens[3])
+    except Exception as e:
+        error_handle(e)
+
+    last_sens = db_last_sens[sens_number]
+    current_sens = fetch_sens.current_sens[sens_number]
+    if last_sens < current_sens:
+        img = "arrow_up.png"
+        return img
+    else:
+        img = "arrow_down.png"
+        return img
+    print(img)
+
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
 thread_fetch_wind.daemon = True
@@ -358,42 +388,49 @@ class App(QWidget):
         self.sensheaderBox.addWidget(self.sensHL)
         self.sensBox.addLayout(self.sensheaderBox)
 
-        self.sensdispBox = QVBoxLayout(self.sensFrame)
+        self.sensgrid = QGridLayout()
+        self.sensBox.addLayout(self.sensgrid)
 
-        self.tempBox = QHBoxLayout(self.sensFrame)
-        self.tempICO = QLabel("ICO")
-        pixmap = QPixmap('img/ico_temp.png')
-        pixmap = pixmap.scaledToHeight(40)
-        self.tempICO.setPixmap(pixmap)
-        self.temp = QLabel(fetch_sens.temp + " °C")
-        self.temp.setFont(QFont('Arial', 20))
-        self.tempBox.addWidget(self.tempICO)
-        self.tempBox.addWidget(self.temp)
-        self.sensdispBox.addLayout(self.tempBox)
 
-        self.humBox = QHBoxLayout(self.sensFrame)
-        self.humICO = QLabel("ICO")
-        pixmap = QPixmap('img/hum.png')
-        pixmap = pixmap.scaledToHeight(30)
-        self.humICO.setPixmap(pixmap)
-        self.hum = QLabel(fetch_sens.hum + "%")
-        self.hum.setFont(QFont('Arial', 20))
-        self.humBox.addWidget(self.humICO)
-        self.humBox.addWidget(self.hum)
-        self.sensdispBox.addLayout(self.humBox)
+        self.tempimg = QPixmap(path + 'img/ico-generic.png')
+        self.tempico = QLabel()
+        self.tempico.setPixmap(self.tempimg)
+        self.tempvalue = QLabel(fetch_sens.temp + " °C")
+        self.tempvalue.setFont(QFont('Arial', 20))
+        self.tempimg = QPixmap(path + 'img/' + sens_arrow(1))
+        print(path + 'img/' + sens_arrow(1))
+        self.temparrow = QLabel()
+        self.temparrow.setPixmap(self.tempimg)
 
-        self.atpBox = QHBoxLayout(self.sensFrame)
-        self.atpICO = QLabel("ICO")
-        pixmap = QPixmap('img/ico_atp.png')
-        pixmap = pixmap.scaledToHeight(30)
-        self.atpICO.setPixmap(pixmap)
-        self.atp = QLabel(fetch_sens.atp + " mbar")
-        self.atp.setFont(QFont('Arial', 20))
-        self.atpBox.addWidget(self.atpICO)
-        self.atpBox.addWidget(self.atp)
-        self.sensdispBox.addLayout(self.atpBox)
+        self.sensgrid.addWidget(self.tempico, 0, 0, Qt.AlignCenter)
+        self.sensgrid.addWidget(self.tempvalue, 0, 1, Qt.AlignCenter)
+        self.sensgrid.addWidget(self.temparrow, 0, 2, Qt.AlignCenter)
 
-        self.sensBox.addLayout(self.sensdispBox)
+        self.humimg = QPixmap(path + 'img/ico-generic.png')
+        self.humico = QLabel()
+        self.humico.setPixmap(self.humimg)
+        self.humvalue = QLabel(fetch_sens.hum + " %")
+        self.humvalue.setFont(QFont('Arial', 20))
+        self.humimg = QPixmap(path + 'img/arrow_up.png')
+        self.humarrow = QLabel()
+        self.humarrow.setPixmap(self.tempimg)
+
+        self.sensgrid.addWidget(self.humico, 1, 0, Qt.AlignCenter)
+        self.sensgrid.addWidget(self.humvalue, 1, 1, Qt.AlignCenter)
+        self.sensgrid.addWidget(self.humarrow, 1, 2, Qt.AlignCenter)
+
+        self.atpimg = QPixmap(path + 'img/ico-generic.png')
+        self.atpico = QLabel()
+        self.atpico.setPixmap(self.atpimg)
+        self.atpvalue = QLabel(fetch_sens.atp + " mBar")
+        self.atpvalue.setFont(QFont('Arial', 20))
+        self.atpimg = QPixmap(path + 'img/arrow_up.png')
+        self.atparrow = QLabel()
+        self.atparrow.setPixmap(self.tempimg)
+
+        self.sensgrid.addWidget(self.atpico, 2, 0, Qt.AlignCenter)
+        self.sensgrid.addWidget(self.atpvalue, 2, 1, Qt.AlignCenter)
+        self.sensgrid.addWidget(self.atparrow, 2, 2, Qt.AlignCenter)
 
         #GPS container
         self.gpsBox = QVBoxLayout(self.sensFrame)
@@ -425,10 +462,10 @@ class App(QWidget):
         self.sensdate = QLabel("S: " + str(fetch_sens.sens_timestamp))
         self.gpsdate = QLabel("G: " + str(fetch_gps.gps_timestamp))
 
-        self.credit.setFont(QFont('Arial', 6))
-        self.winddate.setFont(QFont('Arial', 6))
-        self.sensdate.setFont(QFont('Arial', 6))
-        self.gpsdate.setFont(QFont('Arial', 6))
+        self.credit.setFont(QFont('Arial', 8))
+        self.winddate.setFont(QFont('Arial', 8))
+        self.sensdate.setFont(QFont('Arial', 8))
+        self.gpsdate.setFont(QFont('Arial', 8))
 
         self.footerbox.addWidget(self.credit)
         self.footerbox.addWidget(self.winddate)
@@ -477,9 +514,9 @@ class App(QWidget):
             fetch_sens()
             fetch_gps()
 
-            self.temp.setText(fetch_sens.temp + " °C")
-            self.hum.setText(fetch_sens.hum + "%")
-            self.atp.setText(fetch_sens.atp + " mbar")
+            self.tempvalue.setText(fetch_sens.temp + " °C")
+            self.humvalue.setText(fetch_sens.hum + "%")
+            self.atpvalue.setText(fetch_sens.atp + " mbar")
 
             self.latitude.setText("Latitude: " + fetch_gps.lat)
             self.longitude.setText("Longitude: " + fetch_gps.long)
