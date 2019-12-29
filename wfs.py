@@ -233,7 +233,8 @@ def db_cleanup():
         time.sleep(60)
 
 def sens_arrow(sens_number):
-    fetch_last_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id)-1 FROM sens)"
+    fetch_last_sens = "SELECT * FROM sens ORDER BY id DESC LIMIT 1, 1"
+
     try:
         cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
         cursor = cnx.cursor(buffered=True)
@@ -244,13 +245,13 @@ def sens_arrow(sens_number):
             temp = str(db_last_sens[1])
             hum = str(round(db_last_sens[2]))
             atp = str(db_last_sens[3])
+        else:
+            print("error")
     except Exception as e:
         error_handle(e)
 
     last_sens = db_last_sens[sens_number]
     current_sens = fetch_sens.current_sens[sens_number]
-    print(last_sens)
-    print(current_sens)
     if last_sens < current_sens:
         img = "arrow_up.png"
         return img
@@ -260,8 +261,6 @@ def sens_arrow(sens_number):
     elif last_sens == current_sens:
         img = "arrow_flat.png"
         return img
-
-    # print(img)
 
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
@@ -511,13 +510,20 @@ class App(QWidget):
 
     def update_sens(self):
         try:
+            path = str(Path(__file__).parent.absolute())
             fetch_graph()
             fetch_sens()
             fetch_gps()
 
             self.tempvalue.setText(fetch_sens.temp + " °C")
+            self.tempimgarrow = QPixmap(path + '/img/' + sens_arrow(1))
+            self.temparrow.setPixmap(self.tempimgarrow)
             self.humvalue.setText(fetch_sens.hum + "%")
+            self.humimgarrow = QPixmap(path + '/img/' + sens_arrow(2))
+            self.humarrow.setPixmap(self.humimgarrow)
             self.atpvalue.setText(fetch_sens.atp + " mbar")
+            self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(3))
+            self.atparrow.setPixmap(self.atpimgarrow)
 
             self.latitude.setText("Latitude: " + fetch_gps.lat)
             self.longitude.setText("Longitude: " + fetch_gps.long)
