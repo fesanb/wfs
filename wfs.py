@@ -11,6 +11,7 @@ import mysql.connector
 import threading
 import time
 from datetime import datetime, timedelta
+from pathlib import Path as path
 #custom imports
 from wfs_sub_graph import *
 from wfs_error_handling import error_handle
@@ -304,7 +305,14 @@ class App(QWidget):
             self.meanFrame = QFrame(self)
             self.mean_VL = QVBoxLayout(self.meanFrame)
             self.meanL = QLabel(str(fetch_mean.meanwind), self.meanFrame)
-            self.meanL.setStyleSheet("background-image: url('img/wind-circle.png'); background-repeat: no-repeat; background-position: center")
+            imgpath = str(path().absolute()) + "/img/wind-circle.png"
+            self.meanL.setStyleSheet("background-image: url({}); "
+                                     "background-repeat: no-repeat; "
+                                     "background-position: center".format(imgpath))
+            # print(imgpath)
+            # print("background-image: url({}); "
+            #                          "background-repeat: no-repeat; "
+            #                          "background-position: center".format(imgpath))
             self.meanL.setAlignment(Qt.AlignCenter)
             self.meanL.setMinimumHeight(200)
             self.meanL.setFont(QFont('Arial', 50))
