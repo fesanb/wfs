@@ -36,7 +36,8 @@ last_sens = []
 
 while True:
     new_sens = [round(sensor.data.temperature, 1), round(sensor.data.humidity), round(sensor.data.pressure)]
-
+    print(new_sens)
+    print(last_sens)
     if last_sens == new_sens:
         issame = 1
     else:
