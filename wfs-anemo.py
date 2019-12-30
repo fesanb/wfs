@@ -5,6 +5,7 @@ import sys
 import RPi.GPIO as g
 from time import sleep, perf_counter
 import mysql.connector
+from pathlib import Path
 from wfs_error_handling import error_handle
 
 g.setmode(g.BCM)
@@ -45,4 +46,5 @@ while True:
             anemo = 0
 
     except Exception as e:
-        error_handle(e)
+        filename = Path(__file__).name
+        error_handle(e, filename)

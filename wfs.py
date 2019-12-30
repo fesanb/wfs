@@ -61,7 +61,8 @@ def fetch_wind():
 
             time.sleep(0.9 )
         except Exception as e:
-            error_handle(e)
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
 def make_mean():
     while True:
@@ -79,7 +80,8 @@ def make_mean():
                 emp_no = cursor.lastrowid
                 cnx.commit()
         except Exception as e:
-            error_handle(e)
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         time.sleep(60)
 
@@ -124,7 +126,8 @@ def fetch_mean():
                 fetch_mean.beaufortLS = "Beaufort 1 - Light Air"
 
         except Exception as e:
-            error_handle(e)
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         time.sleep(5)
 
@@ -152,7 +155,8 @@ def fetch_sens():
             fetch_sens.sens_timestamp = "0"
 
     except Exception as e:
-        error_handle(e)
+        filename = Path(__file__).name
+        error_handle(e, filename)
 
 def fetch_gps():
     try:
@@ -173,7 +177,8 @@ def fetch_gps():
             fetch_gps.gps_timestamp = "-"
 
     except Exception as e:
-        error_handle(e)
+        filename = Path(__file__).name
+        error_handle(e, filename)
 
 def fetch_graph():
     global gbp
@@ -199,7 +204,8 @@ def fetch_graph():
             fetch_graph.graph_Y.append(0)
 
     except Exception as e:
-        error_handle(e)
+        filename = Path(__file__).name
+        error_handle(e, filename)
 
 def db_cleanup():
     while True:
@@ -213,7 +219,8 @@ def db_cleanup():
             cnx.commit()
 
         except Exception as e:
-            error_handle(e)
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         time.sleep(60)
 
@@ -233,7 +240,8 @@ def sens_arrow(sens_number):
         else:
             print("error")
     except Exception as e:
-        error_handle(e)
+        filename = Path(__file__).name
+        error_handle(e, filename)
 
     last_sens = db_last_sens[sens_number]
     current_sens = fetch_sens.current_sens[sens_number]
@@ -342,7 +350,8 @@ class App(QWidget):
             self.windContainer.addLayout(self.windBox)
 
         except Exception as e:
-            error_handle(e)
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         #Bauforth box
         self.beaufortbox = QHBoxLayout()
@@ -478,7 +487,8 @@ class App(QWidget):
             self.graph
 
         except Exception as e:
-            error_handle(e)
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         QApplication.processEvents()
 
@@ -489,7 +499,8 @@ class App(QWidget):
             self.winddate.setText("W: " + str(fetch_wind.timestamp))
             self.beaufortL.setText(fetch_mean.beaufortLS)
         except Exception as e:
-            error_handle(e)
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         QApplication.processEvents()
 
@@ -521,7 +532,8 @@ class App(QWidget):
             self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
 
         except Exception as e:
-            error_handle(e)
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         QApplication.processEvents()
 

@@ -6,6 +6,7 @@ import pynmea2
 import serial
 import mysql.connector
 from time import sleep
+from pathlib import Path
 from wfs_error_handling import error_handle
 
 sleep_time = 30
@@ -19,7 +20,8 @@ def db_insert(lat, lon, alt):
         cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES ({0}, {1}, {2})'''.format(lat, lon, alt))
         cnx.commit()
     except Exception as e:
-        error_handle(e)
+        filename = Path(__file__).name
+        error_handle(e, filename)
 
 
 def parseGPS(str):
@@ -43,7 +45,8 @@ def parseGPS(str):
                     sleep_time2 += 300
                     sleep_time = sleep_time2
         except Exception as e:
-            error_handle(e)
+            filename = Path(__file__).name
+            error_handle(e, filename)
     else:
         sleep_time = 0.5
 
@@ -56,4 +59,5 @@ while True:
         str = ser.readline().decode()
         parseGPS(str)
     except Exception as e:
-        error_handle(e)
+        filename = Path(__file__).name
+        error_handle(e, filename)
