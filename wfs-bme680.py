@@ -24,7 +24,7 @@ def db_insert(temp, hum, atp, issame):
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
     try:
-        cursor.execute(u'''INSERT INTO sens(temp, hum, atp, isset) VALUES ({0}, {1}, {2}, {3})'''.format(temp, hum, atp, issame))
+        cursor.execute(u'''INSERT INTO sens(temp, hum, atp, issame) VALUES ({0}, {1}, {2}, {3})'''.format(temp, hum, atp, issame))
         cnx.commit()
     except Exception as e:
         error_handle(e)
