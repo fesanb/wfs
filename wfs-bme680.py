@@ -20,11 +20,11 @@ sensor = bme680.BME680()
 # sensor.select_gas_heater_profile(0)
 
 
-def db_insert(temp, hum, atp, isset):
+def db_insert(temp, hum, atp, issame):
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
     try:
-        cursor.execute(u'''INSERT INTO sens(temp, hum, atp, isset) VALUES ({0}, {1}, {2}, {3})'''.format(temp, hum, atp, isset))
+        cursor.execute(u'''INSERT INTO sens(temp, hum, atp, isset) VALUES ({0}, {1}, {2}, {3})'''.format(temp, hum, atp, issame))
         cnx.commit()
     except Exception as e:
         error_handle(e)
