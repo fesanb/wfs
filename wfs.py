@@ -139,7 +139,7 @@ def fetch_sens():
             fetch_sens.temp = str(db_sens[1])
             fetch_sens.hum = str(db_sens[2])
             fetch_sens.atp = str(db_sens[3])
-            fetch_sens.sens_timestamp = str(db_sens[4])
+            fetch_sens.sens_timestamp = str(db_sens[5])
             fetch_sens.current_sens = []
             for i in db_sens:
                 fetch_sens.current_sens.append(i)

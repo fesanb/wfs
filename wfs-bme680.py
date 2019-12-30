@@ -33,7 +33,7 @@ def db_insert(temp, hum, atp, issame):
 last_sens = []
 
 while True:
-    new_sens = [round(sensor.data.temperature, 1), round(sensor.data.humidity, 0), sensor.data.pressure]
+    new_sens = [round(sensor.data.temperature, 1), round(sensor.data.humidity), round(sensor.data.pressure)]
 
     if last_sens == new_sens:
         issame = 1
@@ -45,7 +45,6 @@ while True:
     if sensor.get_sensor_data() is None:
         pass
     else:
-        print(new_sens)
         db_insert(new_sens[0], new_sens[1], new_sens[2], new_sens[3])
         last_sens = new_sens
 
