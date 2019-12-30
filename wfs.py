@@ -137,7 +137,7 @@ def fetch_sens():
         if cursor.rowcount > 0:
             db_sens = cursor.fetchone()
             fetch_sens.temp = str(db_sens[1])
-            fetch_sens.hum = str(round(db_sens[2]))
+            fetch_sens.hum = str(db_sens[2])
             fetch_sens.atp = str(db_sens[3])
             fetch_sens.sens_timestamp = str(db_sens[4])
             fetch_sens.current_sens = []
@@ -150,21 +150,6 @@ def fetch_sens():
             fetch_sens.hum = "0"
             fetch_sens.atp = "0"
             fetch_sens.sens_timestamp = "0"
-
-        cursor.execute(get_max_wind12)
-        if cursor.rowcount > 0:
-            maxwindDB = cursor.fetchone()
-            fetch_sens.maxwind12 = str(maxwindDB[0])
-        else:
-            fetch_sens.maxwind12 = "0"
-
-        cursor.execute(get_max_wind1)
-        if cursor.rowcount > 0:
-            maxwindDB = cursor.fetchone()
-            fetch_sens.maxwind1 = str(maxwindDB[0])
-        else:
-            fetch_sens.maxwind1 = "0"
-
 
     except Exception as e:
         error_handle(e)

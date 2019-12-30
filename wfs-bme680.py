@@ -30,13 +30,21 @@ def db_insert(temp, hum, atp):
         error_handle(e)
 
 
+last_sens = []
+
 while True:
+    new_sens = [round(sensor.data.temperature, 1), round(sensor.data.humidity, 0), sensor.data.pressure]
+    if last_sens == new_sens:
+        issame = 1
+        new_sens.append(issame)
+    else:
+        issame = 0
+        new_sens.append(issame)
+
     if sensor.get_sensor_data() is None:
         pass
     else:
-        temp = sensor.data.temperature
-        hum = sensor.data.humidity
-        atp = sensor.data.pressure
-        db_insert(temp, hum, atp)
+        db_insert(new_sens[0], new_sens[1], new_sens[2], new_sens[3])
+        last_sens = new_sens
 
         time.sleep(120)
