@@ -28,7 +28,7 @@ def parseGPS(str):
     if str.find('GGA') > 0:
         try:
             msg = pynmea2.parse(str)
-            if msg.lat is None:
+            if msg.lat != "":
                 print("pass")
                 pass
             else:
