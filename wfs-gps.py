@@ -33,6 +33,7 @@ def parseGPS(str):
                 pass
             else:
                 print("msg.lat is set")
+                print(msg.lat)
                 lat = msg.latitude
                 lon = msg.longitude
                 alt = msg.altitude
