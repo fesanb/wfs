@@ -17,7 +17,7 @@ def db_insert(lat, lon, alt):
     cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
     cursor = cnx.cursor()
     try:
-        cursor.execute(u'''INSERT INTO gps(lat,lon,alt) VALUES ({0}, {1}, {2})'''.format(lat, lon, alt))
+        cursor.execute(u'''INSERT INTO gps(lat, lon, alt) VALUES ("{0}", "{1}", "{2}")'''.format(lat, lon, alt))
         cnx.commit()
     except Exception as e:
         filename = Path(__file__).name
@@ -29,7 +29,7 @@ def parseGPS(str):
         try:
             msg = pynmea2.parse(str)
             if msg.lat is None:
-                # print("pass")
+                print("pass")
                 pass
             else:
                 lat = msg.latitude
