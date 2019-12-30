@@ -1,3 +1,3 @@
 from pathlib import Path
 
-print(Path().absolute())
+print(Path(__file__).name)

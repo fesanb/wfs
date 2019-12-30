@@ -89,3 +89,11 @@ CREATE TABLE `wind` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2019-12-28 14:55:55
+CREATE TABLE `error` (
+  `id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `file` varchar(100) DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
+  `obj` varchar(100) DEFAULT NULL,
+  `line` int(9) DEFAULT NULL,
+  `tmestmp` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`));

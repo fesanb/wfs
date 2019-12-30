@@ -5,6 +5,7 @@ import bme680
 import time
 import mysql.connector
 import sys
+from wfs_error_handling import error_handle
 
 sensor = bme680.BME680()
 
@@ -26,10 +27,7 @@ def db_insert(temp, hum, atp):
         cursor.execute(u'''INSERT INTO sens(temp, hum, atp) VALUES ({0}, {1}, {2})'''.format(temp, hum, atp))
         cnx.commit()
     except Exception as e:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        print(exc_type, exc_tb.tb_lineno)
-        print(repr(e))
-    # print("SQL insert done")
+        error_handle(e)
 
 
 while True:
@@ -40,4 +38,5 @@ while True:
         hum = sensor.data.humidity
         atp = sensor.data.pressure
         db_insert(temp, hum, atp)
-        time.sleep(600)
+
+        time.sleep(120)

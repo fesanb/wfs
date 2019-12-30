@@ -1,11 +1,11 @@
 # WFS - Weather Forecast Station
 # Written by Stefan Bahrawy
 
-
 import sys
 import RPi.GPIO as g
 from time import sleep, perf_counter
 import mysql.connector
+from wfs_error_handling import error_handle
 
 g.setmode(g.BCM)
 g.setup(16, g.IN, pull_up_down=g.PUD_DOWN)
@@ -24,7 +24,7 @@ def db_insert(wind):
     cursor = cnx.cursor()
     cursor.execute(u'''INSERT INTO wind(wind) VALUES ({0})'''.format(wind))
     cnx.commit()
-    print("SQL insert done")
+    # print("SQL insert done")
 
 
 g.add_event_detect(16, g.RISING, callback=increv)
@@ -36,14 +36,13 @@ while True:
         sleep(1)
         wind = anemo * 0.1
         if wind == last_wind:
-            print("Wind: {0}m/s".format(wind), end="\r")
+            # print("Wind: {0}m/s".format(wind), end="\r")
+            pass
         else:
             db_insert(wind)
-            print("SQL insert - Wind: {0}m/s".format(wind), end="\r")
+            # print("SQL insert - Wind: {0}m/s".format(wind), end="\r")
             last_wind = wind
             anemo = 0
 
     except Exception as e:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        print(exc_type, exc_tb.tb_lineno)
-        print(repr(e))
+        error_handle(e)
