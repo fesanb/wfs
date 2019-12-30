@@ -36,7 +36,6 @@ last_sens = []
 
 while True:
     new_sens = [round(sensor.data.temperature, 1), round(sensor.data.humidity), round(sensor.data.pressure)]
-    del last_sens[-1]
     if last_sens == new_sens:
         issame = 1
     else:
@@ -49,5 +48,6 @@ while True:
     else:
         db_insert(new_sens[0], new_sens[1], new_sens[2], new_sens[3])
         last_sens = new_sens
+        del last_sens[-1]
 
         time.sleep(120)
