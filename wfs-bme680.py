@@ -45,6 +45,7 @@ while True:
     if sensor.get_sensor_data() is None:
         pass
     else:
+        print(new_sens)
         db_insert(new_sens[0], new_sens[1], new_sens[2], new_sens[3])
         last_sens = new_sens
 
