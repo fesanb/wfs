@@ -29,10 +29,10 @@ def parseGPS(str):
         try:
             msg = pynmea2.parse(str)
             if len(msg.lat) == 0:
-                print("pass")
+                # print("pass")
                 pass
             else:
-                print("fuck you")
+                # print("fuck you")
                 lat = msg.latitude
                 lon = msg.longitude
                 alt = msg.altitude
