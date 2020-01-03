@@ -15,6 +15,10 @@ def forecast():
 	fetch_atp_1hr = "SELECT atp, tmestmp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
 	# fetch_atp = "SELECT atp, tmestmp FROM sens ORDER BY id DESC LIMIT 10"
 
+	expect = "-"
+	change1 = "-"
+	change2 = "-"
+
 	cursor.execute(fetch_atp_1hr)
 	if cursor.rowcount > 0:
 		db_atp = cursor.fetchall()
@@ -54,7 +58,7 @@ def forecast():
 			change1 = "Great weather change"
 			change2 = "Beaufort 8-10"
 
-		return expect, change1, change2
+	return expect, change1, change2
 
 
 forecast()
