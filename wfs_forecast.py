@@ -11,8 +11,8 @@ cursor = cnx.cursor(buffered=True)
 
 
 def forecast():
-	# fetch_atp = "SELECT atp, tmestmp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 3 HOUR)"
-	fetch_atp = "SELECT atp, tmestmp FROM sens ORDER BY id DESC LIMIT 10"
+	fetch_atp = "SELECT atp, tmestmp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 3 HOUR)"
+	# fetch_atp = "SELECT atp, tmestmp FROM sens ORDER BY id DESC LIMIT 10"
 
 	cursor.execute(fetch_atp)
 	if cursor.rowcount > 0:
