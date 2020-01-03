@@ -15,6 +15,7 @@ from pathlib import Path
 #custom imports
 from wfs_sub_graph import *
 from wfs_error_handling import error_handle
+from wfs_forecast import forecast
 
 
 
@@ -32,7 +33,7 @@ get_graph = [
 ]
 
 #SENS
-get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
+get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)"
 get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 65 MINUTE)"
 
 #Max
@@ -153,6 +154,7 @@ def fetch_sens():
             fetch_sens.hum = "0"
             fetch_sens.atp = "0"
             fetch_sens.sens_timestamp = "0"
+            fetch_sens.current_sens = []
 
     except Exception as e:
         filename = Path(__file__).name
@@ -207,22 +209,6 @@ def fetch_graph():
         filename = Path(__file__).name
         error_handle(e, filename)
 
-def db_cleanup():
-    while True:
-        try:
-            cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-            cursor = cnx.cursor(buffered=True)
-
-            wind_cleanup = ("DELETE FROM wind WHERE wind < 1")
-            cursor.execute(wind_cleanup)
-            emp_no = cursor.lastrowid
-            cnx.commit()
-
-        except Exception as e:
-            filename = Path(__file__).name
-            error_handle(e, filename)
-
-        time.sleep(60)
 
 def sens_arrow(sens_number):
     fetch_last_sens = "SELECT * FROM sens ORDER BY id DESC LIMIT 1, 1"
@@ -243,15 +229,19 @@ def sens_arrow(sens_number):
         filename = Path(__file__).name
         error_handle(e, filename)
 
-    last_sens = db_last_sens[sens_number]
-    current_sens = fetch_sens.current_sens[sens_number]
-    if last_sens < current_sens:
-        img = "arrow_up.png"
-        return img
-    elif last_sens > current_sens:
-        img = "arrow_down.png"
-        return img
-    elif last_sens == current_sens:
+    if len(fetch_sens.current_sens) > 0:
+        last_sens = db_last_sens[sens_number]
+        current_sens = fetch_sens.current_sens[sens_number]
+        if last_sens < current_sens:
+            img = "arrow_up.png"
+            return img
+        elif last_sens > current_sens:
+            img = "arrow_down.png"
+            return img
+        elif last_sens == current_sens:
+            img = "arrow_flat.png"
+            return img
+    else:
         img = "arrow_flat.png"
         return img
 
@@ -280,9 +270,9 @@ thread_fetch_graph = threading.Thread(target=fetch_graph, args=())
 thread_fetch_graph.daemon = True
 thread_fetch_graph.start()
 
-thread_db_cleanup = threading.Thread(target=db_cleanup, args=())
-thread_db_cleanup.daemon = True
-thread_db_cleanup.start()
+# thread_db_cleanup = threading.Thread(target=db_cleanup, args=())
+# thread_db_cleanup.daemon = True
+# thread_db_cleanup.start()
 
 class App(QWidget):
 
@@ -357,7 +347,7 @@ class App(QWidget):
         self.beaufortbox = QHBoxLayout()
         self.beaufortL = QLabel(str(fetch_mean.beaufortLS))
         self.beaufortL.setAlignment(Qt.AlignHCenter)
-        self.beaufortL.setMinimumHeight(50)
+        self.beaufortL.setMinimumHeight(40)
         self.beaufortL.setFont(QFont('Arial', 20))
         self.beaufortbox.addWidget(self.beaufortL)
         self.windContainer.addLayout(self.beaufortbox)
@@ -377,8 +367,8 @@ class App(QWidget):
         # self.sensheaderFrame =  QFrame(self)
         self.sensheaderBox = QHBoxLayout(self.sensFrame)
         self.sensHL = QLabel("SENSOR")
-        self.sensHL.setFont(QFont('Arial', 20))
-        self.sensHL.setMinimumHeight(50)
+        self.sensHL.setFont(QFont('Arial', 15))
+        # self.sensHL.setMinimumHeight(50)
         self.sensHL.setAlignment(Qt.AlignCenter)
         self.sensheaderBox.addWidget(self.sensHL)
         self.sensBox.addLayout(self.sensheaderBox)
@@ -391,7 +381,7 @@ class App(QWidget):
         self.tempico = QLabel()
         self.tempico.setPixmap(self.tempimg)
         self.tempvalue = QLabel(fetch_sens.temp + " °C")
-        self.tempvalue.setFont(QFont('Arial', 20))
+        self.tempvalue.setFont(QFont('Arial', 13))
         self.tempimgarrow = QPixmap(path + '/img/' + sens_arrow(1))
         self.temparrow = QLabel()
         self.temparrow.setPixmap(self.tempimgarrow)
@@ -404,7 +394,7 @@ class App(QWidget):
         self.humico = QLabel()
         self.humico.setPixmap(self.humimg)
         self.humvalue = QLabel(fetch_sens.hum + " %")
-        self.humvalue.setFont(QFont('Arial', 20))
+        self.humvalue.setFont(QFont('Arial', 13))
         self.humimgarrow = QPixmap(path + '/img/' + sens_arrow(2))
         self.humarrow = QLabel()
         self.humarrow.setPixmap(self.humimgarrow)
@@ -416,8 +406,8 @@ class App(QWidget):
         self.atpimg = QPixmap(path + '/img/ico-generic.png')
         self.atpico = QLabel()
         self.atpico.setPixmap(self.atpimg)
-        self.atpvalue = QLabel(fetch_sens.atp + " mBar")
-        self.atpvalue.setFont(QFont('Arial', 20))
+        self.atpvalue = QLabel(fetch_sens.atp + " hPa")
+        self.atpvalue.setFont(QFont('Arial', 13))
         self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(3))
         self.atparrow = QLabel()
         self.atparrow.setPixmap(self.atpimgarrow)
@@ -425,6 +415,26 @@ class App(QWidget):
         self.sensgrid.addWidget(self.atpico, 2, 0, Qt.AlignCenter)
         self.sensgrid.addWidget(self.atpvalue, 2, 1, Qt.AlignCenter)
         self.sensgrid.addWidget(self.atparrow, 2, 2, Qt.AlignCenter)
+
+        self.sensBox.addStretch()
+        self.sensBox.addLayout(self.sensgrid)
+
+
+        #Forecast container
+        self.forecast = QVBoxLayout(self.sensFrame)
+        self.Fheader = QLabel("FORECAST")
+        self.Fheader.setFont(QFont('Arial', 15))
+        forecast_val = forecast()
+        self.Fforecast1 = QLabel(forecast_val[0])
+        self.Fforecast2 = QLabel(forecast_val[1])
+        self.Fforecast3 = QLabel(forecast_val[2])
+
+        self.forecast.addWidget(self.Fheader)
+        self.forecast.addWidget(self.Fforecast1)
+        self.forecast.addWidget(self.Fforecast2)
+        self.forecast.addWidget(self.Fforecast3)
+        self.forecast.addStretch()
+        self.sensBox.addLayout(self.forecast)
 
         #GPS container
         self.gpsBox = QVBoxLayout(self.sensFrame)
@@ -436,8 +446,9 @@ class App(QWidget):
         self.gpsBox.addWidget(self.longitude)
         self.gpsBox.addWidget(self.altitude)
         self.sensBox.addLayout(self.gpsBox)
+        self.gpsBox.addStretch()
 
-        self.sensBox.addStretch()
+        # self.sensBox.addStretch()
 
         # self.gbp = 2
         self.graphbutton = QPushButton()
@@ -467,7 +478,7 @@ class App(QWidget):
         self.footerbox.addWidget(self.gpsdate)
         self.sensBox.addLayout(self.footerbox)
 
-        self.sensBox.addStretch()
+        self.footerbox.addStretch()
         self.mainContainer.addWidget(self.sensFrame)
 
         self.O1.addLayout(self.mainContainer)
