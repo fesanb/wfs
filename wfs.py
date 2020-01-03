@@ -369,7 +369,6 @@ class App(QWidget):
         self.sensHL = QLabel("SENSOR")
         self.sensHL.setFont(QFont('Arial', 15))
         # self.sensHL.setMinimumHeight(50)
-        self.sensHL.setAlignment(Qt.AlignCenter)
         self.sensheaderBox.addWidget(self.sensHL)
         self.sensBox.addLayout(self.sensheaderBox)
 
@@ -460,25 +459,25 @@ class App(QWidget):
 
         self.sensBox.addStretch()
 
-        # footer box
-        self.footerbox = QVBoxLayout()
-        self.credit = QLabel("Creator: Stefan Bahrawy")
-        self.winddate = QLabel("W: " + str(fetch_wind.timestamp))
-        self.sensdate = QLabel("S: " + str(fetch_sens.sens_timestamp))
-        self.gpsdate = QLabel("G: " + str(fetch_gps.gps_timestamp))
-
-        self.credit.setFont(QFont('Arial', 8))
-        self.winddate.setFont(QFont('Arial', 8))
-        self.sensdate.setFont(QFont('Arial', 8))
-        self.gpsdate.setFont(QFont('Arial', 8))
-
-        self.footerbox.addWidget(self.credit)
-        self.footerbox.addWidget(self.winddate)
-        self.footerbox.addWidget(self.sensdate)
-        self.footerbox.addWidget(self.gpsdate)
-        self.sensBox.addLayout(self.footerbox)
-
-        self.footerbox.addStretch()
+        # # footer box
+        # self.footerbox = QVBoxLayout()
+        # self.credit = QLabel("Creator: Stefan Bahrawy")
+        # self.winddate = QLabel("W: " + str(fetch_wind.timestamp))
+        # self.sensdate = QLabel("S: " + str(fetch_sens.sens_timestamp))
+        # self.gpsdate = QLabel("G: " + str(fetch_gps.gps_timestamp))
+        #
+        # self.credit.setFont(QFont('Arial', 8))
+        # self.winddate.setFont(QFont('Arial', 8))
+        # self.sensdate.setFont(QFont('Arial', 8))
+        # self.gpsdate.setFont(QFont('Arial', 8))
+        #
+        # self.footerbox.addWidget(self.credit)
+        # self.footerbox.addWidget(self.winddate)
+        # self.footerbox.addWidget(self.sensdate)
+        # self.footerbox.addWidget(self.gpsdate)
+        # self.sensBox.addLayout(self.footerbox)
+        #
+        # self.footerbox.addStretch()
         self.mainContainer.addWidget(self.sensFrame)
 
         self.O1.addLayout(self.mainContainer)
@@ -507,7 +506,7 @@ class App(QWidget):
         try:
             self.windL.setText(fetch_wind.wind)
             self.meanL.setText(str(fetch_mean.meanwind))
-            self.winddate.setText("W: " + str(fetch_wind.timestamp))
+            # self.winddate.setText("W: " + str(fetch_wind.timestamp))
             self.beaufortL.setText(fetch_mean.beaufortLS)
         except Exception as e:
             filename = Path(__file__).name
@@ -528,7 +527,7 @@ class App(QWidget):
             self.humvalue.setText(fetch_sens.hum + "%")
             self.humimgarrow = QPixmap(path + '/img/' + sens_arrow(2))
             self.humarrow.setPixmap(self.humimgarrow)
-            self.atpvalue.setText(fetch_sens.atp + " mbar")
+            self.atpvalue.setText(fetch_sens.atp + " hPa")
             self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(3))
             self.atparrow.setPixmap(self.atpimgarrow)
 
@@ -539,8 +538,8 @@ class App(QWidget):
             graph_update(self, fetch_graph.graph_X, fetch_graph.graph_Y)
             self.graph
 
-            self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
-            self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
+            # self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
+            # self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
 
         except Exception as e:
             filename = Path(__file__).name

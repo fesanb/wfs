@@ -11,10 +11,11 @@ cursor = cnx.cursor(buffered=True)
 
 
 def forecast():
-	fetch_atp = "SELECT atp, tmestmp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 3 HOUR)"
+	fetch_atp_3hr = "SELECT atp, tmestmp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 3 HOUR)"
+	fetch_atp_1hr = "SELECT atp, tmestmp FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
 	# fetch_atp = "SELECT atp, tmestmp FROM sens ORDER BY id DESC LIMIT 10"
 
-	cursor.execute(fetch_atp)
+	cursor.execute(fetch_atp_1hr)
 	if cursor.rowcount > 0:
 		db_atp = cursor.fetchall()
 		split_atp = [i[0] for i in db_atp]
@@ -26,7 +27,7 @@ def forecast():
 
 		if split_atp[0] > split_atp[len(split_atp)-1]:
 			# print("Expect dryer conditions")
-			expect = "Expect wetter conditions"
+			expect = "Expect dryer conditions"
 
 		i = 0
 		print(len(split_timestamp))
