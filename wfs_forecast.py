@@ -33,6 +33,7 @@ def forecast():
 		while split_timestamp[0] - split_timestamp[i] < timedelta(hours=1):
 			i += 1
 			if i > len(split_atp)-1:
+				i -= 1
 				break
 		change = abs(split_atp[0]-split_atp[i])
 
