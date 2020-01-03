@@ -55,3 +55,4 @@ def forecast():
 		return expect, change1, change2
 
 
+forecast()
