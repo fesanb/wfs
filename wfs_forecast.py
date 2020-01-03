@@ -29,10 +29,10 @@ def forecast():
 			expect = "Expect wetter conditions"
 
 		i = 0
-
+		print(len(split_timestamp))
 		while split_timestamp[0] - split_timestamp[i] < timedelta(hours=1):
 			i += 1
-			if i > len(split_atp):
+			if i > len(split_atp)-1:
 				break
 		change = abs(split_atp[0]-split_atp[i])
 
