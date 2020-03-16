@@ -15,7 +15,7 @@ from pathlib import Path
 #custom imports
 from wfs_sub_graph import *
 from wfs_error_handling import error_handle
-from wfs_forecast import forecast
+from wfs_forecast import *
 
 
 
@@ -24,13 +24,12 @@ get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
 # GRAPH
-interval = 12
-get_graph = [
-    "SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval),
-    "SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval),
-    "SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval),
-    "SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
-]
+interval = 5500
+get_graph_wind = "SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
+get_graph_atp = "SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
+get_graph_hum = "SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
+get_graph_temp = "SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
+
 
 #SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)"
@@ -183,27 +182,77 @@ def fetch_gps():
         error_handle(e, filename)
 
 def fetch_graph():
-    global gbp
+    print("fetch graph")
     try:
         cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
         cursor = cnx.cursor(buffered=True)
-
-        cursor.execute(get_graph[gbp])
+        
+        # wind
+        cursor.execute(get_graph_wind)
         if cursor.rowcount > 0:
             db_graph_wind = cursor.fetchall()
-
-            fetch_graph.graph_X = []
-            fetch_graph.graph_Y = []
+            fetch_graph.wind_graph_X = []
+            fetch_graph.wind_graph_Y = []
 
             for i in db_graph_wind:
-                fetch_graph.graph_X.append(i[1])
-                fetch_graph.graph_Y.append(i[0])
+                fetch_graph.wind_graph_X.append(i[1])
+                fetch_graph.wind_graph_Y.append(i[0])
 
         else:
-            fetch_graph.graph_X = []
-            fetch_graph.graph_Y = []
-            fetch_graph.graph_X.append(time.time())
-            fetch_graph.graph_Y.append(0)
+            fetch_graph.wind_graph_X = []
+            fetch_graph.wind_graph_Y = []
+            fetch_graph.wind_graph_X.append(time.time())
+            fetch_graph.wind_graph_Y.append(0)
+        
+        # atp 
+        cursor.execute(get_graph_atp)
+        if cursor.rowcount > 0:
+            db_graph_atp = cursor.fetchall()
+            fetch_graph.atp_graph_X = []
+            fetch_graph.atp_graph_Y = []
+
+            for i in db_graph_atp:
+                fetch_graph.atp_graph_X.append(i[1])
+                fetch_graph.atp_graph_Y.append(i[0])
+
+        else:
+            fetch_graph.atp_graph_X = []
+            fetch_graph.atp_graph_Y = []
+            fetch_graph.atp_graph_X.append(time.time())
+            fetch_graph.atp_graph_Y.append(0)
+        
+        # hum    
+        cursor.execute(get_graph_hum)
+        if cursor.rowcount > 0:
+            db_graph_hum = cursor.fetchall()
+            fetch_graph.hum_graph_X = []
+            fetch_graph.hum_graph_Y = []
+
+            for i in db_graph_hum:
+                fetch_graph.hum_graph_X.append(i[1])
+                fetch_graph.hum_graph_Y.append(i[0])
+
+        else:
+            fetch_graph.hum_graph_X = []
+            fetch_graph.hum_graph_Y = []
+            fetch_graph.hum_graph_X.append(time.time())
+            fetch_graph.hum_graph_Y.append(0)
+        # temp            
+        cursor.execute(get_graph_temp)
+        if cursor.rowcount > 0:
+            db_graph_temp = cursor.fetchall()
+            fetch_graph.temp_graph_X = []
+            fetch_graph.temp_graph_Y = []
+
+            for i in db_graph_temp:
+                fetch_graph.temp_graph_X.append(i[1])
+                fetch_graph.temp_graph_Y.append(i[0])
+
+        else:
+            fetch_graph.temp_graph_X = []
+            fetch_graph.temp_graph_Y = []
+            fetch_graph.temp_graph_X.append(time.time())
+            fetch_graph.temp_graph_Y.append(0)
 
     except Exception as e:
         filename = Path(__file__).name
@@ -354,7 +403,7 @@ class App(QWidget):
 
         #GRAPH
         self.graphContainer = QVBoxLayout()
-        self.graph = graph_plot(fetch_graph.graph_X,fetch_graph.graph_Y)
+        self.graph = graph_plot(fetch_graph.wind_graph_X,fetch_graph.wind_graph_Y,fetch_graph.atp_graph_X,fetch_graph.atp_graph_Y)
         self.graphContainer.addWidget(self.graph)
         self.windContainer.addLayout(self.graphContainer)
         self.windContainer.addStretch()
@@ -424,9 +473,9 @@ class App(QWidget):
         self.Fheader = QLabel("FORECAST")
         self.Fheader.setFont(QFont('Arial', 15))
         forecast_val = forecast()
-        self.Fforecast1 = QLabel(forecast_val[0])
-        self.Fforecast2 = QLabel(forecast_val[1])
-        self.Fforecast3 = QLabel(forecast_val[2])
+        self.Fforecast1 = QLabel("Expect: " + forecast_val[0] + " conditions")
+        self.Fforecast2 = QLabel("Changes: " + forecast_val[1])
+        self.Fforecast3 = QLabel("Expected Winds: " + forecast_val[2] + " BFT")
 
         self.forecast.addWidget(self.Fheader)
         self.forecast.addWidget(self.Fforecast1)
@@ -450,12 +499,33 @@ class App(QWidget):
         # self.sensBox.addStretch()
 
         # self.gbp = 2
-        self.graphbutton = QPushButton()
-        self.graphbutton.setText("WIND")
-        self.graphbutton.setStyleSheet("background-color: #444444; color: black; font-weight:600")
-        self.graphbutton.setCheckable(False)
-        self.graphbutton.clicked.connect(self.graphbutton_clicked)
-        self.sensBox.addWidget(self.graphbutton)
+        button_style = "background-color: #444444; color: black; font-weight:600"
+        self.button_wind = QPushButton()
+        self.button_wind.setText("WIND")
+        self.button_wind.setStyleSheet(button_style)
+        self.button_wind.setCheckable(True)
+        
+        self.button_temp = QPushButton()
+        self.button_temp.setText("TEMP")
+        self.button_temp.setStyleSheet(button_style)
+        self.button_temp.setCheckable(True)
+        
+        self.button_hum = QPushButton()
+        self.button_hum.setText("HUM")
+        self.button_hum.setStyleSheet(button_style)
+        self.button_hum.setCheckable(True)
+        
+        self.button_atp = QPushButton()
+        self.button_atp.setText("ATP")
+        self.button_atp.setStyleSheet(button_style)
+        self.button_atp.setCheckable(True)
+        
+        
+        self.button_wind.clicked.connect(self.button_wind_clicked)
+        self.sensBox.addWidget(self.button_wind)
+        self.sensBox.addWidget(self.button_temp)
+        self.sensBox.addWidget(self.button_hum)
+        self.sensBox.addWidget(self.button_atp)
 
         self.sensBox.addStretch()
 
@@ -483,7 +553,7 @@ class App(QWidget):
         self.O1.addLayout(self.mainContainer)
 
 
-    def graphbutton_clicked(self):
+    def button_wind_clicked(self):
         global gbp
         if gbp < 3:
             gbp += 1
@@ -492,8 +562,8 @@ class App(QWidget):
         fetch_graph()
         try:
             blabel = ["WIND", "ATP", "HUM", "TEMP"]
-            self.graphbutton.setText(blabel[gbp])
-            graph_update(self, fetch_graph.graph_X, fetch_graph.graph_Y)
+            self.button_wind.setText(blabel[gbp])
+            graph_update(self, fetch_graph.wind_graph_X, fetch_graph.wind_graph_Y)
             self.graph
 
         except Exception as e:
@@ -520,6 +590,8 @@ class App(QWidget):
             fetch_graph()
             fetch_sens()
             fetch_gps()
+            forecast()
+            forecast_val = forecast()
 
             self.tempvalue.setText(fetch_sens.temp + " °C")
             self.tempimgarrow = QPixmap(path + '/img/' + sens_arrow(1))
@@ -531,11 +603,15 @@ class App(QWidget):
             self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(3))
             self.atparrow.setPixmap(self.atpimgarrow)
 
+            self.Fforecast1.setText("Expect: " + forecast_val[0] + " conditions")
+            self.Fforecast2.setText("Changes: " + forecast_val[1])
+            self.Fforecast3.setText("Expected Winds: " + forecast_val[2] + " BFT")
+
             self.latitude.setText("Latitude: " + fetch_gps.lat)
             self.longitude.setText("Longitude: " + fetch_gps.long)
             self.altitude.setText("Altitude: " + fetch_gps.alt)
 
-            graph_update(self, fetch_graph.graph_X, fetch_graph.graph_Y)
+            graph_update(self, fetch_graph.wind_graph_X, fetch_graph.wind_graph_Y)
             self.graph
 
             # self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
@@ -559,6 +635,6 @@ if __name__ == '__main__':
 
     timer2 = QTimer()
     timer2.timeout.connect(ex.update_sens)
-    timer2.start(60000)
+    timer2.start(5000)
 
     sys.exit(app.exec_())
