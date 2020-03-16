@@ -611,7 +611,7 @@ class App(QWidget):
             self.longitude.setText("Longitude: " + fetch_gps.long)
             self.altitude.setText("Altitude: " + fetch_gps.alt)
 
-            graph_update(self, fetch_graph.wind_graph_X, fetch_graph.wind_graph_Y)
+            graph_update(self, wind_graph_X, wind_graph_Y, atp_graph_X, atp_graph_Y)
             self.graph
 
             # self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))

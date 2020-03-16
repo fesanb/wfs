@@ -30,12 +30,12 @@ def graph_plot(wind_graph_X, wind_graph_Y, atp_graph_X, atp_graph_Y):
     graph2.setXLink(graph)
     graph.getAxis('right').setLabel('ATP', color='#0000ff')
 
-    graph.plot(wind_graph_X, wind_graph_Y, clear=True, pen='y')
-    graph2.addItem(pg.PlotCurveItem(atp_graph_X, atp_graph_Y, pen='b'))
+    graph.plot(wind_graph_X, wind_graph_Y, clear=True, pen='w')
+    graph2.addItem(pg.PlotCurveItem(atp_graph_X, atp_graph_Y, clear=True, pen='b'))
     return graph
 
 
-
-def graph_update(self, x, y):
-    self.graph.plot(x, y, clear=True, pen='y')
+def graph_update(self, wind_graph_X, wind_graph_Y, atp_graph_X, atp_graph_Y):
+    self.graph.plot(wind_graph_X, wind_graph_Y, clear=True, pen='y')
+    self.graph2.addItem(pg.PlotCurveItem(atp_graph_X, atp_graph_Y, clear=True, pen='b'))
     return self.graph
