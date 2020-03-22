@@ -20,7 +20,7 @@ class TimeAxisItem(pg.AxisItem):
 
 cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
 cursor = cnx.cursor(buffered=True)
-interval = 5000
+interval = 5400
 get_mean = "SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
 get_atp = "SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
 

@@ -13,7 +13,7 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 #custom imports
-from wfs_sub_graph import *
+from wfs_sub_graph import graph_plot, graph_update
 from wfs_error_handling import error_handle
 from wfs_forecast import *
 
@@ -24,7 +24,7 @@ get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
 # GRAPH
-interval = 1
+interval = 12
 get_graph_wind = "SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
 get_graph_atp = "SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
 get_graph_hum = "SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
@@ -181,78 +181,78 @@ def fetch_gps():
         filename = Path(__file__).name
         error_handle(e, filename)
 
-def fetch_graph():
-    print("fetch graph")
+def fg():
+    # print("fetch graph")
     try:
         cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
         cursor = cnx.cursor(buffered=True)
-        
+        # fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y
         # wind
         cursor.execute(get_graph_wind)
         if cursor.rowcount > 0:
             db_graph_wind = cursor.fetchall()
-            fetch_graph.wind_graph_X = []
-            fetch_graph.wind_graph_Y = []
+            fg.gw_x = []
+            fg.gw_y = []
 
             for i in db_graph_wind:
-                fetch_graph.wind_graph_X.append(i[1])
-                fetch_graph.wind_graph_Y.append(i[0])
+                fg.gw_x.append(i[1])
+                fg.gw_y.append(i[0])
 
         else:
-            fetch_graph.wind_graph_X = []
-            fetch_graph.wind_graph_Y = []
-            fetch_graph.wind_graph_X.append(time.time())
-            fetch_graph.wind_graph_Y.append(0)
+            fg.gw_x = []
+            fg.gw_y = []
+            fg.gw_x.append(time.time())
+            fg.gw_y.append(0)
         
         # atp 
         cursor.execute(get_graph_atp)
         if cursor.rowcount > 0:
             db_graph_atp = cursor.fetchall()
-            fetch_graph.atp_graph_X = []
-            fetch_graph.atp_graph_Y = []
+            fg.ga_x = []
+            fg.ga_y = []
 
             for i in db_graph_atp:
-                fetch_graph.atp_graph_X.append(i[1])
-                fetch_graph.atp_graph_Y.append(i[0])
+                fg.ga_x.append(i[1])
+                fg.ga_y.append(i[0])
 
         else:
-            fetch_graph.atp_graph_X = []
-            fetch_graph.atp_graph_Y = []
-            fetch_graph.atp_graph_X.append(time.time())
-            fetch_graph.atp_graph_Y.append(0)
+            fg.ga_x = []
+            fg.ga_y = []
+            fg.ga_x.append(time.time())
+            fg.ga_y.append(0)
         
         # hum    
         cursor.execute(get_graph_hum)
         if cursor.rowcount > 0:
             db_graph_hum = cursor.fetchall()
-            fetch_graph.hum_graph_X = []
-            fetch_graph.hum_graph_Y = []
+            fg.gh_x = []
+            fg.gh_y = []
 
             for i in db_graph_hum:
-                fetch_graph.hum_graph_X.append(i[1])
-                fetch_graph.hum_graph_Y.append(i[0])
+                fg.gh_x.append(i[1])
+                fg.gh_y.append(i[0])
 
         else:
-            fetch_graph.hum_graph_X = []
-            fetch_graph.hum_graph_Y = []
-            fetch_graph.hum_graph_X.append(time.time())
-            fetch_graph.hum_graph_Y.append(0)
+            fg.gh_x = []
+            fg.gh_y = []
+            fg.gh_x.append(time.time())
+            fg.gh_y.append(0)
         # temp            
         cursor.execute(get_graph_temp)
         if cursor.rowcount > 0:
             db_graph_temp = cursor.fetchall()
-            fetch_graph.temp_graph_X = []
-            fetch_graph.temp_graph_Y = []
+            fg.gt_x = []
+            fg.gt_y = []
 
             for i in db_graph_temp:
-                fetch_graph.temp_graph_X.append(i[1])
-                fetch_graph.temp_graph_Y.append(i[0])
+                fg.gt_x.append(i[1])
+                fg.gt_y.append(i[0])
 
         else:
-            fetch_graph.temp_graph_X = []
-            fetch_graph.temp_graph_Y = []
-            fetch_graph.temp_graph_X.append(time.time())
-            fetch_graph.temp_graph_Y.append(0)
+            fg.gt_x = []
+            fg.gt_y = []
+            fg.gt_x.append(time.time())
+            fg.gt_y.append(0)
 
     except Exception as e:
         filename = Path(__file__).name
@@ -315,9 +315,11 @@ thread_fetch_gps = threading.Thread(target=fetch_gps, args=())
 thread_fetch_gps.daemon = True
 thread_fetch_gps.start()
 
-thread_fetch_graph = threading.Thread(target=fetch_graph, args=())
+thread_fetch_graph = threading.Thread(target=fg, args=())
 thread_fetch_graph.daemon = True
 thread_fetch_graph.start()
+
+
 
 # thread_db_cleanup = threading.Thread(target=db_cleanup, args=())
 # thread_db_cleanup.daemon = True
@@ -329,14 +331,18 @@ class App(QWidget):
         super(App, self).__init__(parent=parent)
         self.title = "WFS - Weather Forecast Station"
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
-        # self.left = 0
-        # self.top = 0
-        # self.width = 720
-        # self.height = 480
-        self.showFullScreen()
         self.setWindowTitle(self.title)
-        # self.setGeometry(self.left, self.top, self.width, self.height)
         self.setStyleSheet("color: white; background-color: #000000;")
+
+        # self.showFullScreen()
+
+        self.left = 0
+        self.top = 0
+        self.width = 720
+        self.height = 480
+        self.setGeometry(self.left, self.top, self.width, self.height)
+
+
         self.initUI()
         self.win = QWidget()
 
@@ -403,7 +409,7 @@ class App(QWidget):
 
         #GRAPH
         self.graphContainer = QVBoxLayout()
-        self.graph = graph_plot(fetch_graph.wind_graph_X,fetch_graph.wind_graph_Y,fetch_graph.atp_graph_X,fetch_graph.atp_graph_Y)
+        self.graph = graph_plot(fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
         self.graphContainer.addWidget(self.graph)
         self.windContainer.addLayout(self.graphContainer)
         self.windContainer.addStretch()
@@ -521,7 +527,7 @@ class App(QWidget):
         self.button_atp.setCheckable(True)
         
         
-        self.button_wind.clicked.connect(self.button_wind_clicked)
+        # self.button_wind.clicked.connect(self.button_wind_clicked)
         self.sensBox.addWidget(self.button_wind)
         self.sensBox.addWidget(self.button_temp)
         self.sensBox.addWidget(self.button_hum)
@@ -553,24 +559,24 @@ class App(QWidget):
         self.O1.addLayout(self.mainContainer)
 
 
-    def button_wind_clicked(self):
-        global gbp
-        if gbp < 3:
-            gbp += 1
-        else:
-            gbp = 0
-        fetch_graph()
-        try:
-            blabel = ["WIND", "ATP", "HUM", "TEMP"]
-            self.button_wind.setText(blabel[gbp])
-            graph_update(self, fetch_graph.wind_graph_X, fetch_graph.wind_graph_Y)
-            self.graph
-
-        except Exception as e:
-            filename = Path(__file__).name
-            error_handle(e, filename)
-
-        QApplication.processEvents()
+    # def button_wind_clicked(self):
+    #     global gbp
+    #     if gbp < 3:
+    #         gbp += 1
+    #     else:
+    #         gbp = 0
+    #     fg()
+    #     try:
+    #         blabel = ["WIND", "ATP", "HUM", "TEMP"]
+    #         self.button_wind.setText(blabel[gbp])
+    #         graph_update(self, fg.wind_graph_X, fg.wind_graph_Y)
+    #         self.graph
+    #
+    #     except Exception as e:
+    #         filename = Path(__file__).name
+    #         error_handle(e, filename)
+    #
+    #     QApplication.processEvents()
 
     def update_wind(self):
         try:
@@ -587,7 +593,6 @@ class App(QWidget):
     def update_sens(self):
         try:
             path = str(Path(__file__).parent.absolute())
-            fetch_graph()
             fetch_sens()
             fetch_gps()
             forecast()
@@ -611,17 +616,34 @@ class App(QWidget):
             self.longitude.setText("Longitude: " + fetch_gps.long)
             self.altitude.setText("Altitude: " + fetch_gps.alt)
 
-            graph_update(self, wind_graph_X, wind_graph_Y, atp_graph_X, atp_graph_Y)
-            self.graph
-
-            # self.sensdate.setText("S: " + str(fetch_sens.sens_timestamp))
-            # self.gpsdate.setText("G: " + str(fetch_gps.gps_timestamp))
 
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
 
         QApplication.processEvents()
+
+
+    def update_graph(self):
+        try:
+            path = str(Path(__file__).parent.absolute())
+            fg()
+
+            graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
+            self.graph
+
+            # self.graph = graph_update(fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
+
+        except Exception as e:
+            # filename = Path(__file__).name
+            # error_handle(e, filename)
+            print(e)
+        QApplication.processEvents()
+
+
+# thread_update_graph = threading.Thread(target=App.update_graph, args=())
+# thread_update_graph.daemon = True
+# thread_update_graph.start()
 
 
 if __name__ == '__main__':
@@ -636,5 +658,9 @@ if __name__ == '__main__':
     timer2 = QTimer()
     timer2.timeout.connect(ex.update_sens)
     timer2.start(5000)
+
+    timer3 = QTimer()
+    timer3.timeout.connect(ex.update_graph)
+    timer3.start(5000)
 
     sys.exit(app.exec_())
