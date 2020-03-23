@@ -365,10 +365,10 @@ class App(QWidget):
             self.windFrame = QFrame(self)
             self.wind_VL = QVBoxLayout(self.windFrame)
             self.windL = QLabel(fetch_wind.wind, self.windFrame)
-            img = "/img/wind-circle.png"
+            img = path + "/img/wc_wind.png"
             self.windL.setStyleSheet("background-image: url({}); "
                                      "background-repeat: no-repeat; "
-                                     "background-position: center".format(path + img))
+                                     "background-position: center".format(img))
             self.windL.setAlignment(Qt.AlignCenter)
             self.windL.setMinimumHeight(200)
             self.windL.setFont(QFont('Arial', 50))
@@ -378,9 +378,10 @@ class App(QWidget):
             self.meanFrame = QFrame(self)
             self.mean_VL = QVBoxLayout(self.meanFrame)
             self.meanL = QLabel(str(fetch_mean.meanwind), self.meanFrame)
+            img = path + "/img/wc_mean.png"
             self.meanL.setStyleSheet("background-image: url({}); "
                                      "background-repeat: no-repeat; "
-                                     "background-position: center".format(path + img))
+                                     "background-position: center".format(img))
             self.meanL.setAlignment(Qt.AlignCenter)
             self.meanL.setMinimumHeight(200)
             self.meanL.setFont(QFont('Arial', 50))
