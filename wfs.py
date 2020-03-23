@@ -329,13 +329,13 @@ class App(QWidget):
         self.setWindowTitle(self.title)
         self.setStyleSheet("color: white; background-color: #000000;")
 
-        # self.showFullScreen()
+        self.showFullScreen()
 
-        self.left = 0
-        self.top = 0
-        self.width = 720
-        self.height = 480
-        self.setGeometry(self.left, self.top, self.width, self.height)
+        # self.left = 0
+        # self.top = 0
+        # self.width = 720
+        # self.height = 480
+        # self.setGeometry(self.left, self.top, self.width, self.height)
 
 
         self.initUI()
