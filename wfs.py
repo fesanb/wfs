@@ -500,7 +500,8 @@ class App(QWidget):
         # self.sensBox.addStretch()
 
         # self.gbp = 2
-        button_style = "background-color: #444444; color: black; font-weight:600"
+        button_style = "QPushButton {background-color: #444444; color: black; font-weight:600}" \
+                       "QPushButton:checked {background-color: #111111; color: white; font-weight:600}"
         self.gwb = QPushButton()
         self.gwb.setText("WIND")
         self.gwb.setStyleSheet(button_style)
