@@ -17,8 +17,6 @@ from wfs_sub_graph import graph_plot, graph_update
 from wfs_error_handling import error_handle
 from wfs_forecast import *
 
-
-
 #Wind
 get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
 get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
@@ -39,8 +37,6 @@ get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps) AND tmestmp >= D
 get_max_wind12 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
 get_max_wind1 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
 
-global gbp
-gbp = 0
 
 def fetch_wind():
     while True:
@@ -186,8 +182,7 @@ def fg():
     try:
         cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
         cursor = cnx.cursor(buffered=True)
-        # fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y
-        # wind
+
         cursor.execute(get_graph_wind)
         if cursor.rowcount > 0:
             db_graph_wind = cursor.fetchall()
@@ -506,77 +501,70 @@ class App(QWidget):
 
         # self.gbp = 2
         button_style = "background-color: #444444; color: black; font-weight:600"
-        self.button_wind = QPushButton()
-        self.button_wind.setText("WIND")
-        self.button_wind.setStyleSheet(button_style)
-        self.button_wind.setCheckable(True)
+        self.gwb = QPushButton()
+        self.gwb.setText("WIND")
+        self.gwb.setStyleSheet(button_style)
+        self.gwb.setCheckable(True)
+        self.gwb.setChecked(True)
+        self.gwb.clicked.connect(self.gwbf)
         
-        self.button_temp = QPushButton()
-        self.button_temp.setText("TEMP")
-        self.button_temp.setStyleSheet(button_style)
-        self.button_temp.setCheckable(True)
+        self.gtb = QPushButton()
+        self.gtb.setText("TEMP")
+        self.gtb.setStyleSheet(button_style)
+        self.gtb.setCheckable(True)
+        self.gtb.clicked.connect(self.gtbf)
         
-        self.button_hum = QPushButton()
-        self.button_hum.setText("HUM")
-        self.button_hum.setStyleSheet(button_style)
-        self.button_hum.setCheckable(True)
+        self.ghb = QPushButton()
+        self.ghb.setText("HUM")
+        self.ghb.setStyleSheet(button_style)
+        self.ghb.setCheckable(True)
+        self.ghb.clicked.connect(self.ghbf)
         
-        self.button_atp = QPushButton()
-        self.button_atp.setText("ATP")
-        self.button_atp.setStyleSheet(button_style)
-        self.button_atp.setCheckable(True)
-        
-        
-        # self.button_wind.clicked.connect(self.button_wind_clicked)
-        self.sensBox.addWidget(self.button_wind)
-        self.sensBox.addWidget(self.button_temp)
-        self.sensBox.addWidget(self.button_hum)
-        self.sensBox.addWidget(self.button_atp)
+        self.gab = QPushButton()
+        self.gab.setText("ATP")
+        self.gab.setStyleSheet(button_style)
+        self.gab.setCheckable(True)
+        self.gab.clicked.connect(self.gabf)
+
+        self.sensBox.addWidget(self.gwb)
+        self.sensBox.addWidget(self.gtb)
+        self.sensBox.addWidget(self.ghb)
+        self.sensBox.addWidget(self.gab)
 
         self.sensBox.addStretch()
 
-        # # footer box
-        # self.footerbox = QVBoxLayout()
-        # self.credit = QLabel("Creator: Stefan Bahrawy")
-        # self.winddate = QLabel("W: " + str(fetch_wind.timestamp))
-        # self.sensdate = QLabel("S: " + str(fetch_sens.sens_timestamp))
-        # self.gpsdate = QLabel("G: " + str(fetch_gps.gps_timestamp))
-        #
-        # self.credit.setFont(QFont('Arial', 8))
-        # self.winddate.setFont(QFont('Arial', 8))
-        # self.sensdate.setFont(QFont('Arial', 8))
-        # self.gpsdate.setFont(QFont('Arial', 8))
-        #
-        # self.footerbox.addWidget(self.credit)
-        # self.footerbox.addWidget(self.winddate)
-        # self.footerbox.addWidget(self.sensdate)
-        # self.footerbox.addWidget(self.gpsdate)
-        # self.sensBox.addLayout(self.footerbox)
-        #
-        # self.footerbox.addStretch()
         self.mainContainer.addWidget(self.sensFrame)
 
         self.O1.addLayout(self.mainContainer)
 
+        self.gw = True
+        self.gt = False
+        self.gh = False
+        self.ga = False
 
-    # def button_wind_clicked(self):
-    #     global gbp
-    #     if gbp < 3:
-    #         gbp += 1
-    #     else:
-    #         gbp = 0
-    #     fg()
-    #     try:
-    #         blabel = ["WIND", "ATP", "HUM", "TEMP"]
-    #         self.button_wind.setText(blabel[gbp])
-    #         graph_update(self, fg.wind_graph_X, fg.wind_graph_Y)
-    #         self.graph
-    #
-    #     except Exception as e:
-    #         filename = Path(__file__).name
-    #         error_handle(e, filename)
-    #
-    #     QApplication.processEvents()
+    def gwbf(self):
+        if self.gwb.isChecked():
+            self.gw = True
+        else:
+            self.gw = False
+
+    def gtbf(self):
+        if self.gtb.isChecked():
+            self.gt = True
+        else:
+            self.gt = False
+
+    def ghbf(self):
+        if self.ghb.isChecked():
+            self.gh = True
+        else:
+            self.gh = False
+
+    def gabf(self):
+        if self.gab.isChecked():
+            self.ga = True
+        else:
+            self.ga = False
 
     def update_wind(self):
         try:
@@ -626,24 +614,14 @@ class App(QWidget):
 
     def update_graph(self):
         try:
-            path = str(Path(__file__).parent.absolute())
             fg()
-
             graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
-            self.graph
-
-            # self.graph = graph_update(fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
 
         except Exception as e:
-            # filename = Path(__file__).name
+            filename = Path(__file__).name
             # error_handle(e, filename)
-            print(e)
+            print(e, filename)
         QApplication.processEvents()
-
-
-# thread_update_graph = threading.Thread(target=App.update_graph, args=())
-# thread_update_graph.daemon = True
-# thread_update_graph.start()
 
 
 if __name__ == '__main__':
