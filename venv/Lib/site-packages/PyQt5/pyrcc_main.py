@@ -22,7 +22,6 @@ from PyQt5.QtCore import PYQT_VERSION_STR, QDir, QFile
 
 from .pyrcc import *
 
-
 # Initialise the globals.
 verbose = False
 compressLevel = CONSTANT_COMPRESSLEVEL_DEFAULT
