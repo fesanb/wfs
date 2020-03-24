@@ -2,8 +2,9 @@
 
 b = 2
 
+
 def test():
-	test.a = b+2
+	test.a = b + 2
 
 
 test()
@@ -15,8 +16,9 @@ class Test:
 		self.blank = 0
 
 	def test2(self):
-		self.a = b+2
+		self.a = b + 2
 		print(self.a)
+
 
 x = Test()
 

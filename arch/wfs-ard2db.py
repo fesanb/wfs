@@ -9,7 +9,6 @@ import serial
 import serial.tools.list_ports as port_list
 import mysql.connector
 
-
 print("")
 print("")
 print("")
@@ -51,7 +50,6 @@ ports = list(port_list.comports())
 serial_port = "/dev/ttyAMA0"
 beauti_sleep = 1
 
-
 # while handshake == 0:
 #     for y in ports:
 #         x = [ports[i]]
@@ -91,11 +89,11 @@ beauti_sleep = 1
 # # HANDSHAKE
 
 try:
-    ser = serial.Serial(serial_port, 19200)
+	ser = serial.Serial(serial_port, 19200)
 except:
-    print("Error connecting to the serial port. Either busy or no connection")
-    print("Code needs changing, you are helpless.")
-    sys.exit(1)
+	print("Error connecting to the serial port. Either busy or no connection")
+	print("Code needs changing, you are helpless.")
+	sys.exit(1)
 
 lastdatawind = ""
 lastdatahum = ""
@@ -106,57 +104,55 @@ wind_timepassed = time.perf_counter()
 wind_countertime = 0
 wind_interval = 0.3
 
-
 sens_timepassed = time.perf_counter()
 sens_countertime = 0
 sens_interval = 600
 
-
 while True:
-    try:
-        cc = ser.readline()
-        pcs = cc.decode().split(",")
+	try:
+		cc = ser.readline()
+		pcs = cc.decode().split(",")
 
-        if wind_timepassed - wind_countertime > wind_interval:
-            if pcs[0] == "w":
-                if pcs[1] != lastdatawind and float(pcs[1]) < 30:
-                    lastdatawind = pcs[1]
-                    add_wind = (u'''INSERT INTO wind(wind) VALUES (%s)''' % (pcs[1]))
-                    cursor.execute(add_wind)
-                    emp_no = cursor.lastrowid
-                    cnx.commit()
+		if wind_timepassed - wind_countertime > wind_interval:
+			if pcs[0] == "w":
+				if pcs[1] != lastdatawind and float(pcs[1]) < 30:
+					lastdatawind = pcs[1]
+					add_wind = (u'''INSERT INTO wind(wind) VALUES (%s)''' % (pcs[1]))
+					cursor.execute(add_wind)
+					emp_no = cursor.lastrowid
+					cnx.commit()
 
-                    wind_countertime = time.perf_counter()
-        wind_timepassed = time.perf_counter()
+					wind_countertime = time.perf_counter()
+		wind_timepassed = time.perf_counter()
 
-        if pcs[0] == "GPS":
-            if pcs[1] != "0.00":
-                print("Lat: ", pcs[1], " Long: ", pcs[2], " Alt: ", pcs[3], " SAT: ", pcs[4])
+		if pcs[0] == "GPS":
+			if pcs[1] != "0.00":
+				print("Lat: ", pcs[1], " Long: ", pcs[2], " Alt: ", pcs[3], " SAT: ", pcs[4])
 
-                add_gps = (u'''INSERT INTO gps(lat, lon, alt) VALUES (%s, %s, %s)''' % (pcs[1], pcs[2], pcs[3]))
-                cursor.execute(add_gps)
-                emp_no = cursor.lastrowid
-                cnx.commit()
+				add_gps = (u'''INSERT INTO gps(lat, lon, alt) VALUES (%s, %s, %s)''' % (pcs[1], pcs[2], pcs[3]))
+				cursor.execute(add_gps)
+				emp_no = cursor.lastrowid
+				cnx.commit()
 
-        if pcs[0] == "SENS":
-            temp = round(float(pcs[1]), 1)
-            hum = int(round(float(pcs[2])))
-            atp = int(pcs[3])
+		if pcs[0] == "SENS":
+			temp = round(float(pcs[1]), 1)
+			hum = int(round(float(pcs[2])))
+			atp = int(pcs[3])
 
-            if sens_timepassed - sens_countertime > sens_interval:
-                if temp != lastdatatemp or hum != lastdatahum or atp != lastdataatp:
-                    lastdatatemp = temp
-                    lastdatahum = hum
-                    lastdataatp = atp
-                    add_sens = (u'''INSERT INTO sens(temp, hum, atp) VALUES (%s, %s, %s)''' % (temp, hum, atp))
-                    cursor.execute(add_sens)
-                    emp_no = cursor.lastrowid
-                    cnx.commit()
-                    print("Temp: ", temp, " Hum: ", hum, " ATP: ", atp, end="\r")
-                    sens_countertime = time.perf_counter()
-        sens_timepassed = time.perf_counter()
+			if sens_timepassed - sens_countertime > sens_interval:
+				if temp != lastdatatemp or hum != lastdatahum or atp != lastdataatp:
+					lastdatatemp = temp
+					lastdatahum = hum
+					lastdataatp = atp
+					add_sens = (u'''INSERT INTO sens(temp, hum, atp) VALUES (%s, %s, %s)''' % (temp, hum, atp))
+					cursor.execute(add_sens)
+					emp_no = cursor.lastrowid
+					cnx.commit()
+					print("Temp: ", temp, " Hum: ", hum, " ATP: ", atp, end="\r")
+					sens_countertime = time.perf_counter()
+		sens_timepassed = time.perf_counter()
 
-    except Exception as e:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        print(exc_type, exc_tb.tb_lineno)
-        print(repr(e))
+	except Exception as e:
+		exc_type, exc_obj, exc_tb = sys.exc_info()
+		print(exc_type, exc_tb.tb_lineno)
+		print(repr(e))

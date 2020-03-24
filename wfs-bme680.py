@@ -17,38 +17,41 @@ sensor.set_filter(bme680.FILTER_SIZE_3)
 #
 sensor.set_gas_status(bme680.DISABLE_GAS_MEAS)
 sensor.set_gas_status(bme680.DISABLE_HEATER)
+
+
 # sensor.set_gas_heater_temperature(320)
 # sensor.set_gas_heater_duration(150)
 # sensor.select_gas_heater_profile(0)
 
 
 def db_insert(temp, hum, atp, issame):
-    cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-    cursor = cnx.cursor()
-    try:
-        cursor.execute(u'''INSERT INTO sens(temp, hum, atp, issame) VALUES ({0}, {1}, {2}, {3})'''.format(temp, hum, atp, issame))
-        cnx.commit()
-    except Exception as e:
-        filename = Path(__file__).name
-        error_handle(e, filename)
+	cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+	cursor = cnx.cursor()
+	try:
+		cursor.execute(
+			u'''INSERT INTO sens(temp, hum, atp, issame) VALUES ({0}, {1}, {2}, {3})'''.format(temp, hum, atp, issame))
+		cnx.commit()
+	except Exception as e:
+		filename = Path(__file__).name
+		error_handle(e, filename)
 
 
 last_sens = []
 
 while True:
-    new_sens = [round(sensor.data.temperature, 1), round(sensor.data.humidity), round(sensor.data.pressure)]
-    if last_sens == new_sens:
-        issame = 1
-    else:
-        issame = 0
+	new_sens = [round(sensor.data.temperature, 1), round(sensor.data.humidity), round(sensor.data.pressure)]
+	if last_sens == new_sens:
+		issame = 1
+	else:
+		issame = 0
 
-    new_sens.append(issame)
+	new_sens.append(issame)
 
-    if sensor.get_sensor_data() is None:
-        pass
-    else:
-        db_insert(new_sens[0], new_sens[1], new_sens[2], new_sens[3])
-        last_sens = new_sens
-        del last_sens[-1]
+	if sensor.get_sensor_data() is None:
+		pass
+	else:
+		db_insert(new_sens[0], new_sens[1], new_sens[2], new_sens[3])
+		last_sens = new_sens
+		del last_sens[-1]
 
-        time.sleep(120)
+		time.sleep(120)

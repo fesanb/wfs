@@ -25,11 +25,11 @@ def forecast():
 		split_atp = [i[0] for i in db_atp]
 		split_timestamp = [i[1] for i in db_atp]
 
-		if split_atp[0] < split_atp[len(split_atp)-1]:
+		if split_atp[0] < split_atp[len(split_atp) - 1]:
 			# print("Expect wetter conditions")
 			expect = "dryer"
 
-		if split_atp[0] > split_atp[len(split_atp)-1]:
+		if split_atp[0] > split_atp[len(split_atp) - 1]:
 			# print("Expect dryer conditions")
 			expect = "wetter"
 
@@ -37,10 +37,10 @@ def forecast():
 
 		while split_timestamp[0] - split_timestamp[i] < timedelta(hours=1):
 			i += 1
-			if i > len(split_atp)-1:
+			if i > len(split_atp) - 1:
 				i -= 1
 				break
-		change = abs(split_atp[0]-split_atp[i])
+		change = abs(split_atp[0] - split_atp[i])
 
 		if change > 3:
 			# print("Great weather change")
