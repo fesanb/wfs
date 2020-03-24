@@ -26,7 +26,7 @@ def graph_plot(gw_x, gw_y, ga_x, ga_y, gt_x, gt_y, gh_x, gh_y):
 
     g1 = g.plotItem
     g1.setLabels(left='WIND')
-    # g1.setYRange(0, 30)
+    g1.setYRange(0, 20)
 
     g2 = pg.ViewBox()
     g1.showAxis('right')
@@ -34,7 +34,7 @@ def graph_plot(gw_x, gw_y, ga_x, ga_y, gt_x, gt_y, gh_x, gh_y):
     g1.getAxis('right').linkToView(g2)
     g2.setXLink(g1)
     g1.getAxis('right').setLabel('ATP', color='#0000ff')
-    # g2.setYRange(870, 1085)
+    g2.setYRange(900, 1030)
 
     g3 = pg.ViewBox()
     ax3 = pg.AxisItem('right')
@@ -43,7 +43,7 @@ def graph_plot(gw_x, gw_y, ga_x, ga_y, gt_x, gt_y, gh_x, gh_y):
     ax3.linkToView(g3)
     g3.setXLink(g1)
     ax3.setLabel('TEMP', color='#ff0000')
-    # g3.setYRange(-30, 30)
+    g3.setYRange(-5, 30)
 
     g4 = pg.ViewBox()
     ax4 = pg.AxisItem('right')
@@ -52,7 +52,7 @@ def graph_plot(gw_x, gw_y, ga_x, ga_y, gt_x, gt_y, gh_x, gh_y):
     ax4.linkToView(g4)
     g4.setXLink(g1)
     ax4.setLabel('HUM', color='#00ff00')
-    # g4.setYRange(0, 100)
+    g4.setYRange(0, 100)
 
     g1.plot(gw_x, gw_y, clear=True, pen='y')
     # g2.addItem(pg.PlotCurveItem(ga_x, ga_y, clear=True, pen='b'))
