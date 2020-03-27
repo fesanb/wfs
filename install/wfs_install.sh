@@ -19,12 +19,14 @@ printf  '\e[93m - Install mariaDB \n'
 apt install mariadb-server
 printf  '\e[93m - Setting up the database \n'
 
-mysql -e "CREATE DATABASE wfs /*\!40100 DEFAULT CHARACTER SET utf8 */;"
+mysql -e "CREATE DATABASE [IF NOT EXISTS] wfs /*\!40100 DEFAULT CHARACTER SET utf8 */;"
 mysql -e "show databases;"
-mysql -e "CREATE USER wfs@localhost IDENTIFIED BY 'wfs22';"
+mysql -e "CREATE USER IF NOT EXISTS wfs@localhost IDENTIFIED BY 'wfs22';"
 mysql -e "GRANT ALL PRIVILEGES ON wfs.* TO 'wfs'@'localhost';"
 mysql -e "FLUSH PRIVILEGES;"
 mysql wfs < wfs_dump.sql
+mysql -e "SHOW TABLES FROM wfs;"
+read -r
 
 printf  '\e[92m - Database set up done. \n'
 printf  '\e[93m - Install PIP \n'
@@ -40,7 +42,6 @@ pip3 install pyqt5
 pip3 install pyqtgraph
 pip3 install rpi.gpio
 pip3 install psutil
-pip3 install threading
 pip3 install pyserial
 
 printf  '\e[92m - Installation successful \n'
