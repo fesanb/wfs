@@ -1,17 +1,22 @@
 # WFS - Weather Forecast Station
 # Written by Stefan Bahrawy
 
+# imports
+import numpy as np
+import mysql.connector
+import psutil
+import pyqtgraph as pg
 import sys, os
+import threading
+import time
+
+# froms
+from datetime import datetime, timedelta
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-import numpy as np
-import pyqtgraph as pg
-import mysql.connector
-import threading
-import time
-from datetime import datetime, timedelta
 from pathlib import Path
+
 # custom imports
 from wfs_sub_graph import graph_plot, graph_update
 from wfs_error_handling import error_handle
@@ -537,6 +542,11 @@ class App(QWidget):
 		self.sensBox.addWidget(self.ghb)
 		self.sensBox.addWidget(self.gab)
 
+		self.resBox = QVBoxLayout(self.sensFrame)
+		self.res = QLabel("P:{} - M:{} - T:{}".format(psutil.cpu_percent(), psutil.virtual_memory(), psutil.cpu_temperature()))
+		self.resBox.addWidget(self.res)
+		self.sensBox.addLayout(self.resBox)
+
 		self.sensBox.addStretch()
 
 		self.mainContainer.addWidget(self.sensFrame)
@@ -634,16 +644,16 @@ if __name__ == '__main__':
 	ex = App()
 	ex.show()
 
-	timer1 = QTimer()
-	timer1.timeout.connect(ex.update_wind)
-	timer1.start(1000)
+	wind_timer = QTimer()
+	wind_timer.timeout.connect(ex.update_wind)
+	wind_timer.start(1000)
 
-	timer2 = QTimer()
-	timer2.timeout.connect(ex.update_sens)
-	timer2.start(5000)
+	sens_timer = QTimer()
+	sens_timer.timeout.connect(ex.update_sens)
+	sens_timer.start(5000)
 
-	timer3 = QTimer()
-	timer3.timeout.connect(ex.update_graph)
-	timer3.start(5000)
+	graph_timer = QTimer()
+	graph_timer.timeout.connect(ex.update_graph)
+	graph_timer.start(5000)
 
 	sys.exit(app.exec_())

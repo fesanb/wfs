@@ -23,11 +23,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="b0916cd6-b1e9-4e0f-af87-ad5ac336c3da">
-        <schema name="wfs" object-types="column, view, function, procedure, dataset trigger, table, constraint, index" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="b0916cd6-b1e9-4e0f-af87-ad5ac336c3da">
