@@ -15,9 +15,22 @@ systemctl enable /lib/systemd/system/wfs.service
 
 printf  '\e[92m - Done! \n'
 
-printf  '\e[93m - Install needed software \n'
+printf  '\e[93m - Install mariaDB \n'
 apt install mariadb-server
+printf  '\e[93m - Setting up the database \n'
+# If /root/.my.cnf exists then it won't ask for root password
+if [ -f /root/.my.cnf ]; then
+	mysql -e "CREATE DATABASE wfs /*\!40100 DEFAULT CHARACTER SET utf8 */;"
+	mysql -e "show databases;"
+	mysql -e "CREATE USER wfs@localhost IDENTIFIED BY 'wfs22';"
+	mysql -e "GRANT ALL PRIVILEGES ON wfs.* TO 'wfs'@'localhost';"
+	mysql -e "FLUSH PRIVILEGES;"
+	mysql wfs < wfs_dump.sql
+
+printf  '\e[92m - Database set up done. \n'
+printf  '\e[93m - Install PIP \n'
 apt install pip3
+printf  '\e[92m - Done. \n'
 
 printf  '\e[93m - Install needed Python3 packages \n'
 pip3 install bme680

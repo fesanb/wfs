@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/install/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.service" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.service" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/install/wfs_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-gps.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs_error_handling.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_error_handling.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -426,11 +420,11 @@
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="1064" y="245" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585038810740" />
-    <state x="659" y="107" key="CommitChangelistDialog2" timestamp="1585297629018">
+    <state x="659" y="107" key="CommitChangelistDialog2" timestamp="1585311474126">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578061739907" />
-    <state x="659" y="107" key="CommitChangelistDialog2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585297629018" />
+    <state x="659" y="107" key="CommitChangelistDialog2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585311474126" />
     <state x="765" y="224" key="DBNavigator.DatasetFilterDialog" timestamp="1585042332900">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
@@ -493,11 +487,11 @@
     </state>
     <state x="2027" y="123" key="SettingsEditor/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577539714876" />
     <state x="107" y="123" key="SettingsEditor/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585043051404" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1585297630479">
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1585311476015">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578061741128" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585297630479" />
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585311476015" />
     <state x="952" y="243" key="VcsDiffUtil.ChangesDialog" timestamp="1585043895014">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
