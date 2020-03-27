@@ -543,7 +543,7 @@ class App(QWidget):
 		self.sensBox.addWidget(self.gab)
 
 		self.resBox = QVBoxLayout(self.sensFrame)
-		self.res = QLabel("P:{} - M:{} - T:{}".format(psutil.cpu_percent(), psutil.virtual_memory(), psutil.cpu_temperature()))
+		self.res = QLabel("P:{} - M:{}".format(psutil.cpu_percent(), psutil.virtual_memory()))
 		self.resBox.addWidget(self.res)
 		self.sensBox.addLayout(self.resBox)
 
