@@ -622,6 +622,7 @@ class App(QWidget):
 			self.longitude.setText("Longitude: " + fetch_gps.long)
 			self.altitude.setText("Altitude: " + fetch_gps.alt)
 
+			mem = psutil.virtual_memory()
 			used_mem = round(mem.used/mem.total * 100)
 			self.res.setText("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
 
