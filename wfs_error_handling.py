@@ -19,9 +19,7 @@ def error_handle(e, file):
 	cursor = cnx.cursor(buffered=True)
 
 	add_error = (u'''INSERT INTO 
-    error(file, type, obj, line) 
-    VALUES ("{0}", "{1}", "{2}", {3}) '''
-				 .format(file, exc_type, exc_obj, exc_tb.tb_lineno))
-
+	error(file, type, obj, line) 
+	VALUES ("{0}", "{1}", "{2}", {3}) '''.format(file, exc_type, exc_obj, exc_tb.tb_lineno))
 	cursor.execute(add_error)
 	cnx.commit()

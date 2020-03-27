@@ -46,8 +46,9 @@ def parseGPS(str):
 					sleep_time2 += 300
 					sleep_time = sleep_time2
 		except Exception as e:
-			filename = Path(__file__).name
-			error_handle(e, filename)
+			# filename = Path(__file__).name
+			# error_handle(e, filename)
+			pass
 	else:
 		sleep_time = 0.5
 
