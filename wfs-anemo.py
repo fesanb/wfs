@@ -43,7 +43,7 @@ while True:
 			db_insert(wind)
 			# print("SQL insert - Wind: {0}m/s".format(wind), end="\r")
 			last_wind = wind
-			anemo = 0
+		anemo = 0
 
 	except Exception as e:
 		filename = Path(__file__).name
