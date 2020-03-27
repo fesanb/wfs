@@ -543,7 +543,9 @@ class App(QWidget):
 		self.sensBox.addWidget(self.gab)
 
 		self.resBox = QVBoxLayout(self.sensFrame)
-		self.res = QLabel("P:{} - M:{}".format(psutil.cpu_percent(), psutil.memory_percent()))
+		mem = psutil.virtual_memory()
+		used_mem = round(mem.used/mem.total * 100)
+		self.res = QLabel("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
 		self.resBox.addWidget(self.res)
 		self.sensBox.addLayout(self.resBox)
 
@@ -619,6 +621,8 @@ class App(QWidget):
 			self.latitude.setText("Latitude: " + fetch_gps.lat)
 			self.longitude.setText("Longitude: " + fetch_gps.long)
 			self.altitude.setText("Altitude: " + fetch_gps.alt)
+
+			self.res.setText("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
 
 
 		except Exception as e:
