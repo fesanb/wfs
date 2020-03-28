@@ -53,7 +53,8 @@ def parseGPS(str):
 		sleep_time = 0.5
 
 
-ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
+# ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
+ser = serial.Serial("/dev/ttyAMA0", 9600, timeout=0.5)
 
 while True:
 	try:

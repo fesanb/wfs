@@ -48,5 +48,3 @@ pip3 install psutil
 pip3 install pyserial
 
 printf  '\e[92m - Installation successful \e[0m \n'
-
-fi

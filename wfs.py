@@ -57,13 +57,15 @@ def fetch_wind():
 				db_wind = cursor.fetchone()
 				fetch_wind.wind = str(db_wind[1])
 				fetch_wind.timestamp = db_wind[2]
+
+				if fetch_wind.timestamp < datetime.now() - timedelta(minutes=0.25):
+					fetch_wind.wind = "-.-"
+
 			else:
 				fetch_wind.wind = "-.-"
 
-			if fetch_wind.timestamp < datetime.now() - timedelta(minutes=0.25):
-				fetch_wind.wind = "-.-"
-
 			time.sleep(0.9)
+
 		except Exception as e:
 			filename = Path(__file__).name
 			error_handle(e, filename)
