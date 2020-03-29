@@ -4,11 +4,17 @@
 # imports
 import numpy as np
 import mysql.connector
-import psutil
+
 import pyqtgraph as pg
 import sys, os
 import threading
 import time
+
+try:
+	import psutil
+	ps = True
+except:
+	ps = False
 
 # froms
 from datetime import datetime, timedelta
@@ -563,12 +569,15 @@ class App(QWidget):
 		self.sensBox.addWidget(self.gab)
 
 		self.resBox = QHBoxLayout(self.sensFrame)
-		self.error = QPixmap(path + '/img/' + error_light())
-		mem = psutil.virtual_memory()
-		used_mem = round(mem.used/mem.total * 100)
-		self.res = QLabel("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
-		self.resBox.addWidget(self.error)
-		self.resBox.addWidget(self.res)
+		self.errimg = QPixmap(path + '/img/' + error_light())
+		self.errico = QLabel()
+		self.errico.setPixmap(self.errimg)
+		self.resBox.addWidget(self.errico)
+		if ps is True:
+			mem = psutil.virtual_memory()
+			used_mem = round(mem.used/mem.total * 100)
+			self.res = QLabel("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
+			self.resBox.addWidget(self.res)
 		self.sensBox.addLayout(self.resBox)
 
 		self.sensBox.addStretch()
@@ -644,9 +653,10 @@ class App(QWidget):
 			self.longitude.setText("Longitude: " + fetch_gps.long)
 			self.altitude.setText("Altitude: " + fetch_gps.alt)
 
-			mem = psutil.virtual_memory()
-			used_mem = round(mem.used/mem.total * 100)
-			self.res.setText("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
+			if ps is True:
+				mem = psutil.virtual_memory()
+				used_mem = round(mem.used/mem.total * 100)
+				self.res.setText("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
 
 
 		except Exception as e:
