@@ -569,10 +569,10 @@ class App(QWidget):
 		self.sensBox.addWidget(self.gab)
 
 		self.resBox = QHBoxLayout(self.sensFrame)
-		# self.errimg = QPixmap(path + '/img/' + error_light())
-		# self.errico = QLabel()
-		# self.errico.setPixmap(self.errimg)
-		# self.resBox.addWidget(self.errico)
+		self.errimg = QPixmap(path + '/img/' + error_light())
+		self.errico = QLabel()
+		self.errico.setPixmap(self.errimg)
+		self.resBox.addWidget(self.errico)
 		# if ps is True:
 		mem = psutil.virtual_memory()
 		used_mem = round(mem.used/mem.total * 100)
