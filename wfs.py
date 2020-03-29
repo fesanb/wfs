@@ -353,10 +353,9 @@ thread_fetch_graph = threading.Thread(target=fg, args=())
 thread_fetch_graph.daemon = True
 thread_fetch_graph.start()
 
-
-# thread_db_cleanup = threading.Thread(target=db_cleanup, args=())
-# thread_db_cleanup.daemon = True
-# thread_db_cleanup.start()
+thread_error_light = threading.Thread(target=error_light(), args=())
+thread_error_light.daemon = True
+thread_error_light.start()
 
 class App(QWidget):
 
