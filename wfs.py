@@ -304,6 +304,24 @@ def sens_arrow(sens_number):
 		img = "arrow_flat.png"
 		return img
 
+def error_light():
+	fetch_error = "SELECT * FROM error WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
+
+	try:
+		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+		cursor = cnx.cursor(buffered=True)
+
+		cursor.execute(fetch_error)
+		if cursor.rowcount > 0:
+			light = "error-red.png"
+		else:
+			light = "error-green.png"
+
+		return light
+
+	except Exception as e:
+		filename = Path(__file__).name
+		error_handle(e, filename)
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
 thread_fetch_wind.daemon = True
@@ -544,10 +562,12 @@ class App(QWidget):
 		self.sensBox.addWidget(self.ghb)
 		self.sensBox.addWidget(self.gab)
 
-		self.resBox = QVBoxLayout(self.sensFrame)
+		self.resBox = QHBoxLayout(self.sensFrame)
+		self.error = QPixmap(path + '/img/' + error_light())
 		mem = psutil.virtual_memory()
 		used_mem = round(mem.used/mem.total * 100)
 		self.res = QLabel("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
+		self.resBox.addWidget(self.error)
 		self.resBox.addWidget(self.res)
 		self.sensBox.addLayout(self.resBox)
 
