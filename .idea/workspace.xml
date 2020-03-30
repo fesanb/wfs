@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-anemo.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-anemo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-bme680.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-bme680.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-gps.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -420,11 +423,11 @@
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="1064" y="245" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585038810740" />
-    <state x="659" y="107" key="CommitChangelistDialog2" timestamp="1585475509488">
+    <state x="659" y="107" key="CommitChangelistDialog2" timestamp="1585497110342">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578061739907" />
-    <state x="659" y="107" key="CommitChangelistDialog2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585475509488" />
+    <state x="659" y="107" key="CommitChangelistDialog2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585497110342" />
     <state x="765" y="224" key="DBNavigator.DatasetFilterDialog" timestamp="1585042332900">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
@@ -487,11 +490,11 @@
     </state>
     <state x="2027" y="123" key="SettingsEditor/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577539714876" />
     <state x="107" y="123" key="SettingsEditor/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585043051404" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1585475511008">
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1585497112058">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578061741128" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585475511008" />
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585497112058" />
     <state x="952" y="243" key="VcsDiffUtil.ChangesDialog" timestamp="1585043895014">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>

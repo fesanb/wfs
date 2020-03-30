@@ -26,6 +26,8 @@ def db_insert(wind):
 	cursor.execute(u'''INSERT INTO wind(wind) VALUES ({0})'''.format(wind))
 	cnx.commit()
 	# print("SQL insert done")
+	cursor.close()
+	cnx.close()
 
 
 g.add_event_detect(16, g.RISING, callback=increv)

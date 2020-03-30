@@ -35,6 +35,9 @@ def db_insert(temp, hum, atp, issame):
 		filename = Path(__file__).name
 		error_handle(e, filename)
 
+	cursor.close()
+	cnx.close()
+
 
 last_sens = []
 

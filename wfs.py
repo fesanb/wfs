@@ -70,7 +70,10 @@ def fetch_wind():
 			else:
 				fetch_wind.wind = "-.-"
 
+			cursor.close()
+			cnx.close()
 			time.sleep(0.9)
+
 
 		except Exception as e:
 			filename = Path(__file__).name
@@ -96,6 +99,8 @@ def make_mean():
 			filename = Path(__file__).name
 			error_handle(e, filename)
 
+		cursor.close()
+		cnx.close()
 		time.sleep(60)
 
 
@@ -143,6 +148,8 @@ def fetch_mean():
 			filename = Path(__file__).name
 			error_handle(e, filename)
 
+		cursor.close()
+		cnx.close()
 		time.sleep(5)
 
 
@@ -174,6 +181,9 @@ def fetch_sens():
 		filename = Path(__file__).name
 		error_handle(e, filename)
 
+	cursor.close()
+	cnx.close()
+
 
 def fetch_gps():
 	try:
@@ -196,6 +206,9 @@ def fetch_gps():
 	except Exception as e:
 		filename = Path(__file__).name
 		error_handle(e, filename)
+
+	cursor.close()
+	cnx.close()
 
 
 def fg():
@@ -274,6 +287,9 @@ def fg():
 		filename = Path(__file__).name
 		error_handle(e, filename)
 
+	cursor.close()
+	cnx.close()
+
 
 def sens_arrow(sens_number):
 	fetch_last_sens = "SELECT * FROM sens ORDER BY id DESC LIMIT 1, 1"
@@ -310,6 +326,9 @@ def sens_arrow(sens_number):
 		img = "arrow_flat.png"
 		return img
 
+	cursor.close()
+	cnx.close()
+
 def error_light():
 	fetch_error = "SELECT * FROM error WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
@@ -328,6 +347,9 @@ def error_light():
 	except Exception as e:
 		filename = Path(__file__).name
 		error_handle(e, filename)
+
+	cursor.close()
+	cnx.close()
 
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
 thread_fetch_wind.daemon = True

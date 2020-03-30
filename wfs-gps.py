@@ -23,6 +23,9 @@ def db_insert(lat, lon, alt):
 		filename = Path(__file__).name
 		error_handle(e, filename)
 
+	cursor.close()
+	cnx.close()
+
 
 def parseGPS(str):
 	if str.find('GGA') > 0:
