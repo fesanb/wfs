@@ -557,37 +557,37 @@ class App(QWidget):
 		# self.sensBox.addStretch()
 
 		# self.gbp = 2
-		# button_style = "QPushButton {background-color: #444444; color: black; font-weight:600}" \
-		# 			   "QPushButton:checked {background-color: #111111; color: white; font-weight:600}"
-		# self.gwb = QPushButton()
-		# self.gwb.setText("WIND")
-		# self.gwb.setStyleSheet(button_style)
-		# self.gwb.setCheckable(True)
-		# self.gwb.setChecked(True)
-		# self.gwb.clicked.connect(self.gwbf)
-		#
-		# self.gtb = QPushButton()
-		# self.gtb.setText("TEMP")
-		# self.gtb.setStyleSheet(button_style)
-		# self.gtb.setCheckable(True)
-		# self.gtb.clicked.connect(self.gtbf)
-		#
-		# self.ghb = QPushButton()
-		# self.ghb.setText("HUM")
-		# self.ghb.setStyleSheet(button_style)
-		# self.ghb.setCheckable(True)
-		# self.ghb.clicked.connect(self.ghbf)
-		#
-		# self.gab = QPushButton()
-		# self.gab.setText("ATP")
-		# self.gab.setStyleSheet(button_style)
-		# self.gab.setCheckable(True)
-		# self.gab.clicked.connect(self.gabf)
-		#
-		# self.sensBox.addWidget(self.gwb)
-		# self.sensBox.addWidget(self.gtb)
-		# self.sensBox.addWidget(self.ghb)
-		# self.sensBox.addWidget(self.gab)
+		button_style = "QPushButton {background-color: #444444; color: black; font-weight:600}" \
+					   "QPushButton:checked {background-color: #111111; color: white; font-weight:600}"
+		self.gwb = QPushButton()
+		self.gwb.setText("WIND")
+		self.gwb.setStyleSheet(button_style)
+		self.gwb.setCheckable(True)
+		self.gwb.setChecked(True)
+		self.gwb.clicked.connect(self.gwbf)
+
+		self.gtb = QPushButton()
+		self.gtb.setText("TEMP")
+		self.gtb.setStyleSheet(button_style)
+		self.gtb.setCheckable(True)
+		self.gtb.clicked.connect(self.gtbf)
+
+		self.ghb = QPushButton()
+		self.ghb.setText("HUM")
+		self.ghb.setStyleSheet(button_style)
+		self.ghb.setCheckable(True)
+		self.ghb.clicked.connect(self.ghbf)
+
+		self.gab = QPushButton()
+		self.gab.setText("ATP")
+		self.gab.setStyleSheet(button_style)
+		self.gab.setCheckable(True)
+		self.gab.clicked.connect(self.gabf)
+
+		self.sensBox.addWidget(self.gwb)
+		self.sensBox.addWidget(self.gtb)
+		self.sensBox.addWidget(self.ghb)
+		self.sensBox.addWidget(self.gab)
 
 		self.resBox = QHBoxLayout(self.sensFrame)
 		self.errimg = QPixmap(path + '/img/' + error_light())
@@ -607,34 +607,34 @@ class App(QWidget):
 
 		self.O1.addLayout(self.mainContainer)
 
-	# 	self.gw = True
-	# 	self.gt = False
-	# 	self.gh = False
-	# 	self.ga = False
-	#
-	# def gwbf(self):
-	# 	if self.gwb.isChecked():
-	# 		self.gw = True
-	# 	else:
-	# 		self.gw = False
-	#
-	# def gtbf(self):
-	# 	if self.gtb.isChecked():
-	# 		self.gt = True
-	# 	else:
-	# 		self.gt = False
-	#
-	# def ghbf(self):
-	# 	if self.ghb.isChecked():
-	# 		self.gh = True
-	# 	else:
-	# 		self.gh = False
-	#
-	# def gabf(self):
-	# 	if self.gab.isChecked():
-	# 		self.ga = True
-	# 	else:
-	# 		self.ga = False
+		self.gw = True
+		self.gt = False
+		self.gh = False
+		self.ga = False
+
+	def gwbf(self):
+		if self.gwb.isChecked():
+			self.gw = True
+		else:
+			self.gw = False
+
+	def gtbf(self):
+		if self.gtb.isChecked():
+			self.gt = True
+		else:
+			self.gt = False
+
+	def ghbf(self):
+		if self.ghb.isChecked():
+			self.gh = True
+		else:
+			self.gh = False
+
+	def gabf(self):
+		if self.gab.isChecked():
+			self.ga = True
+		else:
+			self.ga = False
 
 	def update_wind(self):
 		try:
