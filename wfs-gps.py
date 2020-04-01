@@ -64,6 +64,9 @@ while True:
 		sleep(sleep_time)
 		str = ser.readline().decode()
 		parseGPS(str)
-	except Exception as e:
-		filename = Path(__file__).name
-		error_handle(e, filename)
+	except:
+		pass
+	# except Exception as e:
+	# 	pass
+	# 	filename = Path(__file__).name
+	# 	error_handle(e, filename)
