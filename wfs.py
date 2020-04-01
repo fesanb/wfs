@@ -211,84 +211,84 @@ def fetch_gps():
 	cnx.close()
 
 
-# def fg():
-# 	# print("fetch graph")
-# 	try:
-# 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-# 		cursor = cnx.cursor(buffered=True)
-#
-# 		cursor.execute(get_graph_wind)
-# 		if cursor.rowcount > 0:
-# 			db_graph_wind = cursor.fetchall()
-# 			fg.gw_x = []
-# 			fg.gw_y = []
-#
-# 			for i in db_graph_wind:
-# 				fg.gw_x.append(i[1])
-# 				fg.gw_y.append(i[0])
-#
-# 		else:
-# 			fg.gw_x = []
-# 			fg.gw_y = []
-# 			fg.gw_x.append(time.time())
-# 			fg.gw_y.append(0)
-#
-# 		# atp
-# 		cursor.execute(get_graph_atp)
-# 		if cursor.rowcount > 0:
-# 			db_graph_atp = cursor.fetchall()
-# 			fg.ga_x = []
-# 			fg.ga_y = []
-#
-# 			for i in db_graph_atp:
-# 				fg.ga_x.append(i[1])
-# 				fg.ga_y.append(i[0])
-#
-# 		else:
-# 			fg.ga_x = []
-# 			fg.ga_y = []
-# 			fg.ga_x.append(time.time())
-# 			fg.ga_y.append(0)
-#
-# 		# hum
-# 		cursor.execute(get_graph_hum)
-# 		if cursor.rowcount > 0:
-# 			db_graph_hum = cursor.fetchall()
-# 			fg.gh_x = []
-# 			fg.gh_y = []
-#
-# 			for i in db_graph_hum:
-# 				fg.gh_x.append(i[1])
-# 				fg.gh_y.append(i[0])
-#
-# 		else:
-# 			fg.gh_x = []
-# 			fg.gh_y = []
-# 			fg.gh_x.append(time.time())
-# 			fg.gh_y.append(0)
-# 		# temp
-# 		cursor.execute(get_graph_temp)
-# 		if cursor.rowcount > 0:
-# 			db_graph_temp = cursor.fetchall()
-# 			fg.gt_x = []
-# 			fg.gt_y = []
-#
-# 			for i in db_graph_temp:
-# 				fg.gt_x.append(i[1])
-# 				fg.gt_y.append(i[0])
-#
-# 		else:
-# 			fg.gt_x = []
-# 			fg.gt_y = []
-# 			fg.gt_x.append(time.time())
-# 			fg.gt_y.append(0)
-#
-# 	except Exception as e:
-# 		filename = Path(__file__).name
-# 		error_handle(e, filename)
-#
-# 	cursor.close()
-# 	cnx.close()
+def fg():
+	# print("fetch graph")
+	try:
+		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+		cursor = cnx.cursor(buffered=True)
+
+		cursor.execute(get_graph_wind)
+		if cursor.rowcount > 0:
+			db_graph_wind = cursor.fetchall()
+			fg.gw_x = []
+			fg.gw_y = []
+
+			for i in db_graph_wind:
+				fg.gw_x.append(i[1])
+				fg.gw_y.append(i[0])
+
+		else:
+			fg.gw_x = []
+			fg.gw_y = []
+			fg.gw_x.append(time.time())
+			fg.gw_y.append(0)
+
+		# atp
+		cursor.execute(get_graph_atp)
+		if cursor.rowcount > 0:
+			db_graph_atp = cursor.fetchall()
+			fg.ga_x = []
+			fg.ga_y = []
+
+			for i in db_graph_atp:
+				fg.ga_x.append(i[1])
+				fg.ga_y.append(i[0])
+
+		else:
+			fg.ga_x = []
+			fg.ga_y = []
+			fg.ga_x.append(time.time())
+			fg.ga_y.append(0)
+
+		# hum
+		cursor.execute(get_graph_hum)
+		if cursor.rowcount > 0:
+			db_graph_hum = cursor.fetchall()
+			fg.gh_x = []
+			fg.gh_y = []
+
+			for i in db_graph_hum:
+				fg.gh_x.append(i[1])
+				fg.gh_y.append(i[0])
+
+		else:
+			fg.gh_x = []
+			fg.gh_y = []
+			fg.gh_x.append(time.time())
+			fg.gh_y.append(0)
+		# temp
+		cursor.execute(get_graph_temp)
+		if cursor.rowcount > 0:
+			db_graph_temp = cursor.fetchall()
+			fg.gt_x = []
+			fg.gt_y = []
+
+			for i in db_graph_temp:
+				fg.gt_x.append(i[1])
+				fg.gt_y.append(i[0])
+
+		else:
+			fg.gt_x = []
+			fg.gt_y = []
+			fg.gt_x.append(time.time())
+			fg.gt_y.append(0)
+
+	except Exception as e:
+		filename = Path(__file__).name
+		error_handle(e, filename)
+
+	cursor.close()
+	cnx.close()
 
 
 def sens_arrow(sens_number):
@@ -371,9 +371,9 @@ thread_fetch_gps = threading.Thread(target=fetch_gps, args=())
 thread_fetch_gps.daemon = True
 thread_fetch_gps.start()
 
-# thread_fetch_graph = threading.Thread(target=fg, args=())
-# thread_fetch_graph.daemon = True
-# thread_fetch_graph.start()
+thread_fetch_graph = threading.Thread(target=fg, args=())
+thread_fetch_graph.daemon = True
+thread_fetch_graph.start()
 
 thread_error_light = threading.Thread(target=error_light(), args=())
 thread_error_light.daemon = True
@@ -461,13 +461,13 @@ class App(QWidget):
 		self.beaufortbox.addWidget(self.beaufortL)
 		self.windContainer.addLayout(self.beaufortbox)
 
-		# GRAPH
-		# self.graphContainer = QVBoxLayout()
-		# self.graph = graph_plot(fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
-		# self.graphContainer.addWidget(self.graph)
-		# self.windContainer.addLayout(self.graphContainer)
-		# self.windContainer.addStretch()
-		# self.mainContainer.addLayout(self.windContainer)
+		GRAPH
+		self.graphContainer = QVBoxLayout()
+		self.graph = graph_plot(fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
+		self.graphContainer.addWidget(self.graph)
+		self.windContainer.addLayout(self.graphContainer)
+		self.windContainer.addStretch()
+		self.mainContainer.addLayout(self.windContainer)
 
 		# sens container
 		self.sensFrame = QFrame(self)
