@@ -371,9 +371,9 @@ thread_fetch_gps = threading.Thread(target=fetch_gps, args=())
 thread_fetch_gps.daemon = True
 thread_fetch_gps.start()
 
-thread_fetch_graph = threading.Thread(target=fg, args=())
-thread_fetch_graph.daemon = True
-thread_fetch_graph.start()
+# thread_fetch_graph = threading.Thread(target=fg, args=())
+# thread_fetch_graph.daemon = True
+# thread_fetch_graph.start()
 
 thread_error_light = threading.Thread(target=error_light(), args=())
 thread_error_light.daemon = True
