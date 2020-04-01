@@ -211,84 +211,84 @@ def fetch_gps():
 	cnx.close()
 
 
-def fg():
-	# print("fetch graph")
-	try:
-		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-		cursor = cnx.cursor(buffered=True)
-
-		cursor.execute(get_graph_wind)
-		if cursor.rowcount > 0:
-			db_graph_wind = cursor.fetchall()
-			fg.gw_x = []
-			fg.gw_y = []
-
-			for i in db_graph_wind:
-				fg.gw_x.append(i[1])
-				fg.gw_y.append(i[0])
-
-		else:
-			fg.gw_x = []
-			fg.gw_y = []
-			fg.gw_x.append(time.time())
-			fg.gw_y.append(0)
-
-		# atp
-		cursor.execute(get_graph_atp)
-		if cursor.rowcount > 0:
-			db_graph_atp = cursor.fetchall()
-			fg.ga_x = []
-			fg.ga_y = []
-
-			for i in db_graph_atp:
-				fg.ga_x.append(i[1])
-				fg.ga_y.append(i[0])
-
-		else:
-			fg.ga_x = []
-			fg.ga_y = []
-			fg.ga_x.append(time.time())
-			fg.ga_y.append(0)
-
-		# hum
-		cursor.execute(get_graph_hum)
-		if cursor.rowcount > 0:
-			db_graph_hum = cursor.fetchall()
-			fg.gh_x = []
-			fg.gh_y = []
-
-			for i in db_graph_hum:
-				fg.gh_x.append(i[1])
-				fg.gh_y.append(i[0])
-
-		else:
-			fg.gh_x = []
-			fg.gh_y = []
-			fg.gh_x.append(time.time())
-			fg.gh_y.append(0)
-		# temp
-		cursor.execute(get_graph_temp)
-		if cursor.rowcount > 0:
-			db_graph_temp = cursor.fetchall()
-			fg.gt_x = []
-			fg.gt_y = []
-
-			for i in db_graph_temp:
-				fg.gt_x.append(i[1])
-				fg.gt_y.append(i[0])
-
-		else:
-			fg.gt_x = []
-			fg.gt_y = []
-			fg.gt_x.append(time.time())
-			fg.gt_y.append(0)
-
-	except Exception as e:
-		filename = Path(__file__).name
-		error_handle(e, filename)
-
-	cursor.close()
-	cnx.close()
+# def fg():
+# 	# print("fetch graph")
+# 	try:
+# 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+# 		cursor = cnx.cursor(buffered=True)
+#
+# 		cursor.execute(get_graph_wind)
+# 		if cursor.rowcount > 0:
+# 			db_graph_wind = cursor.fetchall()
+# 			fg.gw_x = []
+# 			fg.gw_y = []
+#
+# 			for i in db_graph_wind:
+# 				fg.gw_x.append(i[1])
+# 				fg.gw_y.append(i[0])
+#
+# 		else:
+# 			fg.gw_x = []
+# 			fg.gw_y = []
+# 			fg.gw_x.append(time.time())
+# 			fg.gw_y.append(0)
+#
+# 		# atp
+# 		cursor.execute(get_graph_atp)
+# 		if cursor.rowcount > 0:
+# 			db_graph_atp = cursor.fetchall()
+# 			fg.ga_x = []
+# 			fg.ga_y = []
+#
+# 			for i in db_graph_atp:
+# 				fg.ga_x.append(i[1])
+# 				fg.ga_y.append(i[0])
+#
+# 		else:
+# 			fg.ga_x = []
+# 			fg.ga_y = []
+# 			fg.ga_x.append(time.time())
+# 			fg.ga_y.append(0)
+#
+# 		# hum
+# 		cursor.execute(get_graph_hum)
+# 		if cursor.rowcount > 0:
+# 			db_graph_hum = cursor.fetchall()
+# 			fg.gh_x = []
+# 			fg.gh_y = []
+#
+# 			for i in db_graph_hum:
+# 				fg.gh_x.append(i[1])
+# 				fg.gh_y.append(i[0])
+#
+# 		else:
+# 			fg.gh_x = []
+# 			fg.gh_y = []
+# 			fg.gh_x.append(time.time())
+# 			fg.gh_y.append(0)
+# 		# temp
+# 		cursor.execute(get_graph_temp)
+# 		if cursor.rowcount > 0:
+# 			db_graph_temp = cursor.fetchall()
+# 			fg.gt_x = []
+# 			fg.gt_y = []
+#
+# 			for i in db_graph_temp:
+# 				fg.gt_x.append(i[1])
+# 				fg.gt_y.append(i[0])
+#
+# 		else:
+# 			fg.gt_x = []
+# 			fg.gt_y = []
+# 			fg.gt_x.append(time.time())
+# 			fg.gt_y.append(0)
+#
+# 	except Exception as e:
+# 		filename = Path(__file__).name
+# 		error_handle(e, filename)
+#
+# 	cursor.close()
+# 	cnx.close()
 
 
 def sens_arrow(sens_number):
@@ -462,12 +462,12 @@ class App(QWidget):
 		self.windContainer.addLayout(self.beaufortbox)
 
 		# GRAPH
-		self.graphContainer = QVBoxLayout()
-		self.graph = graph_plot(fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
-		self.graphContainer.addWidget(self.graph)
-		self.windContainer.addLayout(self.graphContainer)
-		self.windContainer.addStretch()
-		self.mainContainer.addLayout(self.windContainer)
+		# self.graphContainer = QVBoxLayout()
+		# self.graph = graph_plot(fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
+		# self.graphContainer.addWidget(self.graph)
+		# self.windContainer.addLayout(self.graphContainer)
+		# self.windContainer.addStretch()
+		# self.mainContainer.addLayout(self.windContainer)
 
 		# sens container
 		self.sensFrame = QFrame(self)
@@ -607,34 +607,34 @@ class App(QWidget):
 
 		self.O1.addLayout(self.mainContainer)
 
-		self.gw = True
-		self.gt = False
-		self.gh = False
-		self.ga = False
-
-	def gwbf(self):
-		if self.gwb.isChecked():
-			self.gw = True
-		else:
-			self.gw = False
-
-	def gtbf(self):
-		if self.gtb.isChecked():
-			self.gt = True
-		else:
-			self.gt = False
-
-	def ghbf(self):
-		if self.ghb.isChecked():
-			self.gh = True
-		else:
-			self.gh = False
-
-	def gabf(self):
-		if self.gab.isChecked():
-			self.ga = True
-		else:
-			self.ga = False
+	# 	self.gw = True
+	# 	self.gt = False
+	# 	self.gh = False
+	# 	self.ga = False
+	#
+	# def gwbf(self):
+	# 	if self.gwb.isChecked():
+	# 		self.gw = True
+	# 	else:
+	# 		self.gw = False
+	#
+	# def gtbf(self):
+	# 	if self.gtb.isChecked():
+	# 		self.gt = True
+	# 	else:
+	# 		self.gt = False
+	#
+	# def ghbf(self):
+	# 	if self.ghb.isChecked():
+	# 		self.gh = True
+	# 	else:
+	# 		self.gh = False
+	#
+	# def gabf(self):
+	# 	if self.gab.isChecked():
+	# 		self.ga = True
+	# 	else:
+	# 		self.ga = False
 
 	def update_wind(self):
 		try:
@@ -687,16 +687,16 @@ class App(QWidget):
 
 		QApplication.processEvents()
 
-	def update_graph(self):
-		try:
-			fg()
-			graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
-
-		except Exception as e:
-			filename = Path(__file__).name
-			# error_handle(e, filename)
-			print(e, filename)
-		QApplication.processEvents()
+	# def update_graph(self):
+	# 	try:
+	# 		fg()
+	# 		graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
+	#
+	# 	except Exception as e:
+	# 		filename = Path(__file__).name
+	# 		# error_handle(e, filename)
+	# 		print(e, filename)
+	# 	QApplication.processEvents()
 
 
 if __name__ == '__main__':
@@ -712,8 +712,8 @@ if __name__ == '__main__':
 	sens_timer.timeout.connect(ex.update_sens)
 	sens_timer.start(5000)
 
-	graph_timer = QTimer()
-	graph_timer.timeout.connect(ex.update_graph)
-	graph_timer.start(5000)
+	# graph_timer = QTimer()
+	# graph_timer.timeout.connect(ex.update_graph)
+	# graph_timer.start(5000)
 
 	sys.exit(app.exec_())
