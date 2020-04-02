@@ -9,12 +9,12 @@ import sys, os
 import threading
 import time
 
-import psutil
-# try:
-# 	import psutil
-# 	ps = True
-# except:
-# 	ps = False
+# import psutil
+try:
+	import psutil
+	ps = True
+except:
+	ps = False
 
 # froms
 from datetime import datetime, timedelta
@@ -382,13 +382,14 @@ class App(QWidget):
 		self.setWindowTitle(self.title)
 		self.setStyleSheet("color: white; background-color: #000000;")
 
-		self.showFullScreen()
-
-		# self.left = 0
-		# self.top = 0
-		# self.width = 720
-		# self.height = 480
-		# self.setGeometry(self.left, self.top, self.width, self.height)
+		if ps is True:
+			self.showFullScreen()
+		else:
+			self.left = 0
+			self.top = 0
+			self.width = 720
+			self.height = 480
+			self.setGeometry(self.left, self.top, self.width, self.height)
 
 		self.initUI()
 		self.win = QWidget()
@@ -573,11 +574,11 @@ class App(QWidget):
 		self.errico = QLabel()
 		self.errico.setPixmap(self.errimg)
 		self.resBox.addWidget(self.errico)
-		# if ps is True:
-		mem = psutil.virtual_memory()
-		used_mem = round(mem.used/mem.total * 100)
-		self.res = QLabel("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
-		self.resBox.addWidget(self.res)
+		if ps is True:
+			mem = psutil.virtual_memory()
+			used_mem = round(mem.used/mem.total * 100)
+			self.res = QLabel("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
+			self.resBox.addWidget(self.res)
 		self.sensBox.addLayout(self.resBox)
 
 		self.sensBox.addStretch()
@@ -653,10 +654,10 @@ class App(QWidget):
 			self.altitude.setText("Altitude: " + fetch_gps.alt)
 
 			self.errimg = QPixmap(path + '/img/' + error_light())
-			# if ps is True:
-			mem = psutil.virtual_memory()
-			used_mem = round(mem.used/mem.total * 100)
-			self.res.setText("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
+			if ps is True:
+				mem = psutil.virtual_memory()
+				used_mem = round(mem.used/mem.total * 100)
+				self.res.setText("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
 
 
 		except Exception as e:
@@ -690,8 +691,8 @@ if __name__ == '__main__':
 	sens_timer.timeout.connect(ex.update_sens)
 	sens_timer.start(5000)
 
-	graph_timer = QTimer()
-	graph_timer.timeout.connect(ex.update_graph)
-	graph_timer.start(5000)
+	# graph_timer = QTimer()
+	# graph_timer.timeout.connect(ex.update_graph)
+	# graph_timer.start(5000)
 
 	sys.exit(app.exec_())
