@@ -74,10 +74,10 @@ def fetch_wind():
 			cnx.close()
 			time.sleep(0.9)
 
-
 		except Exception as e:
 			filename = Path(__file__).name
 			error_handle(e, filename)
+			print(e)
 
 def make_mean():
 	while True:
@@ -148,6 +148,7 @@ def fetch_mean():
 
 		cursor.close()
 		cnx.close()
+		end = time.time()
 		time.sleep(60)
 
 def fetch_sens():
@@ -372,6 +373,8 @@ thread_fetch_graph.start()
 thread_error_light = threading.Thread(target=error_light, args=())
 thread_error_light.daemon = True
 thread_error_light.start()
+
+time.sleep(2)
 
 class App(QWidget):
 
