@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs_sub_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_sub_graph.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,27 +82,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs-ard2db.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="class-function-test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="wfs" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="/usr/bin/python3.5" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/class-function-test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -257,23 +237,44 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="wfs_sub_graph" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wfs" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs_sub_graph.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.testing" />
       <item itemvalue="Python.wfs-ard2db" />
       <item itemvalue="Python.wfs-gui" />
       <item itemvalue="Python.wfs" />
       <item itemvalue="Python.db_pop" />
-      <item itemvalue="Python.class-function-test" />
       <item itemvalue="Python.wfs_error_handling" />
       <item itemvalue="Python.test" />
+      <item itemvalue="Python.wfs_sub_graph" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.wfs" />
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.db_pop" />
+        <item itemvalue="Python.wfs_sub_graph" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.wfs_error_handling" />
-        <item itemvalue="Python.class-function-test" />
       </list>
     </recent_temporary>
   </component>
@@ -421,11 +422,11 @@
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="1064" y="245" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585038810740" />
-    <state x="659" y="107" key="CommitChangelistDialog2" timestamp="1585818816238">
+    <state x="659" y="107" key="CommitChangelistDialog2" timestamp="1585822865046">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="967" y="107" key="CommitChangelistDialog2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578061739907" />
-    <state x="659" y="107" key="CommitChangelistDialog2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585818816238" />
+    <state x="659" y="107" key="CommitChangelistDialog2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585822865046" />
     <state x="765" y="224" key="DBNavigator.DatasetFilterDialog" timestamp="1585042332900">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
@@ -443,26 +444,26 @@
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="385" y="235" key="FileChooserDialogImpl/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585040854428" />
-    <state width="1557" height="201" key="GridCell.Tab.0.bottom" timestamp="1585822854753">
+    <state width="1557" height="201" key="GridCell.Tab.0.bottom" timestamp="1585833324930">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1323" height="346" key="GridCell.Tab.0.bottom/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578423564468" />
-    <state width="1557" height="201" key="GridCell.Tab.0.bottom/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585822854753" />
-    <state width="1557" height="201" key="GridCell.Tab.0.center" timestamp="1585822854753">
+    <state width="1557" height="201" key="GridCell.Tab.0.bottom/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585833324930" />
+    <state width="1557" height="201" key="GridCell.Tab.0.center" timestamp="1585833324930">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1323" height="346" key="GridCell.Tab.0.center/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578423564468" />
-    <state width="1557" height="201" key="GridCell.Tab.0.center/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585822854753" />
-    <state width="1557" height="201" key="GridCell.Tab.0.left" timestamp="1585822854753">
+    <state width="1557" height="201" key="GridCell.Tab.0.center/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585833324930" />
+    <state width="1557" height="201" key="GridCell.Tab.0.left" timestamp="1585833324929">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1323" height="346" key="GridCell.Tab.0.left/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578423564468" />
-    <state width="1557" height="201" key="GridCell.Tab.0.left/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585822854753" />
-    <state width="1557" height="201" key="GridCell.Tab.0.right" timestamp="1585822854753">
+    <state width="1557" height="201" key="GridCell.Tab.0.left/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585833324929" />
+    <state width="1557" height="201" key="GridCell.Tab.0.right" timestamp="1585833324930">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1323" height="346" key="GridCell.Tab.0.right/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578423564468" />
-    <state width="1557" height="201" key="GridCell.Tab.0.right/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585822854753" />
+    <state width="1557" height="201" key="GridCell.Tab.0.right/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585833324930" />
     <state width="1557" height="245" key="GridCell.Tab.1.bottom" timestamp="1585816814630">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
@@ -488,15 +489,19 @@
     </state>
     <state x="2027" y="123" key="SettingsEditor/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1577539714876" />
     <state x="107" y="123" key="SettingsEditor/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585043051404" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1585818817849">
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2" timestamp="1585822866700">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="920" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1019/1920.0.1920.1019@0.0.1920.1019" timestamp="1578061741128" />
-    <state x="920" y="245" key="Vcs.Push.Dialog.v2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585818817849" />
+    <state x="920" y="245" key="Vcs.Push.Dialog.v2/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585822866700" />
     <state x="952" y="243" key="VcsDiffUtil.ChangesDialog" timestamp="1585043895014">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="952" y="243" key="VcsDiffUtil.ChangesDialog/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585043895014" />
+    <state x="643" y="217" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1" timestamp="1585831876478">
+      <screen x="0" y="0" width="1920" height="1019" />
+    </state>
+    <state x="643" y="217" key="com.intellij.execution.console.ConsoleHistoryController$MyBrowseAction$1/1920.0.1920.1019/0.0.1920.1019@0.0.1920.1019" timestamp="1585831876478" />
     <state x="825" y="100" width="1002" height="819" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1585040620097">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>

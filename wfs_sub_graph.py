@@ -67,6 +67,7 @@ def graph_plot(gw_x, gw_y):
 
 
 def graph_update(self, gw_x, gw_y, ga_x, ga_y, gt_x, gt_y, gh_x, gh_y):
+
 	if self.gw is True:
 		g1.plot(gw_x, gw_y, clear=True, pen='y')
 	else:

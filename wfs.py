@@ -152,6 +152,7 @@ def fetch_mean():
 		time.sleep(60)
 
 def fetch_sens():
+	fetch_sens.current_sens = None
 	try:
 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
 		cursor = cnx.cursor(buffered=True)
@@ -209,6 +210,14 @@ def fetch_gps():
 
 def fg():
 	# print("fetch graph")
+	fg.gw_x = None
+	fg.gw_y = None
+	fg.ga_x = None
+	fg.ga_y = None
+	fg.gt_x = None
+	fg.gt_y = None
+	fg.gh_x = None
+	fg.gh_y = None
 	try:
 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
 		cursor = cnx.cursor(buffered=True)
@@ -656,6 +665,7 @@ class App(QWidget):
 			self.longitude.setText("Longitude: " + fetch_gps.long)
 			self.altitude.setText("Altitude: " + fetch_gps.alt)
 
+			error_light()
 			self.errimg = QPixmap(path + '/img/' + error_light())
 			if ps is True:
 				mem = psutil.virtual_memory()
@@ -694,8 +704,8 @@ if __name__ == '__main__':
 	sens_timer.timeout.connect(ex.update_sens)
 	sens_timer.start(5000)
 
-	# graph_timer = QTimer()
-	# graph_timer.timeout.connect(ex.update_graph)
-	# graph_timer.start(5000)
+	graph_timer = QTimer()
+	graph_timer.timeout.connect(ex.update_graph)
+	graph_timer.start(60000)
 
 	sys.exit(app.exec_())
