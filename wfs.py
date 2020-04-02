@@ -445,7 +445,7 @@ class App(QWidget):
 		self.beaufortbox.addWidget(self.beaufortL)
 		self.windContainer.addLayout(self.beaufortbox)
 
-		GRAPH
+		#GRAPH
 		self.graphContainer = QVBoxLayout()
 		self.graph = graph_plot(fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
 		self.graphContainer.addWidget(self.graph)
