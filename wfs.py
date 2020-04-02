@@ -148,7 +148,7 @@ def fetch_mean():
 
 		cursor.close()
 		cnx.close()
-		time.sleep(5)
+		time.sleep(60)
 
 def fetch_sens():
 	try:
