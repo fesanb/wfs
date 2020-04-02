@@ -79,7 +79,6 @@ def fetch_wind():
 			filename = Path(__file__).name
 			error_handle(e, filename)
 
-
 def make_mean():
 	while True:
 		try:
@@ -102,7 +101,6 @@ def make_mean():
 		cursor.close()
 		cnx.close()
 		time.sleep(60)
-
 
 def fetch_mean():
 	while True:
@@ -152,7 +150,6 @@ def fetch_mean():
 		cnx.close()
 		time.sleep(5)
 
-
 def fetch_sens():
 	try:
 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
@@ -184,7 +181,6 @@ def fetch_sens():
 	cursor.close()
 	cnx.close()
 
-
 def fetch_gps():
 	try:
 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
@@ -209,7 +205,6 @@ def fetch_gps():
 
 	cursor.close()
 	cnx.close()
-
 
 def fg():
 	# print("fetch graph")
@@ -289,7 +284,6 @@ def fg():
 
 	cursor.close()
 	cnx.close()
-
 
 def sens_arrow(sens_number):
 	fetch_last_sens = "SELECT * FROM sens ORDER BY id DESC LIMIT 1, 1"
@@ -408,16 +402,6 @@ class App(QWidget):
 		self.windContainer = QVBoxLayout(self)
 
 		try:  # Wind box
-			# self.windHeader = QHBoxLayout()
-			# self.windHL = QLabel("WIND")
-			# self.windHL.setFont(QFont('Arial', 20))
-			# self.windHL.setAlignment(Qt.AlignCenter)
-			# self.windHeader.addWidget(self.windHL)
-			# self.meanHL = QLabel("MEAN")
-			# self.meanHL.setFont(QFont('Arial', 20))
-			# self.meanHL.setAlignment(Qt.AlignCenter)
-			# self.windHeader.addWidget(self.meanHL)
-			# self.windContainer.addLayout(self.windHeader)
 
 			self.windBox = QHBoxLayout()
 			self.windFrame = QFrame(self)
@@ -473,11 +457,9 @@ class App(QWidget):
 		self.sensFrame = QFrame(self)
 		self.sensBox = QVBoxLayout(self.sensFrame)
 
-		# self.sensheaderFrame =  QFrame(self)
 		self.sensheaderBox = QHBoxLayout(self.sensFrame)
 		self.sensHL = QLabel("SENSOR")
 		self.sensHL.setFont(QFont('Arial', 15))
-		# self.sensHL.setMinimumHeight(50)
 		self.sensheaderBox.addWidget(self.sensHL)
 		self.sensBox.addLayout(self.sensheaderBox)
 
@@ -554,9 +536,6 @@ class App(QWidget):
 		self.sensBox.addLayout(self.gpsBox)
 		self.gpsBox.addStretch()
 
-		# self.sensBox.addStretch()
-
-		# self.gbp = 2
 		button_style = "QPushButton {background-color: #444444; color: black; font-weight:600}" \
 					   "QPushButton:checked {background-color: #111111; color: white; font-weight:600}"
 		self.gwb = QPushButton()
@@ -640,7 +619,6 @@ class App(QWidget):
 		try:
 			self.windL.setText(fetch_wind.wind)
 			self.meanL.setText(str(fetch_mean.meanwind))
-			# self.winddate.setText("W: " + str(fetch_wind.timestamp))
 			self.beaufortL.setText(fetch_mean.beaufortLS)
 		except Exception as e:
 			filename = Path(__file__).name
@@ -687,16 +665,16 @@ class App(QWidget):
 
 		QApplication.processEvents()
 
-	# def update_graph(self):
-	# 	try:
-	# 		fg()
-	# 		graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
-	#
-	# 	except Exception as e:
-	# 		filename = Path(__file__).name
-	# 		# error_handle(e, filename)
-	# 		print(e, filename)
-	# 	QApplication.processEvents()
+	def update_graph(self):
+		try:
+			fg()
+			graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
+
+		except Exception as e:
+			filename = Path(__file__).name
+			# error_handle(e, filename)
+			print(e, filename)
+		QApplication.processEvents()
 
 
 if __name__ == '__main__':
@@ -712,8 +690,8 @@ if __name__ == '__main__':
 	sens_timer.timeout.connect(ex.update_sens)
 	sens_timer.start(5000)
 
-	# graph_timer = QTimer()
-	# graph_timer.timeout.connect(ex.update_graph)
-	# graph_timer.start(5000)
+	graph_timer = QTimer()
+	graph_timer.timeout.connect(ex.update_graph)
+	graph_timer.start(5000)
 
 	sys.exit(app.exec_())
