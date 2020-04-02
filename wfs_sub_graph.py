@@ -18,7 +18,7 @@ class TimeAxisItem(pg.AxisItem):
 global g1, g2, g3, g4
 
 
-def graph_plot(gw_x, gw_y, ga_x, ga_y, gt_x, gt_y, gh_x, gh_y):
+def graph_plot(gw_x, gw_y):
 	global g1, g2, g3, g4
 	pg.setConfigOption('background', '#000000')
 	g = pg.PlotWidget(axisItems={'bottom': TimeAxisItem(orientation='bottom')})

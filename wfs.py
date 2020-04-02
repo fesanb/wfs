@@ -448,7 +448,7 @@ class App(QWidget):
 
 		#GRAPH
 		self.graphContainer = QVBoxLayout()
-		self.graph = graph_plot(fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
+		self.graph = graph_plot(fg.gw_x, fg.gw_y)
 		self.graphContainer.addWidget(self.graph)
 		self.windContainer.addLayout(self.graphContainer)
 		self.windContainer.addStretch()
