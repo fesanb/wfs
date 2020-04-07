@@ -18,7 +18,7 @@ class TimeAxisItem(pg.AxisItem):
 global g1, g2, g3, g4
 
 
-def graph_plot(gw_x, gw_y):
+def graph_plot(gw_x, gw_y, ga_y):
 	global g1, g2, g3, g4
 	pg.setConfigOption('background', '#000000')
 	g = pg.PlotWidget(axisItems={'bottom': TimeAxisItem(orientation='bottom')})
@@ -34,7 +34,7 @@ def graph_plot(gw_x, gw_y):
 	g1.getAxis('right').linkToView(g2)
 	g2.setXLink(g1)
 	g1.getAxis('right').setLabel('ATP', color='#0000ff')
-	g2.setYRange(900, 1030)
+	g2.setYRange(max(ga_y) - 8, max(ga_y)+8)
 
 	g3 = pg.ViewBox()
 	ax3 = pg.AxisItem('right')

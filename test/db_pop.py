@@ -22,7 +22,7 @@ while True:
 	wind = round(uniform(3, 8), 1)
 	temp = round(uniform(18, 19), 1)
 	hum = round(uniform(40, 45), 0)
-	atp = round(uniform(1003, 1009), 0)
+	atp = round(uniform(980, 1020), 0)
 
 	wind_insert(wind)
 	sens_insert(temp, hum, atp)

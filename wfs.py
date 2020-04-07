@@ -9,6 +9,7 @@ import sys, os
 import threading
 import time
 
+
 # import psutil
 try:
 	import psutil
@@ -17,16 +18,18 @@ except:
 	ps = False
 
 # froms
+from PyQt5.QtWidgets import QWidget, QLabel, QApplication, QHBoxLayout, QVBoxLayout, QPushButton, QFrame, QGridLayout
+from PyQt5.QtGui import QIcon, QPixmap, QFont
+from PyQt5.QtCore import Qt, QTimer
 from datetime import datetime, timedelta
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
 from pathlib import Path
 
 # custom imports
 from wfs_sub_graph import graph_plot, graph_update
 from wfs_error_handling import error_handle
-from wfs_forecast import *
+# import wfs_forecast
+from wfs_forecast import fc
+
 
 # Wind
 get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
@@ -404,7 +407,6 @@ class App(QWidget):
 			self.setGeometry(self.left, self.top, self.width, self.height)
 
 		self.initUI()
-		self.win = QWidget()
 
 	def initUI(self):
 
@@ -460,7 +462,7 @@ class App(QWidget):
 
 		#GRAPH
 		self.graphContainer = QVBoxLayout()
-		self.graph = graph_plot(fg.gw_x, fg.gw_y)
+		self.graph = graph_plot(fg.gw_x, fg.gw_y, fg.ga_y)
 		self.graphContainer.addWidget(self.graph)
 		self.windContainer.addLayout(self.graphContainer)
 		self.windContainer.addStretch()
@@ -525,15 +527,15 @@ class App(QWidget):
 		self.forecast = QVBoxLayout(self.sensFrame)
 		self.Fheader = QLabel("FORECAST")
 		self.Fheader.setFont(QFont('Arial', 15))
-		forecast_val = forecast()
-		self.Fforecast1 = QLabel("Expect: " + forecast_val[0] + " conditions")
-		self.Fforecast2 = QLabel("Changes: " + forecast_val[1])
-		self.Fforecast3 = QLabel("Expected Winds: " + forecast_val[2] + " BFT")
+		f = fc()
+		self.Fforecast1 = QLabel(f[0])
+		self.Fforecast2 = QLabel(f[1])
+		# self.Fforecast3 = QLabel("Expected Winds: ")# + forecast_val[2] + " BFT")
 
 		self.forecast.addWidget(self.Fheader)
 		self.forecast.addWidget(self.Fforecast1)
 		self.forecast.addWidget(self.Fforecast2)
-		self.forecast.addWidget(self.Fforecast3)
+		# self.forecast.addWidget(self.Fforecast3)
 		self.forecast.addStretch()
 		self.sensBox.addLayout(self.forecast)
 
@@ -593,8 +595,6 @@ class App(QWidget):
 			self.resBox.addWidget(self.res)
 		self.sensBox.addLayout(self.resBox)
 
-		self.sensBox.addStretch()
-
 		self.mainContainer.addWidget(self.sensFrame)
 
 		self.O1.addLayout(self.mainContainer)
@@ -644,8 +644,6 @@ class App(QWidget):
 			path = str(Path(__file__).parent.absolute())
 			fetch_sens()
 			fetch_gps()
-			forecast()
-			forecast_val = forecast()
 
 			self.tempvalue.setText(fetch_sens.temp + " °C")
 			self.tempimgarrow = QPixmap(path + '/img/' + sens_arrow(1))
@@ -656,17 +654,17 @@ class App(QWidget):
 			self.atpvalue.setText(fetch_sens.atp + " hPa")
 			self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(3))
 			self.atparrow.setPixmap(self.atpimgarrow)
-
-			self.Fforecast1.setText("Expect: " + forecast_val[0] + " conditions")
-			self.Fforecast2.setText("Changes: " + forecast_val[1])
-			self.Fforecast3.setText("Expected Winds: " + forecast_val[2] + " BFT")
+			f = fc()
+			self.Fforecast1.setText(f[0])
+			self.Fforecast2.setText(f[1])
+			# self.Fforecast3.setText("Expected Winds: " + forecast_val[2] + " BFT")
 
 			self.latitude.setText("Latitude: " + fetch_gps.lat)
 			self.longitude.setText("Longitude: " + fetch_gps.long)
 			self.altitude.setText("Altitude: " + fetch_gps.alt)
 
-			error_light()
 			self.errimg = QPixmap(path + '/img/' + error_light())
+			self.errico.setPixmap(self.errimg)
 			if ps is True:
 				mem = psutil.virtual_memory()
 				used_mem = round(mem.used/mem.total * 100)
