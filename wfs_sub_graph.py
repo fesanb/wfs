@@ -4,6 +4,9 @@
 import pyqtgraph as pg
 from datetime import datetime
 
+from PyQt5 import QtGui
+from PyQt5 import QtCore
+
 
 class TimeAxisItem(pg.AxisItem):
 	def __init__(self, *args, **kwargs):
@@ -26,6 +29,7 @@ def graph_plot(gw_x, gw_y, ga_y):
 
 	g1 = g.plotItem
 	g1.setLabels(left='WIND')
+	pg.TextItem(color=(200, 200, 200))
 	g1.setYRange(0, 20)
 
 	g2 = pg.ViewBox()
@@ -42,7 +46,7 @@ def graph_plot(gw_x, gw_y, ga_y):
 	g1.scene().addItem(g3)
 	ax3.linkToView(g3)
 	g3.setXLink(g1)
-	ax3.setLabel('TEMP', color='#ff0000')
+	# ax3.setLabel('TEMP', color='#ff0000')
 	g3.setYRange(-5, 30)
 
 	g4 = pg.ViewBox()
@@ -51,7 +55,7 @@ def graph_plot(gw_x, gw_y, ga_y):
 	g1.scene().addItem(g4)
 	ax4.linkToView(g4)
 	g4.setXLink(g1)
-	ax4.setLabel('HUM', color='#00ff00')
+	# ax4.setLabel('HUM', color='#00ff00')
 	g4.setYRange(0, 100)
 
 	g1.plot(gw_x, gw_y, clear=True, pen='y')

@@ -395,7 +395,7 @@ class App(QWidget):
 		self.title = "WFS - Weather Forecast Station"
 		self.setWindowIcon(QIcon("img/drawing.svg.png"))
 		self.setWindowTitle(self.title)
-		self.setStyleSheet("color: white; background-color: #000000;")
+		self.setStyleSheet("color: white; background-color: black;")
 
 		if ps is True:
 			self.showFullScreen()
