@@ -23,23 +23,29 @@ global g1, g2, g3, g4
 
 def graph_plot(gw_x, gw_y, ga_y):
 	global g1, g2, g3, g4
-	pg.setConfigOption('background', '#000000')
+	pg.setConfigOption('background', 'k')
 	g = pg.PlotWidget(axisItems={'bottom': TimeAxisItem(orientation='bottom')})
 	g.showGrid(x=True, y=True)
 
+	# WIND
+	pg.setConfigOption('foreground', 'y')
 	g1 = g.plotItem
 	g1.setLabels(left='WIND')
-	pg.TextItem(color=(200, 200, 200))
 	g1.setYRange(0, 20)
 
+	# ATP
+	pg.setConfigOption('foreground', 'b')
 	g2 = pg.ViewBox()
-	g1.showAxis('right')
+	ax2 = pg.AxisItem('right')
+	g1.layout.addItem(ax2, 2, 2)
 	g1.scene().addItem(g2)
-	g1.getAxis('right').linkToView(g2)
+	ax2.linkToView(g2)
 	g2.setXLink(g1)
-	g1.getAxis('right').setLabel('ATP', color='#0000ff')
+	# ax2.setLabel('TEMP', color='#ff0000')
 	g2.setYRange(max(ga_y) - 8, max(ga_y)+8)
 
+	# TEMP
+	pg.setConfigOption('foreground', 'r')
 	g3 = pg.ViewBox()
 	ax3 = pg.AxisItem('right')
 	g1.layout.addItem(ax3, 2, 3)
@@ -49,6 +55,8 @@ def graph_plot(gw_x, gw_y, ga_y):
 	# ax3.setLabel('TEMP', color='#ff0000')
 	g3.setYRange(-5, 30)
 
+	# HUM
+	pg.setConfigOption('foreground', 'g')
 	g4 = pg.ViewBox()
 	ax4 = pg.AxisItem('right')
 	g1.layout.addItem(ax4, 2, 4)

@@ -539,65 +539,80 @@ class App(QWidget):
 		self.forecast.addStretch()
 		self.sensBox.addLayout(self.forecast)
 
-		# GPS container
-		self.gpsBox = QVBoxLayout(self.sensFrame)
-		self.latitude = QLabel("Latitude: " + fetch_gps.lat)
-		self.longitude = QLabel("Longitude: " + fetch_gps.long)
-		self.altitude = QLabel("Altitude: " + fetch_gps.alt)
 
-		self.gpsBox.addWidget(self.latitude)
-		self.gpsBox.addWidget(self.longitude)
-		self.gpsBox.addWidget(self.altitude)
-		self.sensBox.addLayout(self.gpsBox)
-		self.gpsBox.addStretch()
+		button_style_wind = "QPushButton {background-color: yellow; color: black; font-weight:600}" \
+					   "QPushButton:checked {background-color: yellow; color: white; font-weight:600}"
+		button_style_temp = "QPushButton {background-color: red; color: black; font-weight:600}" \
+					   "QPushButton:checked {background-color: red; color: white; font-weight:600}"
+		button_style_hum = "QPushButton {background-color: green; color: black; font-weight:600}" \
+					   "QPushButton:checked {background-color: green; color: white; font-weight:600}"
+		button_style_atp = "QPushButton {background-color: blue; color: black; font-weight:600}" \
+					   "QPushButton:checked {background-color: blue; color: white; font-weight:600}"
 
-		button_style = "QPushButton {background-color: #444444; color: black; font-weight:600}" \
-					   "QPushButton:checked {background-color: #111111; color: white; font-weight:600}"
 		self.gwb = QPushButton()
 		self.gwb.setText("WIND")
-		self.gwb.setStyleSheet(button_style)
+		self.gwb.setStyleSheet(button_style_wind)
 		self.gwb.setCheckable(True)
 		self.gwb.setChecked(True)
 		self.gwb.clicked.connect(self.gwbf)
+		self.gwb.clicked.connect(self.update_graph)
 
 		self.gtb = QPushButton()
 		self.gtb.setText("TEMP")
-		self.gtb.setStyleSheet(button_style)
+		self.gtb.setStyleSheet(button_style_temp)
 		self.gtb.setCheckable(True)
 		self.gtb.clicked.connect(self.gtbf)
+		self.gtb.clicked.connect(self.update_graph)
 
 		self.ghb = QPushButton()
 		self.ghb.setText("HUM")
-		self.ghb.setStyleSheet(button_style)
+		self.ghb.setStyleSheet(button_style_hum)
 		self.ghb.setCheckable(True)
 		self.ghb.clicked.connect(self.ghbf)
+		self.ghb.clicked.connect(self.update_graph)
 
 		self.gab = QPushButton()
 		self.gab.setText("ATP")
-		self.gab.setStyleSheet(button_style)
+		self.gab.setStyleSheet(button_style_atp)
 		self.gab.setCheckable(True)
 		self.gab.clicked.connect(self.gabf)
+		self.gab.clicked.connect(self.update_graph)
 
 		self.sensBox.addWidget(self.gwb)
 		self.sensBox.addWidget(self.gtb)
 		self.sensBox.addWidget(self.ghb)
 		self.sensBox.addWidget(self.gab)
 
-		self.resBox = QHBoxLayout(self.sensFrame)
+		self.mainContainer.addWidget(self.sensFrame)
+
+		self.O1.addLayout(self.mainContainer)
+
+		# FOOTER
+		self.footerBox = QHBoxLayout()
+
+		self.latitude = QLabel("Latitude: " + fetch_gps.lat)
+		self.longitude = QLabel("Longitude: " + fetch_gps.long)
+		self.altitude = QLabel("Altitude: " + fetch_gps.alt)
+
+		self.footerBox.addWidget(self.latitude)
+		self.footerBox.addWidget(self.longitude)
+		self.footerBox.addWidget(self.altitude)
+
 		self.errimg = QPixmap(path + '/img/' + error_light())
 		self.errico = QLabel()
 		self.errico.setPixmap(self.errimg)
-		self.resBox.addWidget(self.errico)
+		self.footerBox.addWidget(self.errico)
 		if ps is True:
 			mem = psutil.virtual_memory()
 			used_mem = round(mem.used/mem.total * 100)
 			self.res = QLabel("P:{}% - M:{}%".format(psutil.cpu_percent(), used_mem))
-			self.resBox.addWidget(self.res)
-		self.sensBox.addLayout(self.resBox)
+			self.footerBox.addWidget(self.res)
 
-		self.mainContainer.addWidget(self.sensFrame)
 
-		self.O1.addLayout(self.mainContainer)
+		self.O1.addLayout(self.footerBox)
+
+		# FOOTER END
+
 
 		self.gw = True
 		self.gt = False
@@ -678,15 +693,15 @@ class App(QWidget):
 		QApplication.processEvents()
 
 	def update_graph(self):
-		try:
-			fg()
-			graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
+			try:
+				fg()
+				graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
 
-		except Exception as e:
-			filename = Path(__file__).name
-			# error_handle(e, filename)
-			print(e, filename)
-		QApplication.processEvents()
+			except Exception as e:
+				filename = Path(__file__).name
+				# error_handle(e, filename)
+				print(e, filename)
+			QApplication.processEvents()
 
 
 if __name__ == '__main__':
