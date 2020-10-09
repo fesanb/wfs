@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/test/db_pop_atp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/db_pop.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/db_pop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs_sub_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_sub_graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs_forecast.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_forecast.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +64,7 @@
       <recent name="C:\Users\stefa\PycharmProjects\wfs\arch" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.wfs">
+  <component name="RunManager" selected="Python.db_pop_atp">
     <configuration name="MultiplePlotAxes" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -79,27 +78,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv2/Lib/site-packages/pyqtgraph/examples/MultiplePlotAxes.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Plotting" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="wfs" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="/usr/bin/python3.5" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv2/Lib/site-packages/pyqtgraph/examples/Plotting.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -142,6 +120,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/db_pop.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="db_pop_atp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wfs" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/db_pop_atp.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -260,18 +259,18 @@
       <item itemvalue="Python.wfs-ard2db" />
       <item itemvalue="Python.wfs-gui" />
       <item itemvalue="Python.MultiplePlotAxes" />
-      <item itemvalue="Python.Plotting" />
       <item itemvalue="Python.db_pop" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.wfs" />
+      <item itemvalue="Python.db_pop_atp" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.wfs" />
+        <item itemvalue="Python.db_pop_atp" />
         <item itemvalue="Python.db_pop" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.MultiplePlotAxes" />
-        <item itemvalue="Python.Plotting" />
       </list>
     </recent_temporary>
   </component>
@@ -396,57 +395,66 @@
     <MESSAGE value="Error fixing and simplifying.+forecast" />
     <MESSAGE value="Graph updates: Multiple graphs at once." />
     <MESSAGE value="Simplifying and cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Simplifying and cleanup" />
+    <MESSAGE value="Trying to reduce memory usage." />
+    <option name="LAST_COMMIT_MESSAGE" value="Trying to reduce memory usage." />
   </component>
   <component name="WindowStateProjectService">
     <state x="1064" y="-828" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1598805168806">
       <screen x="0" y="-1080" width="1920" height="1050" />
     </state>
     <state x="1064" y="-828" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1598805168806" />
+    <state x="587" y="77" key="CommitChangelistDialog2" timestamp="1602253208912">
+      <screen x="0" y="0" width="1920" height="1019" />
+    </state>
+    <state x="587" y="77" key="CommitChangelistDialog2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602253208912" />
     <state x="740" y="264" key="FileChooserDialogImpl" timestamp="1598467302491">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="740" y="264" key="FileChooserDialogImpl/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1598467302491" />
-    <state width="1899" height="200" key="GridCell.Tab.0.bottom" timestamp="1602253019146">
+    <state width="1899" height="200" key="GridCell.Tab.0.bottom" timestamp="1602275938575">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.bottom/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602253019146" />
-    <state width="1899" height="200" key="GridCell.Tab.0.center" timestamp="1602253019146">
+    <state width="1899" height="200" key="GridCell.Tab.0.bottom/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602275938575" />
+    <state width="1899" height="200" key="GridCell.Tab.0.center" timestamp="1602275938575">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="208" key="GridCell.Tab.0.center/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.center/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602253019146" />
-    <state width="1899" height="200" key="GridCell.Tab.0.left" timestamp="1602253019146">
+    <state width="1899" height="200" key="GridCell.Tab.0.center/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602275938575" />
+    <state width="1899" height="200" key="GridCell.Tab.0.left" timestamp="1602275938575">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="208" key="GridCell.Tab.0.left/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.left/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602253019146" />
-    <state width="1899" height="200" key="GridCell.Tab.0.right" timestamp="1602253019146">
+    <state width="1899" height="200" key="GridCell.Tab.0.left/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602275938575" />
+    <state width="1899" height="200" key="GridCell.Tab.0.right" timestamp="1602275938575">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="208" key="GridCell.Tab.0.right/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602253019146" />
-    <state width="1899" height="253" key="GridCell.Tab.1.bottom" timestamp="1602248547390">
+    <state width="1899" height="200" key="GridCell.Tab.0.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602275938575" />
+    <state width="1899" height="253" key="GridCell.Tab.1.bottom" timestamp="1602274849998">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="253" key="GridCell.Tab.1.bottom/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220075" />
-    <state width="1899" height="253" key="GridCell.Tab.1.bottom/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602248547390" />
-    <state width="1899" height="253" key="GridCell.Tab.1.center" timestamp="1602248547390">
+    <state width="1899" height="253" key="GridCell.Tab.1.bottom/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602274849998" />
+    <state width="1899" height="253" key="GridCell.Tab.1.center" timestamp="1602274849998">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="253" key="GridCell.Tab.1.center/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220075" />
-    <state width="1899" height="253" key="GridCell.Tab.1.center/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602248547390" />
-    <state width="1899" height="253" key="GridCell.Tab.1.left" timestamp="1602248547390">
+    <state width="1899" height="253" key="GridCell.Tab.1.center/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602274849998" />
+    <state width="1899" height="253" key="GridCell.Tab.1.left" timestamp="1602274849998">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="253" key="GridCell.Tab.1.left/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220074" />
-    <state width="1899" height="253" key="GridCell.Tab.1.left/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602248547390" />
-    <state width="1899" height="253" key="GridCell.Tab.1.right" timestamp="1602248547390">
+    <state width="1899" height="253" key="GridCell.Tab.1.left/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602274849998" />
+    <state width="1899" height="253" key="GridCell.Tab.1.right" timestamp="1602274849998">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="253" key="GridCell.Tab.1.right/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220075" />
-    <state width="1899" height="253" key="GridCell.Tab.1.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602248547390" />
+    <state width="1899" height="253" key="GridCell.Tab.1.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602274849998" />
+    <state x="552" y="242" key="Vcs.Push.Dialog.v2" timestamp="1602253211233">
+      <screen x="0" y="0" width="1920" height="1019" />
+    </state>
+    <state x="552" y="242" key="Vcs.Push.Dialog.v2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602253211233" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
