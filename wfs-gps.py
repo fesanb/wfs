@@ -54,9 +54,9 @@ ser = serial.Serial("/dev/ttyAMA0", 9600, timeout=0.5)
 
 while True:
 	try:
-		sleep(interval())
 		gps = ser.readline().decode()
 		parse_gps(gps)
+		sleep(interval())
 	# except:
 	# 	pass
 	except Exception as e:

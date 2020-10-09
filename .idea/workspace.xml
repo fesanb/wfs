@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs-gps.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gps.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -401,10 +400,10 @@
       <screen x="0" y="-1080" width="1920" height="1050" />
     </state>
     <state x="1064" y="-828" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1598805168806" />
-    <state x="587" y="77" key="CommitChangelistDialog2" timestamp="1602276251324">
+    <state x="587" y="77" key="CommitChangelistDialog2" timestamp="1602277861195">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="587" y="77" key="CommitChangelistDialog2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602276251324" />
+    <state x="587" y="77" key="CommitChangelistDialog2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602277861195" />
     <state x="740" y="264" key="FileChooserDialogImpl" timestamp="1598467302491">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
@@ -449,10 +448,10 @@
     </state>
     <state width="1899" height="253" key="GridCell.Tab.1.right/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220075" />
     <state width="1899" height="253" key="GridCell.Tab.1.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602274849998" />
-    <state x="552" y="242" key="Vcs.Push.Dialog.v2" timestamp="1602276253418">
+    <state x="552" y="242" key="Vcs.Push.Dialog.v2" timestamp="1602277863005">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="552" y="242" key="Vcs.Push.Dialog.v2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602276253418" />
+    <state x="552" y="242" key="Vcs.Push.Dialog.v2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602277863005" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
