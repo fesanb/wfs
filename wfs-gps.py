@@ -57,9 +57,9 @@ while True:
 		sleep(interval())
 		gps = ser.readline().decode()
 		parse_gps(gps)
-	except:
-		pass
-	# except Exception as e:
+	# except:
 	# 	pass
-	# 	filename = Path(__file__).name
-	# 	error_handle(e, filename)
+	except Exception as e:
+		pass
+		filename = Path(__file__).name
+		error_handle(e, filename)
