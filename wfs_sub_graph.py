@@ -4,9 +4,6 @@
 import pyqtgraph as pg
 from datetime import datetime
 
-from PyQt5 import QtGui
-from PyQt5 import QtCore
-
 
 class TimeAxisItem(pg.AxisItem):
 	def __init__(self, *args, **kwargs):
@@ -42,7 +39,7 @@ def graph_plot(gw_x, gw_y, ga_y):
 	ax2.linkToView(g2)
 	g2.setXLink(g1)
 	# ax2.setLabel('TEMP', color='#ff0000')
-	g2.setYRange(max(ga_y) - 8, max(ga_y)+8)
+	g2.setYRange(min(ga_y) - 8, max(ga_y)+8)
 
 	# TEMP
 	pg.setConfigOption('foreground', 'r')
@@ -86,6 +83,7 @@ def graph_update(self, gw_x, gw_y, ga_x, ga_y, gt_x, gt_y, gh_x, gh_y):
 		g1.clear()
 
 	if self.ga is True:
+		g2.setYRange(min(ga_y) - 8, max(ga_y)+8)
 		g2.addItem(pg.PlotCurveItem(ga_x, ga_y, clear=True, pen='b'))
 		g2.setGeometry(g1.vb.sceneBoundingRect())
 	else:

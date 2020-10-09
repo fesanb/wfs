@@ -2,6 +2,7 @@
 # Written by Stefan Bahrawy
 
 # imports
+import gc
 import numpy as np
 import mysql.connector
 import pyqtgraph as pg
@@ -697,6 +698,9 @@ class App(QWidget):
 				fg()
 				graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
 
+				# #free memory with gc.collect()
+				# gc.collect()
+
 			except Exception as e:
 				filename = Path(__file__).name
 				# error_handle(e, filename)
@@ -708,6 +712,18 @@ if __name__ == '__main__':
 	app = QApplication(sys.argv)
 	ex = App()
 	ex.show()
+
+	thread_update_graph = threading.Thread(target=ex.update_graph, args=())
+	thread_update_graph.daemon = True
+	thread_update_graph.start()
+
+	thread_update_sens = threading.Thread(target=ex.update_sens, args=())
+	thread_update_sens.daemon = True
+	thread_update_sens.start()
+
+	thread_update_wind = threading.Thread(target=ex.update_wind, args=())
+	thread_update_wind.daemon = True
+	thread_update_wind.start()
 
 	wind_timer = QTimer()
 	wind_timer.timeout.connect(ex.update_wind)
