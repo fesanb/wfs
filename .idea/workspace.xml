@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/install/wfs.clean.service" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/install/wfs.clean.timer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/install/readme.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.log.anemo.service" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.anemo.service" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.log.bme680.service" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.bme680.service" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.log.gps.service" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.gps.service" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs_dump.sql" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_dump.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/db_pop.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/db_pop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs_sub_db_cleanup.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_sub_db_cleanup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-gps.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gps.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,34 +401,34 @@
       <screen x="0" y="-1080" width="1920" height="1050" />
     </state>
     <state x="1064" y="-828" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1598805168806" />
-    <state x="587" y="77" key="CommitChangelistDialog2" timestamp="1602313989178">
+    <state x="587" y="77" key="CommitChangelistDialog2" timestamp="1602336667957">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="587" y="77" key="CommitChangelistDialog2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602313989178" />
+    <state x="587" y="77" key="CommitChangelistDialog2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336667957" />
     <state x="740" y="264" key="FileChooserDialogImpl" timestamp="1598467302491">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state x="740" y="264" key="FileChooserDialogImpl/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1598467302491" />
-    <state width="1899" height="200" key="GridCell.Tab.0.bottom" timestamp="1602336623724">
+    <state width="1899" height="200" key="GridCell.Tab.0.bottom" timestamp="1602336685811">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.bottom/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336623724" />
-    <state width="1899" height="200" key="GridCell.Tab.0.center" timestamp="1602336623724">
+    <state width="1899" height="200" key="GridCell.Tab.0.bottom/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336685811" />
+    <state width="1899" height="200" key="GridCell.Tab.0.center" timestamp="1602336685811">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="208" key="GridCell.Tab.0.center/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.center/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336623724" />
-    <state width="1899" height="200" key="GridCell.Tab.0.left" timestamp="1602336623724">
+    <state width="1899" height="200" key="GridCell.Tab.0.center/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336685811" />
+    <state width="1899" height="200" key="GridCell.Tab.0.left" timestamp="1602336685811">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="208" key="GridCell.Tab.0.left/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.left/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336623724" />
-    <state width="1899" height="200" key="GridCell.Tab.0.right" timestamp="1602336623724">
+    <state width="1899" height="200" key="GridCell.Tab.0.left/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336685811" />
+    <state width="1899" height="200" key="GridCell.Tab.0.right" timestamp="1602336685811">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
     <state width="1899" height="208" key="GridCell.Tab.0.right/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336623724" />
+    <state width="1899" height="200" key="GridCell.Tab.0.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336685811" />
     <state width="1899" height="253" key="GridCell.Tab.1.bottom" timestamp="1602274849998">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
@@ -459,10 +449,10 @@
     </state>
     <state width="1899" height="253" key="GridCell.Tab.1.right/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220075" />
     <state width="1899" height="253" key="GridCell.Tab.1.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602274849998" />
-    <state x="552" y="242" key="Vcs.Push.Dialog.v2" timestamp="1602313990621">
+    <state x="552" y="242" key="Vcs.Push.Dialog.v2" timestamp="1602336673339">
       <screen x="0" y="0" width="1920" height="1019" />
     </state>
-    <state x="552" y="242" key="Vcs.Push.Dialog.v2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602313990621" />
+    <state x="552" y="242" key="Vcs.Push.Dialog.v2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602336673339" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

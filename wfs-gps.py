@@ -9,6 +9,7 @@ from pathlib import Path
 from wfs_error_handling import error_handle
 
 global satellites
+global s
 
 
 def db_insert(lat, lon, alt):
@@ -26,17 +27,22 @@ def db_insert(lat, lon, alt):
 
 
 def parse_gps(gps_sig):
+	global satellites
+	global s
 	if gps_sig.find('GGA') > 0:
 		msg = pynmea2.parse(gps_sig)
 		if len(msg.lat) == 0:
+			s = False
 			pass
 		else:
 			lat = msg.latitude
 			lon = msg.longitude
 			alt = msg.altitude
-			global satellites
+
 			satellites = msg.num_sats
 			db_insert(lat, lon, alt)
+			s = True
+
 
 
 def interval():
@@ -56,7 +62,8 @@ while True:
 	try:
 		gps = ser.readline().decode()
 		parse_gps(gps)
-		sleep(interval())
+		if s is True:
+			sleep(interval())
 	# except:
 	# 	pass
 	except Exception as e:
