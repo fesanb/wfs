@@ -23,6 +23,9 @@ sensor.set_gas_status(bme680.DISABLE_HEATER)
 # sensor.set_gas_heater_duration(150)
 # sensor.select_gas_heater_profile(0)
 
+#prssure at sea level formula:
+# relative pressure = absolute pressure + h/8,3
+#h is height above sea level.
 
 def db_insert(temp, hum, atp, issame):
 	cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
