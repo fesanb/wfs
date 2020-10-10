@@ -1,0 +1,11 @@
+[Unit]
+Description=Clean WFS Databases
+Requires=wfs.clean.service
+
+[Timer]
+Unit=wfs.clean.service
+OnBootSec=60min
+OnUnitActiveSec=60min
+
+[Install]
+WantedBy=timers.target
