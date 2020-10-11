@@ -33,6 +33,7 @@ def db_insert(wind):
 g.add_event_detect(16, g.RISING, callback=increv)
 
 last_wind = 0
+do_break = 0
 
 while True:
 	try:
@@ -45,7 +46,12 @@ while True:
 			db_insert(wind)
 			# print("SQL insert - Wind: {0}m/s".format(wind), end="\r")
 			last_wind = wind
+			do_break = +1
 		anemo = 0
+
+		if do_break > 1000 and wind < 5:
+			do_break = 0
+			break
 
 	except Exception as e:
 		filename = Path(__file__).name

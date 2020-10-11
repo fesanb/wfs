@@ -4,8 +4,9 @@ After=multi-user.target
 
 [Service]
 User=pi
+Restart=always
+RestartSec=120s
 ExecStart=/usr/bin/python3 /home/pi/wfs/wfs-bme680.py
-RestartSec=60s
 
 [Install]
 WantedBy=multi-user.target

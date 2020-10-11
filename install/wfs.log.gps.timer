@@ -1,0 +1,11 @@
+[Unit]
+Description=WFS-GPS
+Requires=wfs.log.gps.service
+
+[Timer]
+Unit=wfs.log.gps.service
+OnBootSec=3min
+OnUnitActiveSec=1min
+
+[Install]
+WantedBy=timers.target

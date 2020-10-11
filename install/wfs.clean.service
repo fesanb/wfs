@@ -1,11 +1,8 @@
 [Unit]
 Description=WFS-CLEAN
-After=multi-user.target
 
 [Service]
 User=pi
 Type=oneshot
 ExecStart=/usr/bin/python3 /home/pi/wfs/wfs_sub_db_cleanup.py
 
-[Install]
-WantedBy=multi-user.target
