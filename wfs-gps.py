@@ -61,11 +61,11 @@ try:
 	while gps_iter < 20:
 		try:
 			gps = ser.readline().decode()
+			parse_gps(gps)  # random.choice([fake_sig, fake_sig1, fake_sig2, fake_sig3])
 		except Exception as e:
 			filename = Path(__file__).name
 			error_handle(e, filename)
 
-		parse_gps(gps)  # random.choice([fake_sig, fake_sig1, fake_sig2, fake_sig3])
 		if parse_gps.sig is True:
 			gps_list.append([parse_gps.lat, parse_gps.lon, parse_gps.alt, parse_gps.sat])
 		gps_iter = gps_iter + 1
