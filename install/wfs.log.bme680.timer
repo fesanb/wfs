@@ -1,0 +1,11 @@
+[Unit]
+Description=WFS-BME680
+Requires=wfs.log.bme680.service
+
+[Timer]
+Unit=wfs.log.bme680.service
+OnBootSec=1min
+OnUnitActiveSec=120sec
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=WFS-BME680 BOOT
+
+[Service]
+User=pi
+Type=oneshot
+ExecStart=/usr/bin/python3 /home/pi/wfs/bme680_boot.py
+
+[Install]
+WantedBy=multi-user.target

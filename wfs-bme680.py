@@ -4,35 +4,18 @@
 import bme680
 import time
 import mysql.connector
-import sys
 from pathlib import Path
 from wfs_error_handling import error_handle
 
 sensor = bme680.BME680()
-
-sensor.set_humidity_oversample(bme680.OS_2X)
-sensor.set_pressure_oversample(bme680.OS_4X)
-sensor.set_temperature_oversample(bme680.OS_8X)
-sensor.set_filter(bme680.FILTER_SIZE_3)
-#
-sensor.set_gas_status(bme680.DISABLE_GAS_MEAS)
-sensor.set_gas_status(bme680.DISABLE_HEATER)
+# all bme680 setting are set in different file on boot of unit
 
 
-# sensor.set_gas_heater_temperature(320)
-# sensor.set_gas_heater_duration(150)
-# sensor.select_gas_heater_profile(0)
-
-#prssure at sea level formula:
-# relative pressure = absolute pressure + h/8,3
-#h is height above sea level.
-
-def db_insert(temp, hum, atp, issame):
+def db_insert(temp, hum, atp):
 	cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
 	cursor = cnx.cursor()
 	try:
-		cursor.execute(
-			u'''INSERT INTO sens(temp, hum, atp, issame) VALUES ({0}, {1}, {2}, {3})'''.format(temp, hum, atp, issame))
+		cursor.execute(u'''INSERT INTO sens(temp, hum, atp) VALUES ({0}, {1}, {2})'''.format(temp, hum, atp))
 		cnx.commit()
 	except Exception as e:
 		filename = Path(__file__).name
@@ -44,20 +27,12 @@ def db_insert(temp, hum, atp, issame):
 
 last_sens = []
 
-while True:
-	new_sens = [round(sensor.data.temperature, 1), round(sensor.data.humidity), round(sensor.data.pressure)]
-	if last_sens == new_sens:
-		issame = 1
-	else:
-		issame = 0
 
-	new_sens.append(issame)
+new_sens = [round(sensor.data.temperature, 1), round(sensor.data.humidity), round(sensor.data.pressure)]
+if sensor.get_sensor_data() is None:
+	pass
+else:
+	db_insert(new_sens[0], new_sens[1], new_sens[2])
+	last_sens = new_sens
+	del last_sens[-1]
 
-	if sensor.get_sensor_data() is None:
-		pass
-	else:
-		db_insert(new_sens[0], new_sens[1], new_sens[2], new_sens[3])
-		last_sens = new_sens
-		del last_sens[-1]
-
-		time.sleep(120)

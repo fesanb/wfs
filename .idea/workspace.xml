@@ -2,6 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/bme680_boot.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/install/splash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/install/wfs.boot.bme680.service" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/install/wfs.log.bme680.timer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/install/readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.log.bme680.service" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.bme680.service" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.log.gps.service" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.gps.service" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_install.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-bme680.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-bme680.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs-gps.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gps.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,9 +47,9 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/test/test.py" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/wfs.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/arch/wfs-gui.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/test/testing.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/wfs.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectId" id="1PdOw2sNt3Gk2WO8HjLhmIrXcxw" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -56,12 +69,13 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\stefa\PycharmProjects\wfs\install" />
       <recent name="C:\Users\stefa\PycharmProjects\wfs\img" />
       <recent name="C:\Users\stefa\PycharmProjects\wfs\test" />
       <recent name="C:\Users\stefa\PycharmProjects\wfs\arch" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.wfs-gps">
+  <component name="RunManager" selected="Python.wfs">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -257,17 +271,17 @@
       <item itemvalue="Python.wfs-gui" />
       <item itemvalue="Python.db_pop" />
       <item itemvalue="Python.test" />
+      <item itemvalue="Python.wfs-gps" />
       <item itemvalue="Python.wfs" />
       <item itemvalue="Python.wfs_sub_db_cleanup" />
-      <item itemvalue="Python.wfs-gps" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.wfs" />
         <item itemvalue="Python.wfs-gps" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.wfs_sub_db_cleanup" />
         <item itemvalue="Python.db_pop" />
-        <item itemvalue="Python.wfs" />
       </list>
     </recent_temporary>
   </component>
@@ -395,75 +409,7 @@
     <MESSAGE value="Trying to reduce memory usage." />
     <option name="LAST_COMMIT_MESSAGE" value="Trying to reduce memory usage." />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="1064" y="245" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1602411538037">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state x="1064" y="-828" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1598805168806" />
-    <state x="1064" y="245" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602411538037" />
-    <state x="587" y="77" key="CommitChangelistDialog2" timestamp="1602425734501">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state x="587" y="77" key="CommitChangelistDialog2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602425734501" />
-    <state x="740" y="264" key="FileChooserDialogImpl" timestamp="1598467302491">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state x="740" y="264" key="FileChooserDialogImpl/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1598467302491" />
-    <state width="1899" height="200" key="GridCell.Tab.0.bottom" timestamp="1602424394376">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state width="1899" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.bottom/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602424394376" />
-    <state width="1899" height="200" key="GridCell.Tab.0.center" timestamp="1602424394376">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state width="1899" height="208" key="GridCell.Tab.0.center/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.center/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602424394376" />
-    <state width="1899" height="200" key="GridCell.Tab.0.left" timestamp="1602424394376">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state width="1899" height="208" key="GridCell.Tab.0.left/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.left/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602424394376" />
-    <state width="1899" height="200" key="GridCell.Tab.0.right" timestamp="1602424394376">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state width="1899" height="208" key="GridCell.Tab.0.right/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240222212" />
-    <state width="1899" height="200" key="GridCell.Tab.0.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602424394376" />
-    <state width="1899" height="253" key="GridCell.Tab.1.bottom" timestamp="1602412117925">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state width="1899" height="253" key="GridCell.Tab.1.bottom/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220075" />
-    <state width="1899" height="253" key="GridCell.Tab.1.bottom/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602412117925" />
-    <state width="1899" height="253" key="GridCell.Tab.1.center" timestamp="1602412117925">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state width="1899" height="253" key="GridCell.Tab.1.center/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220075" />
-    <state width="1899" height="253" key="GridCell.Tab.1.center/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602412117925" />
-    <state width="1899" height="253" key="GridCell.Tab.1.left" timestamp="1602412117925">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state width="1899" height="253" key="GridCell.Tab.1.left/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220074" />
-    <state width="1899" height="253" key="GridCell.Tab.1.left/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602412117925" />
-    <state width="1899" height="253" key="GridCell.Tab.1.right" timestamp="1602412117925">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state width="1899" height="253" key="GridCell.Tab.1.right/0.0.1920.1019/0.-1080.1920.1050@0.-1080.1920.1050" timestamp="1602240220075" />
-    <state width="1899" height="253" key="GridCell.Tab.1.right/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602412117925" />
-    <state x="552" y="242" key="Vcs.Push.Dialog.v2" timestamp="1602425736035">
-      <screen x="0" y="0" width="1920" height="1019" />
-    </state>
-    <state x="552" y="242" key="Vcs.Push.Dialog.v2/0.0.1920.1019/0.-1080.1920.1050@0.0.1920.1019" timestamp="1602425736035" />
-  </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/wfs.py</url>
-          <line>391</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="fg.gw_x" />

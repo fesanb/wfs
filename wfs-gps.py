@@ -4,9 +4,7 @@
 import pynmea2
 import serial
 import mysql.connector
-import random
 
-from time import sleep
 from pathlib import Path
 from wfs_error_handling import error_handle
 
