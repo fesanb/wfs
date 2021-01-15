@@ -28,7 +28,6 @@ from pathlib import Path
 # custom imports
 from wfs_sub_graph import graph_plot, graph_update
 from wfs_error_handling import error_handle
-# import wfs_forecast
 from wfs_forecast import fc
 
 
@@ -57,103 +56,98 @@ get_max_wind1 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INT
 
 
 def fetch_wind():
-	while True:
-		try:
-			cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-			cursor = cnx.cursor(buffered=True)
+	try:
+		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+		cursor = cnx.cursor(buffered=True)
 
-			cursor.execute(get_wind)
-			if cursor.rowcount > 0:
-				db_wind = cursor.fetchone()
-				fetch_wind.wind = str(db_wind[1])
-				fetch_wind.timestamp = db_wind[2]
+		cursor.execute(get_wind)
+		if cursor.rowcount > 0:
+			db_wind = cursor.fetchone()
+			fetch_wind.wind = str(db_wind[1])
+			fetch_wind.timestamp = db_wind[2]
 
-				if fetch_wind.timestamp < datetime.now() - timedelta(minutes=0.25):
-					fetch_wind.wind = "-.-"
-
-			else:
+			if fetch_wind.timestamp < datetime.now() - timedelta(minutes=0.25):
 				fetch_wind.wind = "-.-"
 
-			cursor.close()
-			cnx.close()
-			time.sleep(0.9)
+		else:
+			fetch_wind.wind = "-.-"
 
-		except Exception as e:
-			filename = Path(__file__).name
-			error_handle(e, filename)
-			print(e)
+		cursor.close()
+		cnx.close()
+
+	except Exception as e:
+		filename = Path(__file__).name
+		error_handle(e, filename)
+		print(e)
 
 def make_mean():
-	while True:
-		try:
-			cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-			cursor = cnx.cursor(buffered=True)
+	try:
+		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+		cursor = cnx.cursor(buffered=True)
 
-			cursor.execute("SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)")
-			db_mean_wind_1min = cursor.fetchone()
-			if db_mean_wind_1min[0] is None:
-				pass
-			else:
-				add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (round(db_mean_wind_1min[0], 2)))
-				cursor.execute(add_mean)
-				emp_no = cursor.lastrowid
-				cnx.commit()
-		except Exception as e:
-			filename = Path(__file__).name
-			error_handle(e, filename)
+		cursor.execute("SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)")
+		db_mean_wind_1min = cursor.fetchone()
+		if db_mean_wind_1min[0] is None:
+			pass
+		else:
+			add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (round(db_mean_wind_1min[0], 2)))
+			cursor.execute(add_mean)
+			emp_no = cursor.lastrowid
+			cnx.commit()
+	except Exception as e:
+		filename = Path(__file__).name
+		error_handle(e, filename)
 
-		cursor.close()
-		cnx.close()
-		time.sleep(60)
+	cursor.close()
+	cnx.close()
 
 def fetch_mean():
-	while True:
-		try:
-			cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-			cursor = cnx.cursor(buffered=True)
+	try:
+		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+		cursor = cnx.cursor(buffered=True)
 
-			cursor.execute(get_mean_wind)
-			db_mean_wind = cursor.fetchone()
-			if db_mean_wind[0] is None:  # cursor.rowcount is 0 and
-				fetch_mean.meanwind = 0
-			else:
-				fetch_mean.meanwind = round(float(db_mean_wind[0]), 1)
+		cursor.execute(get_mean_wind)
+		db_mean_wind = cursor.fetchone()
+		if db_mean_wind[0] is None:  # cursor.rowcount is 0 and
+			fetch_mean.meanwind = 0
+		else:
+			fetch_mean.meanwind = round(float(db_mean_wind[0]), 1)
 
-			if float(fetch_mean.meanwind) < 0.3:
-				fetch_mean.beaufortLS = "Beaufort 0 - Calm"
-			elif float(fetch_mean.meanwind) > 32.7:
-				fetch_mean.beaufortLS = "Beaufort 12 - Hurricane"
-			elif float(fetch_mean.meanwind) > 28.5:
-				fetch_mean.beaufortLS = "Beaufort 11 - Violent Storm"
-			elif float(fetch_mean.meanwind) > 24.5:
-				fetch_mean.beaufortLS = "Beaufort 10 - Storm"
-			elif float(fetch_mean.meanwind) > 20.8:
-				fetch_mean.beaufortLS = "Beaufort 9 - Strong Gale"
-			elif float(fetch_mean.meanwind) > 17.2:
-				fetch_mean.beaufortLS = "Beaufort 8 - Fresh Gale"
-			elif float(fetch_mean.meanwind) > 13.9:
-				fetch_mean.beaufortLS = "Beaufort 7 - Moderate gale"
-			elif float(fetch_mean.meanwind) > 10.8:
-				fetch_mean.beaufortLS = "Beaufort 6 - Strong breeze"
-			elif float(fetch_mean.meanwind) > 8.0:
-				fetch_mean.beaufortLS = "Beaufort 5 - Fresh breeze"
-			elif float(fetch_mean.meanwind) > 5.5:
-				fetch_mean.beaufortLS = "Beaufort 4 - Moderate breeze"
-			elif float(fetch_mean.meanwind) > 3.4:
-				fetch_mean.beaufortLS = "Beaufort 3 - Gentle breeze"
-			elif float(fetch_mean.meanwind) > 1.6:
-				fetch_mean.beaufortLS = "Beaufort 2 - Light breeze"
-			elif float(fetch_mean.meanwind) > 0.3:
-				fetch_mean.beaufortLS = "Beaufort 1 - Light Air"
+		if float(fetch_mean.meanwind) < 0.3:
+			fetch_mean.beaufortLS = "Beaufort 0 - Calm"
+		elif float(fetch_mean.meanwind) > 32.7:
+			fetch_mean.beaufortLS = "Beaufort 12 - Hurricane"
+		elif float(fetch_mean.meanwind) > 28.5:
+			fetch_mean.beaufortLS = "Beaufort 11 - Violent Storm"
+		elif float(fetch_mean.meanwind) > 24.5:
+			fetch_mean.beaufortLS = "Beaufort 10 - Storm"
+		elif float(fetch_mean.meanwind) > 20.8:
+			fetch_mean.beaufortLS = "Beaufort 9 - Strong Gale"
+		elif float(fetch_mean.meanwind) > 17.2:
+			fetch_mean.beaufortLS = "Beaufort 8 - Fresh Gale"
+		elif float(fetch_mean.meanwind) > 13.9:
+			fetch_mean.beaufortLS = "Beaufort 7 - Moderate gale"
+		elif float(fetch_mean.meanwind) > 10.8:
+			fetch_mean.beaufortLS = "Beaufort 6 - Strong breeze"
+		elif float(fetch_mean.meanwind) > 8.0:
+			fetch_mean.beaufortLS = "Beaufort 5 - Fresh breeze"
+		elif float(fetch_mean.meanwind) > 5.5:
+			fetch_mean.beaufortLS = "Beaufort 4 - Moderate breeze"
+		elif float(fetch_mean.meanwind) > 3.4:
+			fetch_mean.beaufortLS = "Beaufort 3 - Gentle breeze"
+		elif float(fetch_mean.meanwind) > 1.6:
+			fetch_mean.beaufortLS = "Beaufort 2 - Light breeze"
+		elif float(fetch_mean.meanwind) > 0.3:
+			fetch_mean.beaufortLS = "Beaufort 1 - Light Air"
 
-		except Exception as e:
-			filename = Path(__file__).name
-			error_handle(e, filename)
+	except Exception as e:
+		filename = Path(__file__).name
+		error_handle(e, filename)
 
-		cursor.close()
-		cnx.close()
-		end = time.time()
-		time.sleep(60)
+	cursor.close()
+	cnx.close()
+	end = time.time()
+
 
 def fetch_sens():
 	fetch_sens.current_sens = None
@@ -728,6 +722,10 @@ if __name__ == '__main__':
 	wind_timer = QTimer()
 	wind_timer.timeout.connect(ex.update_wind)
 	wind_timer.start(1000)
+
+	mean_timer = QTimer()
+	mean_timer.timeout.connect(make_mean)
+	mean_timer.start(1000)
 
 	sens_timer = QTimer()
 	sens_timer.timeout.connect(ex.update_sens)

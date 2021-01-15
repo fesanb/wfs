@@ -3,7 +3,7 @@ Description=WFS-BME680 BOOT
 
 [Service]
 User=pi
-Type=oneshot
+Type=simple
 ExecStart=/usr/bin/python3 /home/pi/wfs/bme680_boot.py
 
 [Install]

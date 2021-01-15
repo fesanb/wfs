@@ -3,6 +3,6 @@ Description=WFS-CLEAN
 
 [Service]
 User=pi
-Type=oneshot
+Type=simple
 ExecStart=/usr/bin/python3 /home/pi/wfs/wfs_sub_db_cleanup.py
 

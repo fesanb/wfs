@@ -83,13 +83,16 @@ try:
 		c2 = 0
 		c = c + 1
 
-	m = max(equal_list)
-	equals = equal_list.count(max(equal_list))
-	index = [i for i, j in enumerate(equal_list) if j == m]
+	if len(equal_list) == 0:
+		pass
+	else:
+		m = max(equal_list)
+		equals = equal_list.count(max(equal_list))
+		index = [i for i, j in enumerate(equal_list) if j == m]
 
-	if equals > 5:
-		insert = gps_list[index[0]]
-		db_insert(insert[0], insert[1], insert[2], insert[3])
+		if equals > 5:
+			insert = gps_list[index[0]]
+			db_insert(insert[0], insert[1], insert[2], insert[3])
 
 except Exception as e:
 		filename = Path(__file__).name

@@ -4,5 +4,6 @@ After=multi-user.target
 
 [Service]
 User=pi
+Type=simple
 ExecStart=/usr/bin/python3 /home/pi/wfs/wfs-bme680.py
 
