@@ -148,7 +148,6 @@ def fetch_mean():
 	cnx.close()
 	end = time.time()
 
-
 def fetch_sens():
 	fetch_sens.current_sens = None
 	try:
@@ -639,6 +638,8 @@ class App(QWidget):
 			self.ga = False
 
 	def update_wind(self):
+		fetch_wind()
+		fetch_mean()
 		try:
 			self.windL.setText(fetch_wind.wind)
 			self.meanL.setText(str(fetch_mean.meanwind))

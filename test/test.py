@@ -1,6 +1,9 @@
-a = [1,2]
+def test():
+	test.b = 33
+	b = 44
 
-if len(a) == 0:
-	None
-else:
-	print(max(a))
+test()
+
+c = test.b
+print(test.b)
+

@@ -5,7 +5,7 @@ Requires=wfs.log.anemo.service
 [Timer]
 Unit=wfs.log.anemo.service
 OnBootSec=10sec
-OnUnitActiveSec=
+OnUnitActiveSec=900ms
 
 [Install]
 WantedBy=timers.target
