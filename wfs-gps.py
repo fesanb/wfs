@@ -50,7 +50,7 @@ def parse_gps(gps_sig):
 		parse_gps.sig = False
 
 
-ser = serial.Serial("/dev/ttyAMA0", 9600, timeout=2)
+ser = serial.Serial("/dev/ttyAMA0", 9600, timeout=1)
 
 try:
 	gps_iter = 0
@@ -65,7 +65,7 @@ try:
 			print(parse_gps.lat, parse_gps.lon, parse_gps.alt, parse_gps.sat)
 
 		gps_iter += 1
-		sleep(0.3)
+		# sleep(0.3)
 
 	c1 = 0
 	c2 = 0
