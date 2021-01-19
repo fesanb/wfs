@@ -56,7 +56,7 @@ try:
 	gps_iter = 0
 	gps_list = []
 
-	while gps_iter < 40:
+	while gps_iter < 60:
 		gps = ser.readline().decode(errors='ignore')
 		parse_gps(gps)  # random.choice([fake_sig, fake_sig1, fake_sig2, fake_sig3])
 
