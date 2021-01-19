@@ -5,8 +5,10 @@ import pynmea2
 import serial
 import mysql.connector
 
+from time import sleep
 from pathlib import Path
 from wfs_error_handling import error_handle
+
 
 # NOT IN USE ser = serial.Serial("/dev/ttyS0", 9600, timeout=0.5)
 
@@ -33,55 +35,56 @@ def db_insert(lat, lon, alt, sat):
 	cnx.close()
 
 
-try:
-	ser = serial.Serial("/dev/ttyAMA0", 9600, timeout=1)
-
-
-	def parse_gps(gps_sig):
-		if gps_sig.find('GGA') > 0:
-			msg = pynmea2.parse(gps_sig)
-			if len(msg.lat) == 0:
-				parse_gps.sig = False
-				pass
-			else:
-				parse_gps.sig = True
-				parse_gps.lat = msg.latitude
-				parse_gps.lon = msg.longitude
-				parse_gps.alt = msg.altitude
-				parse_gps.sat = msg.num_sats
-		else:
+def parse_gps(gps_sig):
+	if gps_sig.find('GGA') > 0:
+		msg = pynmea2.parse(gps_sig)
+		if len(msg.lat) == 0:
 			parse_gps.sig = False
+		else:
+			parse_gps.sig = True
+			parse_gps.lat = msg.latitude
+			parse_gps.lon = msg.longitude
+			parse_gps.alt = msg.altitude
+			parse_gps.sat = msg.num_sats
+	else:
+		parse_gps.sig = False
 
 
+ser = serial.Serial("/dev/ttyAMA0", 9600, timeout=2)
+
+try:
 	gps_iter = 0
 	gps_list = []
 
-	while gps_iter < 20:
-		try:
-			gps = ser.readline().decode()
-			parse_gps(gps)  # random.choice([fake_sig, fake_sig1, fake_sig2, fake_sig3])
-		except Exception as e:
-			filename = Path(__file__).name
-			error_handle(e, filename)
+	while gps_iter < 40:
+		gps = ser.readline().decode()
+		parse_gps(gps)  # random.choice([fake_sig, fake_sig1, fake_sig2, fake_sig3])
 
 		if parse_gps.sig is True:
 			gps_list.append([parse_gps.lat, parse_gps.lon, parse_gps.alt, parse_gps.sat])
-		gps_iter = gps_iter + 1
+			print(parse_gps.lat, parse_gps.lon, parse_gps.alt, parse_gps.sat)
 
-	c = 0
+		gps_iter += 1
+		sleep(0.3)
+
+	c1 = 0
 	c2 = 0
 	equal = 0
 	equal_list = []
 
-	while c < len(gps_list):
+	print(len(gps_list))
+
+	while c1 < len(gps_list):
 		for i in gps_list:
-			if gps_list[c] == gps_list[c2]:
-				equal = equal + 1
-			c2 = c2 + 1
+			if gps_list[c1] == gps_list[c2]:
+				equal += 1
+			c2 += 1
 		equal_list.append(equal)
 		equal = 0
 		c2 = 0
-		c = c + 1
+		c1 += 1
+
+	print(len(equal_list))
 
 	if len(equal_list) == 0:
 		pass
@@ -95,5 +98,5 @@ try:
 			db_insert(insert[0], insert[1], insert[2], insert[3])
 
 except Exception as e:
-		filename = Path(__file__).name
-		error_handle(e, filename)
+	filename = Path(__file__).name
+	error_handle(e, filename)
