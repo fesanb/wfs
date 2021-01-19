@@ -4,8 +4,8 @@ Requires=wfs.log.gps.service
 
 [Timer]
 Unit=wfs.log.gps.service
-OnBootSec=3min
-OnUnitActiveSec=1min
+OnBootSec=5min
+OnUnitActiveSec=10min
 
 [Install]
 WantedBy=timers.target

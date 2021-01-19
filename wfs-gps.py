@@ -64,7 +64,6 @@ try:
 			gps_list.append([parse_gps.lat, parse_gps.lon, parse_gps.alt, parse_gps.sat])
 
 		gps_iter += 1
-		# sleep(0.3)
 
 	c1 = 0
 	c2 = 0
