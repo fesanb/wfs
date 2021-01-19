@@ -1,9 +1,9 @@
-def test():
-	test.b = 33
-	b = 44
+a = 0
 
-test()
+while True:
+	a += 1
+	print(a)
+	if a > 10:
+		break
 
-c = test.b
-print(test.b)
 
