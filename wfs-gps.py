@@ -57,7 +57,7 @@ try:
 	gps_list = []
 
 	while gps_iter < 40:
-		gps = ser.readline().decode()
+		gps = ser.readline() # .decode()
 		parse_gps(gps)  # random.choice([fake_sig, fake_sig1, fake_sig2, fake_sig3])
 
 		if parse_gps.sig is True:
