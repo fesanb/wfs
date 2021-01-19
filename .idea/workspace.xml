@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/install/wfs.log.anemo.service" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.anemo.service" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.log.anemo.timer" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.anemo.timer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.log.gps.timer" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.gps.timer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-gps.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-gps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-anemo.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-anemo.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

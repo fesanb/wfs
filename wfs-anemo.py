@@ -3,7 +3,6 @@
 
 import sys
 import RPi.GPIO as g
-from time import sleep, perf_counter
 import mysql.connector
 from pathlib import Path
 from wfs_error_handling import error_handle
@@ -33,26 +32,18 @@ def db_insert(wind):
 g.add_event_detect(16, g.RISING, callback=increv)
 
 last_wind = 0
-do_break = 0
 
-while True:
-	try:
-		sleep(1)
-		wind = anemo * 0.1
-		if wind == last_wind:
-			# print("Wind: {0}m/s".format(wind), end="\r")
-			pass
-		else:
-			db_insert(wind)
-			# print("SQL insert - Wind: {0}m/s".format(wind), end="\r")
-			last_wind = wind
-			do_break = +1
-		anemo = 0
+try:
+	wind = anemo * 0.1
+	if wind == 0:
+		# print("Wind: {0}m/s".format(wind), end="\r")
+		pass
+	else:
+		db_insert(wind)
+		# print("SQL insert - Wind: {0}m/s".format(wind), end="\r")
+	anemo = 0
 
-		if do_break > 1000 and wind < 5:
-			do_break = 0
-			break
 
-	except Exception as e:
-		filename = Path(__file__).name
-		error_handle(e, filename)
+except Exception as e:
+	filename = Path(__file__).name
+	error_handle(e, filename)
