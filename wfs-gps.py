@@ -56,13 +56,12 @@ try:
 	gps_iter = 0
 	gps_list = []
 
-	while gps_iter < 60:
+	while gps_iter < 100:
 		gps = ser.readline().decode(errors='ignore')
 		parse_gps(gps)  # random.choice([fake_sig, fake_sig1, fake_sig2, fake_sig3])
 
 		if parse_gps.sig is True:
 			gps_list.append([parse_gps.lat, parse_gps.lon, parse_gps.alt, parse_gps.sat])
-			print(parse_gps.lat, parse_gps.lon, parse_gps.alt, parse_gps.sat)
 
 		gps_iter += 1
 		# sleep(0.3)
@@ -71,8 +70,6 @@ try:
 	c2 = 0
 	equal = 0
 	equal_list = []
-
-	print(len(gps_list))
 
 	while c1 < len(gps_list):
 		for i in gps_list:
@@ -83,8 +80,6 @@ try:
 		equal = 0
 		c2 = 0
 		c1 += 1
-
-	print(len(equal_list))
 
 	if len(equal_list) == 0:
 		pass
