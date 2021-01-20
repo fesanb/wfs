@@ -1,20 +1,20 @@
 #!/bin/bash
 
 printf  '\e[93m Copying service files to /lib/systemd/system/ \e[0m \n'
-cp wfs.mean.service /lib/systemd/system/
-cp wfs.mean.timer /lib/systemd/system/
-cp wfs.log.anemo.service /lib/systemd/system/
-cp wfs.log.bme680.service /lib/systemd/system/
-cp wfs.log.bme680.timer /lib/systemd/system/
-cp wfs.log.gps.service /lib/systemd/system/
-cp wfs.log.gps.timer /lib/systemd/system/
-cp wfs.service /lib/systemd/system/
-cp wfs.clean.service /lib/systemd/system/
-cp wfs.clean.timer /lib/systemd/system/
+cp /service-timer/wfs.mean.service /lib/systemd/system/
+cp /service-timer/wfs.mean.timer /lib/systemd/system/
+cp /service-timer/wfs.log.anemo.service /lib/systemd/system/
+cp /service-timer/wfs.log.bme680.service /lib/systemd/system/
+cp /service-timer/wfs.log.bme680.timer /lib/systemd/system/
+cp /service-timer/wfs.log.gps.service /lib/systemd/system/
+cp /service-timer/wfs.log.gps.timer /lib/systemd/system/
+cp /service-timer/wfs.service /lib/systemd/system/
+cp /service-timer/wfs.clean.service /lib/systemd/system/
+cp /service-timer/wfs.clean.timer /lib/systemd/system/
 printf  '\e[92m - Done! \e[0m \n'
 
 printf  '\e[93m Setting a new splash image \e[0m \n' # Better way is to change plymouth theme with custom one.
-cp splash.png /usr/share/plymouth/themes/pix/
+cp /install/splash.png /usr/share/plymouth/themes/pix/
 printf  '\e[92m - Done! \e[0m \n'
 
 printf  '\e[93m Enabling Services \e[0m \n'
