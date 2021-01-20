@@ -47,7 +47,7 @@ get_graph_temp = "SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >
 	interval)
 
 # SENS
-get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)"
+get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
 get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 65 MINUTE)"
 
 # Max

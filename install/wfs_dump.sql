@@ -35,9 +35,9 @@ CREATE TABLE `mean` (
 DROP TABLE IF EXISTS `sens`;
 CREATE TABLE `sens` (
   `id` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `temp` float DEFAULT NULL,
-  `hum` int DEFAULT NULL,
-  `atp` int(11) DEFAULT NULL,
+  `temp` int(4) DEFAULT NULL,
+  `hum` int(4) DEFAULT NULL,
+  `atp` int(4) DEFAULT NULL,
   `issame` int(2) DEFAULT NULL,
   `tmestmp` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
