@@ -3,12 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.log.anemo.service" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.anemo.service" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.log.anemo.timer" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs_install_small.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_install_small.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bme680_boot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bme680_boot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.log.bme680.timer" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs.log.bme680.timer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs_dump.sql" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_dump.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-anemo.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-anemo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-bme680.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-bme680.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -303,10 +303,9 @@ def sens_arrow(sens_number):
 		if cursor.rowcount > 0:
 			db_last_sens = cursor.fetchone()
 			temp = str(db_last_sens[1])
-			hum = str(round(db_last_sens[2]))
+			hum = str(db_last_sens[2])
 			atp = str(db_last_sens[3])
-		else:
-			print("error")
+
 	except Exception as e:
 		filename = Path(__file__).name
 		error_handle(e, filename)
