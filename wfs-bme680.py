@@ -52,6 +52,8 @@ new_sens = [round(s.data.temperature, 1), round(s.data.humidity), round(s.data.p
 db_fetch()
 print(db_fetch.last_sens)
 print(new_sens)
+if new_sens == db_fetch.last_sens:
+	print("they are the same")
 
 if s.get_sensor_data() is None:
 	pass
