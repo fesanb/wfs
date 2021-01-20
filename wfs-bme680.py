@@ -48,7 +48,7 @@ def db_insert(temp, hum, atp):
 	cnx.close()
 
 
-new_sens = [round(s.data.temperature, 1), round(s.data.humidity), round(s.data.pressure)]
+new_sens = [round(s.data.temperature), round(s.data.humidity), round(s.data.pressure)]
 db_fetch()
 print(db_fetch.last_sens)
 print(new_sens)
@@ -58,6 +58,9 @@ if new_sens == db_fetch.last_sens:
 if s.get_sensor_data() is None:
 	pass
 else:
-	db_insert(new_sens[0], new_sens[1], new_sens[2])
+	if new_sens == db_fetch.last_sens:
+		pass
+	else:
+		db_insert(new_sens[0], new_sens[1], new_sens[2])
 
 
