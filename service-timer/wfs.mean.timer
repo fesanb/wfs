@@ -1,0 +1,11 @@
+[Unit]
+Description=WFS-MEAN
+Requires=wfs.mean.service
+
+[Timer]
+Unit=wfs.mean.service
+OnBootSec=2min
+OnUnitActiveSec=10min
+
+[Install]
+WantedBy=timers.target

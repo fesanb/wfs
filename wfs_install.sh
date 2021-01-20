@@ -4,6 +4,8 @@ echo "disable_splash=1" | sudo tee -a /boot/config.txt # Disable Bluetooth
 systemctl disable hciuart # Free up UART to allow serial communication with GPS.
 
 printf  '\e[93m Copying service files to /lib/systemd/system/ \e[0m \n'
+cp wfs.mean.service /lib/systemd/system/
+cp wfs.mean.timer /lib/systemd/system/
 cp wfs.log.anemo.service /lib/systemd/system/
 cp wfs.log.bme680.service /lib/systemd/system/
 cp wfs.log.bme680.timer /lib/systemd/system/
@@ -19,6 +21,7 @@ cp splash.png /usr/share/plymouth/themes/pix/
 printf  '\e[92m - Done! \e[0m \n'
 
 printf  '\e[93m Enabling Services \e[0m \n'
+systemctl enable /lib/systemd/system/wfs.log.mean.timer
 systemctl enable /lib/systemd/system/wfs.log.anemo.service
 systemctl enable /lib/systemd/system/wfs.log.bme680.timer
 systemctl enable /lib/systemd/system/wfs.log.gps.timer

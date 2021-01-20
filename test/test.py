@@ -1,45 +1,11 @@
-import sys, os
+import numpy as np
 
-from PyQt5.QtWidgets import QWidget, QLabel, QApplication, QHBoxLayout, QVBoxLayout, QPushButton, QFrame, QGridLayout
-from PyQt5.QtGui import QIcon, QPixmap, QFont
-from PyQt5.QtCore import Qt, QTimer
+def moving_average(a, n=3) :
+			ret = np.cumsum(a, dtype=float)
+			ret[n:] = ret[n:] - ret[:-n]
+			return ret[n - 1:] / n
 
-class App(QWidget):
+h = [2000,2001,2000,2002,2003,2002]
 
-	def __init__(self, parent=None):
-		super(App, self).__init__(parent=parent)
-		self.title = "WFS - Weather Forecast Station"
-		self.setWindowIcon(QIcon("img/drawing.svg.png"))
-		self.setWindowTitle(self.title)
-		# self.setStyleSheet("color: white; background-color: black;")
-
-		self.left = 0
-		self.top = 0
-		self.width = 720
-		self.height = 480
-		self.setGeometry(self.left, self.top, self.width, self.height)
-
-		self.initUI()
-
-	def initUI(self):
-		self.O1 = QVBoxLayout(self)
-
-		self.gwb = QPushButton()
-		self.gwb.setText("WIND")
-		self.gwb.setCheckable(True)
-		self.gwb.clicked.connect(data)
-		self.O1.addWidget(self.gwb)
-
-
-def data():
-	print("test")
-	gwb.setText("clicked")
-
-if __name__ == '__main__':
-	app = QApplication(sys.argv)
-	ex = App()
-	ex.show()
-
-	sys.exit(app.exec_())
-
-
+trend_res = np.all(np.diff(moving_average(np.array(h), n=4))>0)
+print(trend_res)

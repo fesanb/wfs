@@ -33,18 +33,15 @@ from wfs_forecast import fc
 
 # Wind
 get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
-get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
+# get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
+get_mean_wind = "SELECT mean FROM mean WHERE id=(SELECT MAX(id) FROM mean) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
 
 # GRAPH
 interval = 12
-get_graph_wind = "SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(
-	interval)
-get_graph_atp = "SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(
-	interval)
-get_graph_hum = "SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(
-	interval)
-get_graph_temp = "SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(
-	interval)
+get_graph_wind = "SELECT mean, UNIX_TIMESTAMP(tmestmp) FROM mean WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
+get_graph_atp = "SELECT atp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
+get_graph_hum = "SELECT hum, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
+get_graph_temp = "SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {} HOUR)".format(interval)
 
 # SENS
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
@@ -80,28 +77,31 @@ def fetch_wind():
 		error_handle(e, filename)
 		print(e)
 
-def make_mean():
-	try:
-		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-		cursor = cnx.cursor(buffered=True)
-
-		cursor.execute("SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)")
-		db_mean_wind_1min = cursor.fetchone()
-		if db_mean_wind_1min[0] is None:
-			pass
-		else:
-			add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (round(db_mean_wind_1min[0], 2)))
-			cursor.execute(add_mean)
-			emp_no = cursor.lastrowid
-			cnx.commit()
-	except Exception as e:
-		filename = Path(__file__).name
-		error_handle(e, filename)
-
-	cursor.close()
-	cnx.close()
+# def make_mean():
+# 	try:
+# 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+# 		cursor = cnx.cursor(buffered=True)
+#
+# 		cursor.execute("SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)")
+# 		db_mean_wind_1min = cursor.fetchone()
+# 		if db_mean_wind_1min[0] is None:
+# 			pass
+# 		else:
+# 			add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (round(db_mean_wind_1min[0], 2)))
+# 			cursor.execute(add_mean)
+# 			emp_no = cursor.lastrowid
+# 			cnx.commit()
+# 	except Exception as e:
+# 		filename = Path(__file__).name
+# 		error_handle(e, filename)
+#
+# 	cursor.close()
+# 	cnx.close()
 
 def fetch_mean():
+	fetch_mean.meanwind = 0
+	fetch_mean.beaufortLS = "not ready..."
+
 	try:
 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
 		cursor = cnx.cursor(buffered=True)
@@ -110,6 +110,7 @@ def fetch_mean():
 		db_mean_wind = cursor.fetchone()
 		if db_mean_wind[0] is None:  # cursor.rowcount is 0 and
 			fetch_mean.meanwind = 0
+			fetch_mean.beaufortLS = "not ready..."
 		else:
 			fetch_mean.meanwind = round(float(db_mean_wind[0]), 1)
 
@@ -292,8 +293,8 @@ def fg():
 	cursor.close()
 	cnx.close()
 
-def sens_arrow(sens_number):
-	fetch_last_sens = "SELECT * FROM sens ORDER BY id DESC LIMIT 1, 1"
+def sens_arrow(sens_type):
+	fetch_last_sens = "SELECT * FROM sens ORDER BY id DESC LIMIT 10"
 
 	try:
 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
@@ -301,30 +302,55 @@ def sens_arrow(sens_number):
 
 		cursor.execute(fetch_last_sens)
 		if cursor.rowcount > 0:
-			db_last_sens = cursor.fetchone()
-			temp = str(db_last_sens[1])
-			hum = str(db_last_sens[2])
-			atp = str(db_last_sens[3])
+			db_last_sens = cursor.fetchall()
+			temp = [a[1] for a in db_last_sens]
+			hum = [a[2] for a in db_last_sens]
+			atp = [a[3] for a in db_last_sens]
+
+		sens_col = [temp, hum, atp]
 
 	except Exception as e:
 		filename = Path(__file__).name
 		error_handle(e, filename)
 
-	if len(fetch_sens.current_sens) > 0:
-		last_sens = db_last_sens[sens_number]
-		current_sens = fetch_sens.current_sens[sens_number]
-		if last_sens < current_sens:
-			img = "arrow_up.png"
-			return img
-		elif last_sens > current_sens:
-			img = "arrow_down.png"
-			return img
-		elif last_sens == current_sens:
-			img = "arrow_flat.png"
-			return img
+	def trend(sens):
+
+		def moving_average(a, n=3) :
+			ret = np.cumsum(a, dtype=float)
+			ret[n:] = ret[n:] - ret[:-n]
+			return ret[n - 1:] / n
+
+		trend.trend_res = np.all(np.diff(moving_average(np.array(sens), n=4))>0)
+		print(trend.trend_res)
+
+	print(sens_col[sens_type])
+	trend(sens_col[sens_type])
+
+	if trend.trend_res is True:
+		img = "arrow_up.png"
+		return img
+	elif trend.trend_res is False:
+		img = "arrow_down.png"
+		return img
 	else:
 		img = "arrow_flat.png"
 		return img
+
+	# if len(fetch_sens.current_sens) > 0:
+	# 	last_sens = db_last_sens[sens_number]
+	# 	current_sens = fetch_sens.current_sens[sens_number]
+	# 	if last_sens < current_sens:
+	# 		img = "arrow_up.png"
+	# 		return img
+	# 	elif last_sens > current_sens:
+	# 		img = "arrow_down.png"
+	# 		return img
+	# 	elif last_sens == current_sens:
+	# 		img = "arrow_flat.png"
+	# 		return img
+	# else:
+	# 	img = "arrow_flat.png"
+	# 	return img
 
 	cursor.close()
 	cnx.close()
@@ -355,9 +381,9 @@ thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
 thread_fetch_wind.daemon = True
 thread_fetch_wind.start()
 
-thread_make_mean = threading.Thread(target=make_mean, args=())
-thread_make_mean.daemon = True
-thread_make_mean.start()
+# thread_make_mean = threading.Thread(target=make_mean, args=())
+# thread_make_mean.daemon = True
+# thread_make_mean.start()
 
 thread_mean = threading.Thread(target=fetch_mean, args=())
 thread_mean.daemon = True
@@ -479,7 +505,7 @@ class App(QWidget):
 		self.tempico.setPixmap(self.tempimg)
 		self.tempvalue = QLabel(fetch_sens.temp + " °C")
 		self.tempvalue.setFont(QFont('Arial', 13))
-		self.tempimgarrow = QPixmap(path + '/img/' + sens_arrow(1))
+		self.tempimgarrow = QPixmap(path + '/img/' + sens_arrow(0))
 		self.temparrow = QLabel()
 		self.temparrow.setPixmap(self.tempimgarrow)
 
@@ -492,7 +518,7 @@ class App(QWidget):
 		self.humico.setPixmap(self.humimg)
 		self.humvalue = QLabel(fetch_sens.hum + " %")
 		self.humvalue.setFont(QFont('Arial', 13))
-		self.humimgarrow = QPixmap(path + '/img/' + sens_arrow(2))
+		self.humimgarrow = QPixmap(path + '/img/' + sens_arrow(1))
 		self.humarrow = QLabel()
 		self.humarrow.setPixmap(self.humimgarrow)
 
@@ -505,7 +531,7 @@ class App(QWidget):
 		self.atpico.setPixmap(self.atpimg)
 		self.atpvalue = QLabel(fetch_sens.atp + " hPa")
 		self.atpvalue.setFont(QFont('Arial', 13))
-		self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(3))
+		self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(2))
 		self.atparrow = QLabel()
 		self.atparrow.setPixmap(self.atpimgarrow)
 
@@ -656,13 +682,13 @@ class App(QWidget):
 			fetch_gps()
 
 			self.tempvalue.setText(fetch_sens.temp + " °C")
-			self.tempimgarrow = QPixmap(path + '/img/' + sens_arrow(1))
+			self.tempimgarrow = QPixmap(path + '/img/' + sens_arrow(0))
 			self.temparrow.setPixmap(self.tempimgarrow)
 			self.humvalue.setText(fetch_sens.hum + "%")
-			self.humimgarrow = QPixmap(path + '/img/' + sens_arrow(2))
+			self.humimgarrow = QPixmap(path + '/img/' + sens_arrow(1))
 			self.humarrow.setPixmap(self.humimgarrow)
 			self.atpvalue.setText(fetch_sens.atp + " hPa")
-			self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(3))
+			self.atpimgarrow = QPixmap(path + '/img/' + sens_arrow(2))
 			self.atparrow.setPixmap(self.atpimgarrow)
 			f = fc()
 			self.Fforecast1.setText(f[0])
@@ -723,9 +749,9 @@ if __name__ == '__main__':
 	wind_timer.timeout.connect(ex.update_wind)
 	wind_timer.start(1000)
 
-	mean_timer = QTimer()
-	mean_timer.timeout.connect(make_mean)
-	mean_timer.start(1000)
+	# mean_timer = QTimer()
+	# mean_timer.timeout.connect(make_mean)
+	# mean_timer.start(1000)
 
 	sens_timer = QTimer()
 	sens_timer.timeout.connect(ex.update_sens)

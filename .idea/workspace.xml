@@ -2,14 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/service-timer/wfs.mean.service" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service-timer/wfs.mean.timer" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wfs-make-mean.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bme680_boot.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs.boot.bme680.service" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs_dump.sql" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_dump.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_install.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/install/wfs_install_small.sh" beforeDir="false" afterPath="$PROJECT_DIR$/install/wfs_install_small.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-bme680.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-bme680.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ard/WFS-FRQCNT_v1.0/WFS-FRQCNT_v1.0.ino" beforeDir="false" afterPath="$PROJECT_DIR$/dev/ard/WFS-FRQCNT_v1.0/WFS-FRQCNT_v1.0.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ard/WFS_v0.3/WFS_v0.3.ino" beforeDir="false" afterPath="$PROJECT_DIR$/dev/ard/WFS_v0.3/WFS_v0.3.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ard/WFS_v0.4/WFS_v0.4.ino" beforeDir="false" afterPath="$PROJECT_DIR$/dev/ard/WFS_v0.4/WFS_v0.4.ino" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.clean.service" beforeDir="false" afterPath="$PROJECT_DIR$/service-timer/wfs.clean.service" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.clean.timer" beforeDir="false" afterPath="$PROJECT_DIR$/service-timer/wfs.clean.timer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.log.anemo.service" beforeDir="false" afterPath="$PROJECT_DIR$/service-timer/wfs.log.anemo.service" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.log.bme680.service" beforeDir="false" afterPath="$PROJECT_DIR$/service-timer/wfs.log.bme680.service" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.log.bme680.timer" beforeDir="false" afterPath="$PROJECT_DIR$/service-timer/wfs.log.bme680.timer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.log.gps.service" beforeDir="false" afterPath="$PROJECT_DIR$/service-timer/wfs.log.gps.service" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.log.gps.timer" beforeDir="false" afterPath="$PROJECT_DIR$/service-timer/wfs.log.gps.timer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs.service" beforeDir="false" afterPath="$PROJECT_DIR$/service-timer/wfs.service" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_install.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install/wfs_install_small.sh" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_install_small.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kicad/Sens-board.pro" beforeDir="false" afterPath="$PROJECT_DIR$/dev/kicad/Sens-board.pro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs10102020.sql" beforeDir="false" afterPath="$PROJECT_DIR$/dump/wfs10102020.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs_sub_db_cleanup.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_sub_db_cleanup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,10 +77,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\stefa\PycharmProjects\wfs\dump" />
+      <recent name="C:\Users\stefa\PycharmProjects\wfs\dev" />
+      <recent name="C:\Users\stefa\PycharmProjects\wfs\service-timer" />
+      <recent name="C:\Users\stefa\PycharmProjects\wfs" />
       <recent name="C:\Users\stefa\PycharmProjects\wfs\install" />
-      <recent name="C:\Users\stefa\PycharmProjects\wfs\img" />
-      <recent name="C:\Users\stefa\PycharmProjects\wfs\test" />
-      <recent name="C:\Users\stefa\PycharmProjects\wfs\arch" />
     </key>
   </component>
   <component name="RunManager" selected="Python.test">
@@ -217,6 +232,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="wfs-make-mean" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wfs" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs-make-mean.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="wfs" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -238,27 +274,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="wfs_sub_db_cleanup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="wfs" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="/usr/bin/python3.5" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs_sub_db_cleanup.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.testing" />
       <item itemvalue="Python.wfs-ard2db" />
@@ -267,15 +282,15 @@
       <item itemvalue="Python.test" />
       <item itemvalue="Python.wfs-gps" />
       <item itemvalue="Python.wfs" />
-      <item itemvalue="Python.wfs_sub_db_cleanup" />
+      <item itemvalue="Python.wfs-make-mean" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.test" />
         <item itemvalue="Python.wfs" />
-        <item itemvalue="Python.wfs-gps" />
-        <item itemvalue="Python.wfs_sub_db_cleanup" />
         <item itemvalue="Python.db_pop" />
+        <item itemvalue="Python.wfs-make-mean" />
+        <item itemvalue="Python.wfs-gps" />
       </list>
     </recent_temporary>
   </component>
@@ -402,7 +417,8 @@
     <MESSAGE value="Graph updates: Multiple graphs at once." />
     <MESSAGE value="Simplifying and cleanup" />
     <MESSAGE value="Trying to reduce memory usage." />
-    <option name="LAST_COMMIT_MESSAGE" value="Trying to reduce memory usage." />
+    <MESSAGE value="Fixing small issues." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing small issues." />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
