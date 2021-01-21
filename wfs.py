@@ -286,7 +286,7 @@ def sens_arrow(sens_type):
 			hum = [a[2] for a in db_last_sens]
 			atp = [a[3] for a in db_last_sens]
 
-		sens_col = [temp, hum, atp]
+		sens_col = [temp[::-1], hum[::-1], atp[::-1]]
 
 	except Exception as e:
 		filename = Path(__file__).name

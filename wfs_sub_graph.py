@@ -28,7 +28,7 @@ def graph_plot(gw_x, gw_y, ga_y):
 	pg.setConfigOption('foreground', 'y')
 	g1 = g.plotItem
 	g1.setLabels(left='WIND')
-	g1.setYRange(0, 20)
+	g1.setYRange(min(gw_y) - 8, max(gw_y)+8)
 
 	# ATP
 	pg.setConfigOption('foreground', 'b')
