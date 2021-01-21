@@ -273,7 +273,7 @@ def fg():
 	cnx.close()
 
 def sens_arrow(sens_type):
-	fetch_last_sens = "SELECT * FROM sens ORDER BY id DESC LIMIT 10"
+	fetch_last_sens = "SELECT * FROM sens ORDER BY id DESC LIMIT 3"
 
 	try:
 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
@@ -292,24 +292,18 @@ def sens_arrow(sens_type):
 		filename = Path(__file__).name
 		error_handle(e, filename)
 
-	def trend(sens):
 
-		def moving_average(a, n=3) :
-			ret = np.cumsum(a)
-			ret[n:] = ret[n:] - ret[:-n]
-			return ret[n - 1:] / n
+	t = (sum(sens_col[sens_type]) / len(sens_col[sens_type])) - sens_col[sens_type][2]
 
-		trend.trend_res = np.all(np.diff(moving_average(np.array(sens), n=4))>0)
-
-	trend(sens_col[sens_type])
-
-	if trend.trend_res == 1:
-		img = "arrow_up.png"
-		return img
-	elif trend.trend_res == 0:
+	if t > 0:
 		img = "arrow_down.png"
 		return img
-	else:
+
+	if t < 0:
+		img = "arrow_up.png"
+		return img
+
+	if t == 0:
 		img = "arrow_flat.png"
 		return img
 
