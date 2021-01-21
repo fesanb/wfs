@@ -7,9 +7,9 @@ from pathlib import Path
 from wfs_error_handling import error_handle
 
 s = bme680.BME680()
-s.set_humidity_oversample(bme680.OS_16X)
-s.set_pressure_oversample(bme680.OS_16X)
-s.set_temperature_oversample(bme680.OS_16X)
+s.set_humidity_oversample(bme680.OS_8X)
+s.set_pressure_oversample(bme680.OS_8X)
+s.set_temperature_oversample(bme680.OS_8X)
 s.set_filter(bme680.FILTER_SIZE_15)
 
 s.set_gas_status(bme680.DISABLE_GAS_MEAS)

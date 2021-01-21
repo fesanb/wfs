@@ -18,7 +18,7 @@ cp /install/splash.png /usr/share/plymouth/themes/pix/
 printf  '\e[92m - Done! \e[0m \n'
 
 printf  '\e[93m Enabling Services \e[0m \n'
-systemctl enable /lib/systemd/system/wfs.log.mean.timer
+systemctl enable /lib/systemd/system/wfs.mean.timer
 systemctl enable /lib/systemd/system/wfs.log.anemo.service
 systemctl enable /lib/systemd/system/wfs.log.bme680.timer
 systemctl enable /lib/systemd/system/wfs.log.gps.timer

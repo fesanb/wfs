@@ -1,21 +1,16 @@
 import numpy as np
 
-def trend(h):
+trend is None
 
-	def moving_average(a, n=3) :
-				ret = np.cumsum(a)
-				ret[n:] = ret[n:] - ret[:-n]
-				return ret[n - 1:] / n
-
-	trend.trend_res = np.all(np.diff(moving_average(np.array(h), n=4))>0)
-
-# h = [41,41,41,43,44,44,43,43,38,38]
-h = [41,41,41,43,44,44,45,46,46,46]
+def trend_set(v):
+	if v[0] > v[9]:
+		trend is True
 
 
-trend(h)
-if trend.trend_res == 0:
-	print("False")
+t = [18,18,18,19,19,19,20,20,20,21]
+h = [32,32,34,34,33,33,31,31,29,29]
+a = [932,933,934,933,934,934,933,932,933,933]
 
-if trend.trend_res == 1:
-	print("True")
+trend_set(t)
+print(trend)
+

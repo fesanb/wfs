@@ -74,28 +74,7 @@ def fetch_wind():
 	except Exception as e:
 		filename = Path(__file__).name
 		error_handle(e, filename)
-		print(e)
-
-# def make_mean():
-# 	try:
-# 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
-# 		cursor = cnx.cursor(buffered=True)
-#
-# 		cursor.execute("SELECT AVG(wind) FROM wind  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)")
-# 		db_mean_wind_1min = cursor.fetchone()
-# 		if db_mean_wind_1min[0] is None:
-# 			pass
-# 		else:
-# 			add_mean = (u'''INSERT INTO mean(mean) VALUES (%s)''' % (round(db_mean_wind_1min[0], 2)))
-# 			cursor.execute(add_mean)
-# 			emp_no = cursor.lastrowid
-# 			cnx.commit()
-# 	except Exception as e:
-# 		filename = Path(__file__).name
-# 		error_handle(e, filename)
-#
-# 	cursor.close()
-# 	cnx.close()
+		# print(e)
 
 def fetch_mean():
 
@@ -321,9 +300,7 @@ def sens_arrow(sens_type):
 			return ret[n - 1:] / n
 
 		trend.trend_res = np.all(np.diff(moving_average(np.array(sens), n=4))>0)
-		print(trend.trend_res)
 
-	print(sens_col[sens_type])
 	trend(sens_col[sens_type])
 
 	if trend.trend_res == 1:
@@ -335,22 +312,6 @@ def sens_arrow(sens_type):
 	else:
 		img = "arrow_flat.png"
 		return img
-
-	# if len(fetch_sens.current_sens) > 0:
-	# 	last_sens = db_last_sens[sens_number]
-	# 	current_sens = fetch_sens.current_sens[sens_number]
-	# 	if last_sens < current_sens:
-	# 		img = "arrow_up.png"
-	# 		return img
-	# 	elif last_sens > current_sens:
-	# 		img = "arrow_down.png"
-	# 		return img
-	# 	elif last_sens == current_sens:
-	# 		img = "arrow_flat.png"
-	# 		return img
-	# else:
-	# 	img = "arrow_flat.png"
-	# 	return img
 
 	cursor.close()
 	cnx.close()
@@ -380,10 +341,6 @@ def error_light():
 thread_fetch_wind = threading.Thread(target=fetch_wind, args=())
 thread_fetch_wind.daemon = True
 thread_fetch_wind.start()
-
-# thread_make_mean = threading.Thread(target=make_mean, args=())
-# thread_make_mean.daemon = True
-# thread_make_mean.start()
 
 thread_mean = threading.Thread(target=fetch_mean, args=())
 thread_mean.daemon = True
@@ -724,7 +681,7 @@ class App(QWidget):
 			except Exception as e:
 				filename = Path(__file__).name
 				# error_handle(e, filename)
-				print(e, filename)
+				# print(e, filename)
 			QApplication.processEvents()
 
 
@@ -748,10 +705,6 @@ if __name__ == '__main__':
 	wind_timer = QTimer()
 	wind_timer.timeout.connect(ex.update_wind)
 	wind_timer.start(1000)
-
-	# mean_timer = QTimer()
-	# mean_timer.timeout.connect(make_mean)
-	# mean_timer.start(1000)
 
 	sens_timer = QTimer()
 	sens_timer.timeout.connect(ex.update_sens)
