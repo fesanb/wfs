@@ -33,8 +33,7 @@ from wfs_forecast import fc
 
 # Wind
 get_wind = "SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)"
-# get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
-get_mean_wind = "SELECT mean FROM mean WHERE id=(SELECT MAX(id) FROM mean) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
+
 
 # GRAPH
 interval = 12
@@ -99,47 +98,48 @@ def fetch_wind():
 # 	cnx.close()
 
 def fetch_mean():
-	fetch_mean.meanwind = 0
-	fetch_mean.beaufortLS = "not ready..."
 
 	try:
+		# get_mean_wind = "SELECT AVG(mean) FROM mean  WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
+		get_mean_wind = "SELECT mean FROM mean WHERE id=(SELECT MAX(id) FROM mean) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 11 MINUTE)"
+
 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
 		cursor = cnx.cursor(buffered=True)
 
 		cursor.execute(get_mean_wind)
 		db_mean_wind = cursor.fetchone()
-		if db_mean_wind[0] is None:  # cursor.rowcount is 0 and
-			fetch_mean.meanwind = 0
-			fetch_mean.beaufortLS = "not ready..."
+		if cursor.rowcount is 0: #db_mean_wind[0] is None:  # cursor.rowcount is 0 and
+			fetch_mean.meanwind = "-.-"
+			fetch_mean.beaufortLS = "no data last 10 min..."
 		else:
 			fetch_mean.meanwind = round(float(db_mean_wind[0]), 1)
 
-		if float(fetch_mean.meanwind) < 0.3:
-			fetch_mean.beaufortLS = "Beaufort 0 - Calm"
-		elif float(fetch_mean.meanwind) > 32.7:
-			fetch_mean.beaufortLS = "Beaufort 12 - Hurricane"
-		elif float(fetch_mean.meanwind) > 28.5:
-			fetch_mean.beaufortLS = "Beaufort 11 - Violent Storm"
-		elif float(fetch_mean.meanwind) > 24.5:
-			fetch_mean.beaufortLS = "Beaufort 10 - Storm"
-		elif float(fetch_mean.meanwind) > 20.8:
-			fetch_mean.beaufortLS = "Beaufort 9 - Strong Gale"
-		elif float(fetch_mean.meanwind) > 17.2:
-			fetch_mean.beaufortLS = "Beaufort 8 - Fresh Gale"
-		elif float(fetch_mean.meanwind) > 13.9:
-			fetch_mean.beaufortLS = "Beaufort 7 - Moderate gale"
-		elif float(fetch_mean.meanwind) > 10.8:
-			fetch_mean.beaufortLS = "Beaufort 6 - Strong breeze"
-		elif float(fetch_mean.meanwind) > 8.0:
-			fetch_mean.beaufortLS = "Beaufort 5 - Fresh breeze"
-		elif float(fetch_mean.meanwind) > 5.5:
-			fetch_mean.beaufortLS = "Beaufort 4 - Moderate breeze"
-		elif float(fetch_mean.meanwind) > 3.4:
-			fetch_mean.beaufortLS = "Beaufort 3 - Gentle breeze"
-		elif float(fetch_mean.meanwind) > 1.6:
-			fetch_mean.beaufortLS = "Beaufort 2 - Light breeze"
-		elif float(fetch_mean.meanwind) > 0.3:
-			fetch_mean.beaufortLS = "Beaufort 1 - Light Air"
+			if float(fetch_mean.meanwind) < 0.3:
+				fetch_mean.beaufortLS = "Beaufort 0 - Calm"
+			elif float(fetch_mean.meanwind) > 32.7:
+				fetch_mean.beaufortLS = "Beaufort 12 - Hurricane"
+			elif float(fetch_mean.meanwind) > 28.5:
+				fetch_mean.beaufortLS = "Beaufort 11 - Violent Storm"
+			elif float(fetch_mean.meanwind) > 24.5:
+				fetch_mean.beaufortLS = "Beaufort 10 - Storm"
+			elif float(fetch_mean.meanwind) > 20.8:
+				fetch_mean.beaufortLS = "Beaufort 9 - Strong Gale"
+			elif float(fetch_mean.meanwind) > 17.2:
+				fetch_mean.beaufortLS = "Beaufort 8 - Fresh Gale"
+			elif float(fetch_mean.meanwind) > 13.9:
+				fetch_mean.beaufortLS = "Beaufort 7 - Moderate gale"
+			elif float(fetch_mean.meanwind) > 10.8:
+				fetch_mean.beaufortLS = "Beaufort 6 - Strong breeze"
+			elif float(fetch_mean.meanwind) > 8.0:
+				fetch_mean.beaufortLS = "Beaufort 5 - Fresh breeze"
+			elif float(fetch_mean.meanwind) > 5.5:
+				fetch_mean.beaufortLS = "Beaufort 4 - Moderate breeze"
+			elif float(fetch_mean.meanwind) > 3.4:
+				fetch_mean.beaufortLS = "Beaufort 3 - Gentle breeze"
+			elif float(fetch_mean.meanwind) > 1.6:
+				fetch_mean.beaufortLS = "Beaufort 2 - Light breeze"
+			elif float(fetch_mean.meanwind) > 0.3:
+				fetch_mean.beaufortLS = "Beaufort 1 - Light Air"
 
 	except Exception as e:
 		filename = Path(__file__).name
@@ -316,7 +316,7 @@ def sens_arrow(sens_type):
 	def trend(sens):
 
 		def moving_average(a, n=3) :
-			ret = np.cumsum(a, dtype=float)
+			ret = np.cumsum(a)
 			ret[n:] = ret[n:] - ret[:-n]
 			return ret[n - 1:] / n
 
@@ -326,10 +326,10 @@ def sens_arrow(sens_type):
 	print(sens_col[sens_type])
 	trend(sens_col[sens_type])
 
-	if trend.trend_res is True:
+	if trend.trend_res == 1:
 		img = "arrow_up.png"
 		return img
-	elif trend.trend_res is False:
+	elif trend.trend_res == 0:
 		img = "arrow_down.png"
 		return img
 	else:

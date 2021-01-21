@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/wfs_install_small.sh" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_install_small.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-timer/wfs.mean.timer" beforeDir="false" afterPath="$PROJECT_DIR$/service-timer/wfs.mean.timer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_install.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +67,7 @@
       <recent name="C:\Users\stefa\PycharmProjects\wfs\install" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.db_pop">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -265,9 +269,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.wfs" />
         <item itemvalue="Python.db_pop" />
+        <item itemvalue="Python.wfs" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.wfs-make-mean" />
         <item itemvalue="Python.wfs-gps" />
       </list>

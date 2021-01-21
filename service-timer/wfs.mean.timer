@@ -5,7 +5,7 @@ Requires=wfs.mean.service
 [Timer]
 Unit=wfs.mean.service
 OnBootSec=2min
-OnUnitActiveSec=10min
+OnUnitActiveSec=9min
 
 [Install]
 WantedBy=timers.target
