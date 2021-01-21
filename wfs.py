@@ -46,10 +46,6 @@ get_graph_temp = "SELECT temp, UNIX_TIMESTAMP(tmestmp) FROM sens WHERE tmestmp >
 get_sens = "SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)"
 get_gps = "SELECT * FROM gps WHERE id=(SELECT MAX(id) FROM gps) AND tmestmp >= DATE_SUB(NOW(), INTERVAL 65 MINUTE)"
 
-# Max
-get_max_wind12 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
-get_max_wind1 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
-
 
 def fetch_wind():
 	try:
@@ -127,6 +123,70 @@ def fetch_mean():
 	cursor.close()
 	cnx.close()
 	end = time.time()
+
+def fetch_statistics():
+
+	# Max
+	get_max_wind24 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 24 HOUR)"
+	get_max_wind12 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 12 HOUR)"
+	get_max_wind6 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 6 HOUR)"
+	get_max_wind3 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 3 HOUR)"
+	get_max_wind1 = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 1 HOUR)"
+	peak_wind = "SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL 10 MINUTE)"
+
+	try:
+		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
+		cursor = cnx.cursor(buffered=True)
+
+		cursor.execute(peak_wind)
+		db_wind = cursor.fetchone()
+		if db_wind[0] is None:
+			fetch_statistics.peak_wind = "0.0"
+		else:
+			fetch_statistics.peak_wind = str(round(db_wind[0], 1))
+
+		cursor.execute(get_max_wind1)
+		db_wind = cursor.fetchone()
+		if db_wind[0] is None:
+			fetch_statistics.max1 = "0.0"
+		else:
+			fetch_statistics.max1 = str(round(db_wind[0], 1))
+
+		cursor.execute(get_max_wind3)
+		db_wind = cursor.fetchone()
+		if db_wind[0] is None:
+			fetch_statistics.max3 = "0.0"
+		else:
+			fetch_statistics.max3 = str(round(db_wind[0], 1))
+
+		cursor.execute(get_max_wind6)
+		db_wind = cursor.fetchone()
+		if db_wind[0] is None:
+			fetch_statistics.max6 = "0.0"
+		else:
+			fetch_statistics.max6 = str(round(db_wind[0], 1))
+
+		cursor.execute(get_max_wind12)
+		db_wind = cursor.fetchone()
+		if db_wind[0] is None:
+			fetch_statistics.max12 = "0.0"
+		else:
+			fetch_statistics.max12 = str(round(db_wind[0], 1))
+
+		cursor.execute(get_max_wind24)
+		db_wind = cursor.fetchone()
+		if db_wind[0] is None:
+			fetch_statistics.max24 = "0.0"
+		else:
+			fetch_statistics.max24 = str(round(db_wind[0], 1))
+
+		cursor.close()
+		cnx.close()
+
+	except Exception as e:
+		filename = Path(__file__).name
+		error_handle(e, filename)
+		# print(e)
 
 def fetch_sens():
 	fetch_sens.current_sens = None
@@ -340,6 +400,10 @@ thread_mean = threading.Thread(target=fetch_mean, args=())
 thread_mean.daemon = True
 thread_mean.start()
 
+thread_statistics = threading.Thread(target=fetch_statistics, args=())
+thread_statistics.daemon = True
+thread_statistics.start()
+
 thread_fetch_sens = threading.Thread(target=fetch_sens, args=())
 thread_fetch_sens.daemon = True
 thread_fetch_sens.start()
@@ -490,8 +554,30 @@ class App(QWidget):
 		self.sensgrid.addWidget(self.atpvalue, 2, 1, Qt.AlignCenter)
 		self.sensgrid.addWidget(self.atparrow, 2, 2, Qt.AlignCenter)
 
-		self.sensBox.addStretch()
+		self.sensgrid.setRowStretch(3,50)
 		self.sensBox.addLayout(self.sensgrid)
+
+
+		#wind info container
+		self.statistic = QVBoxLayout(self.sensFrame)
+
+		self.peak = QLabel("Peak:        " + fetch_statistics.peak_wind + " m/s")
+		self.max1 = QLabel("Max 1hr:   " + fetch_statistics.max1 + " m/s")
+		self.max3 = QLabel("Max 3hr:   " + fetch_statistics.max3 + " m/s")
+		self.max6 = QLabel("Max 6hr:   " + fetch_statistics.max6 + " m/s")
+		self.max12 = QLabel("Max 12hr: " + fetch_statistics.max12 + " m/s")
+		self.max24 = QLabel("Max 24hr: " + fetch_statistics.max24 + " m/s")
+
+		self.statistic.addWidget(self.peak)
+		self.statistic.addWidget(self.max1)
+		self.statistic.addWidget(self.max3)
+		self.statistic.addWidget(self.max6)
+		self.statistic.addWidget(self.max12)
+		self.statistic.addWidget(self.max24)
+
+		self.statistic.addStretch(40)
+		self.sensBox.addLayout(self.statistic)
+
 
 		# Forecast container
 		self.forecast = QVBoxLayout(self.sensFrame)
@@ -506,18 +592,17 @@ class App(QWidget):
 		self.forecast.addWidget(self.Fforecast1)
 		self.forecast.addWidget(self.Fforecast2)
 		# self.forecast.addWidget(self.Fforecast3)
-		self.forecast.addStretch()
+
+		self.forecast.addStretch(10)
 		self.sensBox.addLayout(self.forecast)
 
 
-		button_style_wind = "QPushButton {background-color: yellow; color: black; font-weight:600}" \
-					   "QPushButton:checked {background-color: yellow; color: white; font-weight:600}"
-		button_style_temp = "QPushButton {background-color: red; color: black; font-weight:600}" \
-					   "QPushButton:checked {background-color: red; color: white; font-weight:600}"
-		button_style_hum = "QPushButton {background-color: green; color: black; font-weight:600}" \
-					   "QPushButton:checked {background-color: green; color: white; font-weight:600}"
-		button_style_atp = "QPushButton {background-color: blue; color: black; font-weight:600}" \
-					   "QPushButton:checked {background-color: blue; color: white; font-weight:600}"
+
+		#Graph Buttons
+		button_style_wind = "QPushButton {background-color: grey; color: black; font-weight:600}" \
+					   "QPushButton:checked {background-color: yellow; color: black; font-weight:600}"
+		button_style_atp = "QPushButton {background-color: grey; color: black; font-weight:600}" \
+					   "QPushButton:checked {background-color: blue; color: black; font-weight:600}"
 
 		self.gwb = QPushButton()
 		self.gwb.setText("WIND")
@@ -527,30 +612,14 @@ class App(QWidget):
 		self.gwb.clicked.connect(self.gwbf)
 		self.gwb.clicked.connect(self.update_graph)
 
-		self.gtb = QPushButton()
-		self.gtb.setText("TEMP")
-		self.gtb.setStyleSheet(button_style_temp)
-		self.gtb.setCheckable(True)
-		self.gtb.clicked.connect(self.gtbf)
-		self.gtb.clicked.connect(self.update_graph)
-
-		self.ghb = QPushButton()
-		self.ghb.setText("HUM")
-		self.ghb.setStyleSheet(button_style_hum)
-		self.ghb.setCheckable(True)
-		self.ghb.clicked.connect(self.ghbf)
-		self.ghb.clicked.connect(self.update_graph)
-
 		self.gab = QPushButton()
-		self.gab.setText("ATP")
+		self.gab.setText("Pressure")
 		self.gab.setStyleSheet(button_style_atp)
 		self.gab.setCheckable(True)
 		self.gab.clicked.connect(self.gabf)
 		self.gab.clicked.connect(self.update_graph)
 
 		self.sensBox.addWidget(self.gwb)
-		self.sensBox.addWidget(self.gtb)
-		self.sensBox.addWidget(self.ghb)
 		self.sensBox.addWidget(self.gab)
 
 		self.mainContainer.addWidget(self.sensFrame)
@@ -585,8 +654,6 @@ class App(QWidget):
 
 
 		self.gw = True
-		self.gt = False
-		self.gh = False
 		self.ga = False
 
 	def gwbf(self):
@@ -594,18 +661,6 @@ class App(QWidget):
 			self.gw = True
 		else:
 			self.gw = False
-
-	def gtbf(self):
-		if self.gtb.isChecked():
-			self.gt = True
-		else:
-			self.gt = False
-
-	def ghbf(self):
-		if self.ghb.isChecked():
-			self.gh = True
-		else:
-			self.gh = False
 
 	def gabf(self):
 		if self.gab.isChecked():
@@ -667,10 +722,7 @@ class App(QWidget):
 	def update_graph(self):
 			try:
 				fg()
-				graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y, fg.gt_x, fg.gt_y, fg.gh_x, fg.gh_y)
-
-				# #free memory with gc.collect()
-				# gc.collect()
+				graph_update(self, fg.gw_x, fg.gw_y, fg.ga_x, fg.ga_y)
 
 			except Exception as e:
 				filename = Path(__file__).name
