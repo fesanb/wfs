@@ -681,6 +681,21 @@ class App(QWidget):
 
 		QApplication.processEvents()
 
+	def update_statistics(self):
+		fetch_statistics()
+		try:
+			self.peak.setText("Peak:        " + fetch_statistics.peak_wind + " m/s")
+			self.max1.setText("Max 1hr:   " + fetch_statistics.max1 + " m/s")
+			self.max3.setText("Max 3hr:   " + fetch_statistics.max3 + " m/s")
+			self.max6.setText("Max 6hr:   " + fetch_statistics.max6 + " m/s")
+			self.max12.setText("Max 12hr: " + fetch_statistics.max12 + " m/s")
+			self.max24.setText("Max 24hr: " + fetch_statistics.max24 + " m/s")
+		except Exception as e:
+			filename = Path(__file__).name
+			error_handle(e, filename)
+
+		QApplication.processEvents()
+
 	def update_sens(self):
 		try:
 			path = str(Path(__file__).parent.absolute())
@@ -748,6 +763,7 @@ if __name__ == '__main__':
 	thread_update_wind.daemon = True
 	thread_update_wind.start()
 
+
 	wind_timer = QTimer()
 	wind_timer.timeout.connect(ex.update_wind)
 	wind_timer.start(1000)
@@ -759,5 +775,9 @@ if __name__ == '__main__':
 	graph_timer = QTimer()
 	graph_timer.timeout.connect(ex.update_graph)
 	graph_timer.start(60000)
+
+	statistics_timer = QTimer()
+	statistics_timer.timeout.connect(ex.update_statistics)
+	statistics_timer.start(60000)
 
 	sys.exit(app.exec_())
