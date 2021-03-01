@@ -557,27 +557,30 @@ class App(QWidget):
 		self.sensgrid.setRowStretch(3,50)
 		self.sensBox.addLayout(self.sensgrid)
 
-
 		#wind info container
-		self.statistic = QVBoxLayout(self.sensFrame)
+		try:
+			self.statistic = QVBoxLayout(self.sensFrame)
 
-		self.peak = QLabel("Peak:        " + fetch_statistics.peak_wind + " m/s")
-		self.max1 = QLabel("Max 1hr:   " + fetch_statistics.max1 + " m/s")
-		self.max3 = QLabel("Max 3hr:   " + fetch_statistics.max3 + " m/s")
-		self.max6 = QLabel("Max 6hr:   " + fetch_statistics.max6 + " m/s")
-		self.max12 = QLabel("Max 12hr: " + fetch_statistics.max12 + " m/s")
-		self.max24 = QLabel("Max 24hr: " + fetch_statistics.max24 + " m/s")
+			self.peak = QLabel("Peak:        " + fetch_statistics.peak_wind + " m/s")
+			self.max1 = QLabel("Max 1hr:   " + fetch_statistics.max1 + " m/s")
+			self.max3 = QLabel("Max 3hr:   " + fetch_statistics.max3 + " m/s")
+			self.max6 = QLabel("Max 6hr:   " + fetch_statistics.max6 + " m/s")
+			self.max12 = QLabel("Max 12hr: " + fetch_statistics.max12 + " m/s")
+			self.max24 = QLabel("Max 24hr: " + fetch_statistics.max24 + " m/s")
 
-		self.statistic.addWidget(self.peak)
-		self.statistic.addWidget(self.max1)
-		self.statistic.addWidget(self.max3)
-		self.statistic.addWidget(self.max6)
-		self.statistic.addWidget(self.max12)
-		self.statistic.addWidget(self.max24)
+			self.statistic.addWidget(self.peak)
+			self.statistic.addWidget(self.max1)
+			self.statistic.addWidget(self.max3)
+			self.statistic.addWidget(self.max6)
+			self.statistic.addWidget(self.max12)
+			self.statistic.addWidget(self.max24)
 
-		self.statistic.addStretch(40)
-		self.sensBox.addLayout(self.statistic)
+			self.statistic.addStretch(40)
+			self.sensBox.addLayout(self.statistic)
 
+		except Exception as e:
+			filename = Path(__file__).name
+			error_handle(e, filename)
 
 		# Forecast container
 		self.forecast = QVBoxLayout(self.sensFrame)
@@ -595,8 +598,6 @@ class App(QWidget):
 
 		self.forecast.addStretch(10)
 		self.sensBox.addLayout(self.forecast)
-
-
 
 		#Graph Buttons
 		button_style_wind = "QPushButton {background-color: grey; color: black; font-weight:600}" \
@@ -651,8 +652,6 @@ class App(QWidget):
 		self.O1.addLayout(self.footerBox)
 
 		# FOOTER END
-
-
 		self.gw = True
 		self.ga = False
 

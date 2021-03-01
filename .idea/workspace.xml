@@ -64,7 +64,7 @@
       <recent name="C:\Users\stefa\PycharmProjects\wfs\install" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.db_pop">
+  <component name="RunManager" selected="Python.wfs">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -266,8 +266,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.db_pop" />
         <item itemvalue="Python.wfs" />
+        <item itemvalue="Python.db_pop" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.wfs-make-mean" />
         <item itemvalue="Python.wfs-gps" />
