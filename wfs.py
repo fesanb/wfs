@@ -559,9 +559,17 @@ class App(QWidget):
 
 		#wind info container
 		try:
+
+			self.peak = QLabel("Peak:      NA m/s")
+			self.max1 = QLabel("Max 1hr:   NA m/s")
+			self.max3 = QLabel("Max 3hr:   NA m/s")
+			self.max6 = QLabel("Max 6hr:   NA m/s")
+			self.max12 = QLabel("Max 12hr: NA m/s")
+			self.max24 = QLabel("Max 24hr: NA m/s")
+
 			self.statistic = QVBoxLayout(self.sensFrame)
 
-			self.peak = QLabel("Peak:        " + fetch_statistics.peak_wind + " m/s")
+			self.peak = QLabel("Peak:      " + fetch_statistics.peak_wind + " m/s")
 			self.max1 = QLabel("Max 1hr:   " + fetch_statistics.max1 + " m/s")
 			self.max3 = QLabel("Max 3hr:   " + fetch_statistics.max3 + " m/s")
 			self.max6 = QLabel("Max 6hr:   " + fetch_statistics.max6 + " m/s")
