@@ -83,7 +83,7 @@ def fetch_mean():
 
 		cursor.execute(get_mean_wind)
 		db_mean_wind = cursor.fetchone()
-		if cursor.rowcount is 0: #db_mean_wind[0] is None:  # cursor.rowcount is 0 and
+		if cursor.rowcount == 0: #db_mean_wind[0] is None:  # cursor.rowcount is 0 and
 			fetch_mean.meanwind = "-.-"
 			fetch_mean.beaufortLS = "no data last 10 min..."
 		else:
@@ -432,8 +432,8 @@ class App(QWidget):
 		self.setStyleSheet("color: white; background-color: black;")
 
 		if ps is True:
-			self.showFullScreen()
-		else:
+			#  self.showFullScreen()
+		#  else:
 			self.left = 0
 			self.top = 0
 			self.width = 720

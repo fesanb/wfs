@@ -1,5 +1,6 @@
 # WFS - Weather Forecast Station
 # Written by Stefan Bahrawy
+# Written to suit ThiesClima 4.3520.00.000
 
 import sys
 import RPi.GPIO as g
@@ -38,7 +39,7 @@ do_break = 0
 while True:
 	try:
 		sleep(1)
-		wind = anemo * 0.1
+		wind = anemo * 0.08669 + 0.32  # ThiesClima: V[m/s] = 0,08669 x f[Hz] + 0,32 : China = 0,1 x f[Hz]
 		if wind == last_wind:
 			# print("Wind: {0}m/s".format(wind), end="\r")
 			pass
