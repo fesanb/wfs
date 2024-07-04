@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import psutil
 from wfs_forecast import fc
+from wfs_error_handling import error_handle
 
 
 class DatabaseFetcher:
@@ -26,8 +27,8 @@ class DatabaseFetcher:
             cnx.close()
             return data
         except Exception as e:
-            print(f"Database error: {e}")
-            return None
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
 
 class WeatherFetcher(DatabaseFetcher):
@@ -356,7 +357,8 @@ class App(QWidget):
             self.meanL.setText(str(mean_wind))
             self.beaufortL.setText(beaufort)
         except Exception as e:
-            print(f"Error updating wind: {e}")
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         QApplication.processEvents()
 
@@ -370,7 +372,8 @@ class App(QWidget):
             self.max12.setText(f"Max 12hr: {statistics['12 HOUR']} m/s")
             self.max24.setText(f"Max 24hr: {statistics['24 HOUR']} m/s")
         except Exception as e:
-            print(f"Error updating statistics: {e}")
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         QApplication.processEvents()
 
@@ -402,7 +405,8 @@ class App(QWidget):
                 self.res.setText(f"P:{psutil.cpu_percent()}% - M:{used_mem}%")
 
         except Exception as e:
-            print(f"Error updating sensors: {e}")
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         QApplication.processEvents()
 
@@ -430,7 +434,8 @@ class App(QWidget):
             self.canvas.axes.legend()
             self.canvas.draw()
         except Exception as e:
-            print(f"Error updating graph: {e}")
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
         QApplication.processEvents()
 
