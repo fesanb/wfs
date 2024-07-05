@@ -1,8 +1,8 @@
 import sys
-from PyQt6.QtWidgets import (QWidget, QLabel, QApplication, QHBoxLayout,
+from PyQt5.QtWidgets import (QWidget, QLabel, QApplication, QHBoxLayout,
                              QVBoxLayout, QPushButton, QFrame, QGridLayout)
-from PyQt6.QtGui import QIcon, QPixmap, QFont
-from PyQt6.QtCore import Qt, QTimer
+from PyQt5.QtGui import QIcon, QPixmap, QFont
+from PyQt5.QtCore import Qt, QTimer
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 import mysql.connector

@@ -42,8 +42,8 @@ mysql -e "SHOW TABLES FROM wfs;"
 read -r
 printf  '\e[92m - Database set up done. \e[0m \n'
 
-printf  '\e[93m - Install PyQT5 \e[0m \n'
-apt install python3-pyqt5 -y
+printf  '\e[93m - Install PyQT6 \e[0m \n'
+pip install pythpyqt6 -y
 printf  '\e[92m - Done. \e[0m \n'
 
 
