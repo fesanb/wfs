@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="Fixed Error in the statistics module. App kept restarting due to a None data in DB.">
+    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="fixed too many ticks on graph x, and some sizes on the UI.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/db_pop.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/db_pop.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -349,7 +348,14 @@
       <option name="presentableId" value="LOCAL−00007" />
       <updated>1720374755402</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL−00008" summary="fixed too many ticks on graph x, and some sizes on the UI.">
+      <option name="closed" value="true" />
+      <created>1720381181708</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1720381181708</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -400,7 +406,8 @@
     <MESSAGE value="Changed to PYQt6, matlab graph, shorted and simplified code" />
     <MESSAGE value="Changed back to PYQt5, matlab graph, shorted and simplified code" />
     <MESSAGE value="Fixed Error in the statistics module. App kept restarting due to a None data in DB." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Error in the statistics module. App kept restarting due to a None data in DB." />
+    <MESSAGE value="fixed too many ticks on graph x, and some sizes on the UI." />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed too many ticks on graph x, and some sizes on the UI." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
