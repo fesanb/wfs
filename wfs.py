@@ -223,7 +223,7 @@ class App(QWidget):
     def setup_graph_container(self):
         self.graphContainer = QVBoxLayout()
         self.canvas = MplCanvas(self, width=6, height=1, dpi=100)
-        self.canvas.setMinimumHeight(200)
+        self.canvas.setMinimumHeight(150)
         self.graphContainer.addWidget(self.canvas)
 
         # self.graphSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
