@@ -158,8 +158,8 @@ class App(QWidget):
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
         self.setStyleSheet("color: white; background-color: black;")
-        # self.showFullScreen()
-        self.setGeometry(0, 0, 720, 480)
+        self.showFullScreen()
+        # self.setGeometry(0, 0, 720, 480)
 
         self.initUI()
         self.setup_timers()
