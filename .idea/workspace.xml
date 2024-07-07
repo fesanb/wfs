@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="fixed too many ticks on graph x, and some sizes on the UI.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="UI fixes">
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs2.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,7 @@
       <recent name="C:\Users\stefa\PycharmProjects\wfs\install" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.db_pop">
+  <component name="RunManager" selected="Python.wfs">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="ENV_FILES" value="" />
@@ -355,7 +355,14 @@
       <option name="presentableId" value="LOCAL−00008" />
       <updated>1720381181708</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL−00009" summary="UI fixes">
+      <option name="closed" value="true" />
+      <created>1720381838646</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1720381838646</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -407,7 +414,8 @@
     <MESSAGE value="Changed back to PYQt5, matlab graph, shorted and simplified code" />
     <MESSAGE value="Fixed Error in the statistics module. App kept restarting due to a None data in DB." />
     <MESSAGE value="fixed too many ticks on graph x, and some sizes on the UI." />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed too many ticks on graph x, and some sizes on the UI." />
+    <MESSAGE value="UI fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

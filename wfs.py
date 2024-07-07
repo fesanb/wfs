@@ -2,7 +2,8 @@ import sys
 
 import matplotlib.pyplot as plt
 from PyQt5.QtWidgets import (QWidget, QLabel, QApplication, QHBoxLayout,
-                             QVBoxLayout, QPushButton, QFrame, QGridLayout)
+                             QVBoxLayout, QPushButton, QFrame, QGridLayout,
+                             QSpacerItem, QSizePolicy)
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtCore import Qt, QTimer
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -120,7 +121,8 @@ class WeatherFetcher(DatabaseFetcher):
                 graph_data[key] = {'x': [time.strftime('%H:%M', time.localtime(item[1])) for item in data],
                                    'y': [item[0] for item in data]}
             else:
-                graph_data[key] = {'x': [datetime.now()], 'y': [0]}
+                current_hour = int(time.strftime('%H', time.localtime(time.time())))
+                graph_data[key] = {'x': [current_hour], 'y': [0]}
         return graph_data
 
     def fetch_error_light(self):
@@ -138,9 +140,7 @@ class WeatherFetcher(DatabaseFetcher):
                 return "arrow_up.png"
         return "arrow_flat.png"
 
-
 weather_fetcher = WeatherFetcher()
-
 
 class MplCanvas(FigureCanvas):
     def __init__(self, parent=None, width=6, height=1, dpi=100):
@@ -155,7 +155,6 @@ class MplCanvas(FigureCanvas):
         self.axes.spines['right'].set_color('white')
         super(MplCanvas, self).__init__(fig)
 
-
 class App(QWidget):
     def __init__(self, parent=None):
         super(App, self).__init__(parent=parent)
@@ -163,8 +162,8 @@ class App(QWidget):
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
         self.setStyleSheet("color: white; background-color: black;")
-        self.showFullScreen()
-        # self.setGeometry(0, 0, 720, 480)
+        # self.showFullScreen()
+        self.setGeometry(0, 0, 720, 480)
 
         self.initUI()
         self.setup_timers()
@@ -224,8 +223,11 @@ class App(QWidget):
     def setup_graph_container(self):
         self.graphContainer = QVBoxLayout()
         self.canvas = MplCanvas(self, width=6, height=1, dpi=100)
-        self.canvas.setMinimumHeight(180)
+        self.canvas.setMinimumHeight(200)
         self.graphContainer.addWidget(self.canvas)
+
+        self.graphSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.graphContainer.addItem(self.graphSpacer)
 
         self.gwb = QPushButton("WIND")
         self.gwb.setCheckable(True)
@@ -348,21 +350,6 @@ class App(QWidget):
             self.res = QLabel(f"P:{psutil.cpu_percent()}% - M:{used_mem}%")
             self.footerBox.addWidget(self.res)
 
-    def create_frame(self, layout):
-        frame = QFrame(self)
-        layout.addWidget(frame)
-        return frame
-
-    def create_label(self, text, image_path, parent, font_size, min_height):
-        label = QLabel(text, parent)
-        label.setStyleSheet(f"background-image: url({image_path}); "
-                            f"background-repeat: no-repeat; "
-                            f"background-position: center")
-        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        label.setMinimumHeight(min_height)
-        label.setFont(QFont('Arial', font_size))
-        return label
-
     def update_wind(self):
         wind, timestamp = weather_fetcher.fetch_wind()
         mean_wind, beaufort = weather_fetcher.fetch_mean()
@@ -373,7 +360,6 @@ class App(QWidget):
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
-
         QApplication.processEvents()
 
     def update_statistics(self):
@@ -388,7 +374,6 @@ class App(QWidget):
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
-
         QApplication.processEvents()
 
     def update_sens(self):
@@ -421,7 +406,6 @@ class App(QWidget):
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
-
         QApplication.processEvents()
 
     def switch_to_wind(self):
@@ -450,7 +434,6 @@ class App(QWidget):
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
-
         QApplication.processEvents()
 
     def setup_timers(self):
@@ -469,7 +452,6 @@ class App(QWidget):
         self.statistics_timer = QTimer()
         self.statistics_timer.timeout.connect(self.update_statistics)
         self.statistics_timer.start(60000)
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

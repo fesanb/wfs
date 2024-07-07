@@ -1,16 +1,19 @@
 import sys
-from PyQt6.QtWidgets import (QWidget, QLabel, QApplication, QHBoxLayout,
+import matplotlib.pyplot as plt
+from PyQt5.QtWidgets import (QWidget, QLabel, QApplication, QHBoxLayout,
                              QVBoxLayout, QPushButton, QFrame, QGridLayout)
-from PyQt6.QtGui import QIcon, QPixmap, QFont
-from PyQt6.QtCore import Qt, QTimer
+from PyQt5.QtGui import QIcon, QPixmap, QFont
+from PyQt5.QtCore import Qt, QTimer
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from matplotlib.ticker import MaxNLocator
 import mysql.connector
 from datetime import datetime, timedelta
 from pathlib import Path
 import psutil
 from wfs_forecast import fc
-
+from wfs_error_handling import error_handle
+import time
 
 class DatabaseFetcher:
     def __init__(self):
@@ -26,14 +29,11 @@ class DatabaseFetcher:
             cnx.close()
             return data
         except Exception as e:
-            print(f"Database error: {e}")
+            filename = Path(__file__).name
+            error_handle(e, filename)
             return None
 
-
 class WeatherFetcher(DatabaseFetcher):
-    def __init__(self):
-        super().__init__()
-
     def fetch_wind(self):
         data = self.fetch_data("SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)")
         if data:
@@ -74,11 +74,19 @@ class WeatherFetcher(DatabaseFetcher):
     def fetch_statistics(self):
         periods = ['24 HOUR', '12 HOUR', '6 HOUR', '3 HOUR', '1 HOUR']
         statistics = {}
-        for period in periods:
-            query = f"SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {period})"
-            data = self.fetch_data(query)
-            statistics[period] = str(round(data[0][0], 1)) if data else "0.0"
-        return statistics
+        try:
+            for period in periods:
+                query = f"SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {period})"
+                data = self.fetch_data(query)
+                if data and data[0][0] is not None:
+                    statistics[period] = str(round(data[0][0], 1))
+                else:
+                    statistics[period] = "0.0"
+            return statistics
+        except Exception as e:
+            filename = Path(__file__).name
+            error_handle(e, filename)
+            return statistics
 
     def fetch_sens(self):
         data = self.fetch_data("SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)")
@@ -104,10 +112,14 @@ class WeatherFetcher(DatabaseFetcher):
         for key, query in queries.items():
             data = self.fetch_data(query)
             if data:
-                graph_data[key] = {'x': [datetime.fromtimestamp(item[1]) for item in data],
+                graph_data[key] = {'x': [int(time.strftime('%H', time.localtime(item[1]))) for item in data],
                                    'y': [item[0] for item in data]}
+                # Print the first X value for debugging
+                print(f"First X value for {key} data: {graph_data[key]['x'][0]}")
             else:
-                graph_data[key] = {'x': [datetime.now()], 'y': [0]}
+                current_hour = int(time.strftime('%H', time.localtime(time.time())))
+                print(f"First X value for {key} data: {current_hour}")
+                graph_data[key] = {'x': [current_hour], 'y': [0]}
         return graph_data
 
     def fetch_error_light(self):
@@ -125,12 +137,10 @@ class WeatherFetcher(DatabaseFetcher):
                 return "arrow_up.png"
         return "arrow_flat.png"
 
-
 weather_fetcher = WeatherFetcher()
 
-
 class MplCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
+    def __init__(self, parent=None, width=6, height=1, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi, facecolor='black')
         self.axes = fig.add_subplot(111)
         self.axes.set_facecolor('black')
@@ -142,7 +152,6 @@ class MplCanvas(FigureCanvas):
         self.axes.spines['right'].set_color('white')
         super(MplCanvas, self).__init__(fig)
 
-
 class App(QWidget):
     def __init__(self, parent=None):
         super(App, self).__init__(parent=parent)
@@ -150,7 +159,6 @@ class App(QWidget):
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
         self.setStyleSheet("color: white; background-color: black;")
-        #self.showFullScreen()
         self.setGeometry(0, 0, 720, 480)
 
         self.initUI()
@@ -211,6 +219,7 @@ class App(QWidget):
     def setup_graph_container(self):
         self.graphContainer = QVBoxLayout()
         self.canvas = MplCanvas(self, width=6, height=1, dpi=100)
+        self.canvas.setMinimumHeight(200)
         self.graphContainer.addWidget(self.canvas)
 
         self.gwb = QPushButton("WIND")
@@ -334,21 +343,6 @@ class App(QWidget):
             self.res = QLabel(f"P:{psutil.cpu_percent()}% - M:{used_mem}%")
             self.footerBox.addWidget(self.res)
 
-    def create_frame(self, layout):
-        frame = QFrame(self)
-        layout.addWidget(frame)
-        return frame
-
-    def create_label(self, text, image_path, parent, font_size, min_height):
-        label = QLabel(text, parent)
-        label.setStyleSheet(f"background-image: url({image_path}); "
-                            f"background-repeat: no-repeat; "
-                            f"background-position: center")
-        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        label.setMinimumHeight(min_height)
-        label.setFont(QFont('Arial', font_size))
-        return label
-
     def update_wind(self):
         wind, timestamp = weather_fetcher.fetch_wind()
         mean_wind, beaufort = weather_fetcher.fetch_mean()
@@ -357,8 +351,8 @@ class App(QWidget):
             self.meanL.setText(str(mean_wind))
             self.beaufortL.setText(beaufort)
         except Exception as e:
-            print(f"Error updating wind: {e}")
-
+            filename = Path(__file__).name
+            error_handle(e, filename)
         QApplication.processEvents()
 
     def update_statistics(self):
@@ -371,8 +365,8 @@ class App(QWidget):
             self.max12.setText(f"Max 12hr: {statistics['12 HOUR']} m/s")
             self.max24.setText(f"Max 24hr: {statistics['24 HOUR']} m/s")
         except Exception as e:
-            print(f"Error updating statistics: {e}")
-
+            filename = Path(__file__).name
+            error_handle(e, filename)
         QApplication.processEvents()
 
     def update_sens(self):
@@ -403,8 +397,8 @@ class App(QWidget):
                 self.res.setText(f"P:{psutil.cpu_percent()}% - M:{used_mem}%")
 
         except Exception as e:
-            print(f"Error updating sensors: {e}")
-
+            filename = Path(__file__).name
+            error_handle(e, filename)
         QApplication.processEvents()
 
     def switch_to_wind(self):
@@ -427,12 +421,12 @@ class App(QWidget):
             elif self.gab.isChecked():
                 self.canvas.axes.plot(graph_data['atp']['x'], graph_data['atp']['y'], label='Pressure', color='blue')
                 self.canvas.axes.set_ylabel("BMP (hPa)", color='blue')
-            self.canvas.axes.set_xlabel("Time", color='white')
-            # self.canvas.axes.legend()
+            self.canvas.axes.set_xlabel("Hour", color='white')
+            self.canvas.axes.xaxis.set_major_locator(MaxNLocator(nbins=8))
             self.canvas.draw()
         except Exception as e:
-            print(f"Error updating graph: {e}")
-
+            filename = Path(__file__).name
+            error_handle(e, filename)
         QApplication.processEvents()
 
     def setup_timers(self):
@@ -451,7 +445,6 @@ class App(QWidget):
         self.statistics_timer = QTimer()
         self.statistics_timer.timeout.connect(self.update_statistics)
         self.statistics_timer.start(60000)
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
