@@ -150,7 +150,7 @@ class App(QWidget):
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
         self.setStyleSheet("color: white; background-color: black;")
-        self.showFullScreen()
+        #self.showFullScreen()
         self.setGeometry(0, 0, 720, 480)
 
         self.initUI()
@@ -188,6 +188,7 @@ class App(QWidget):
                                  "background-position: center".format(img))
 
         self.meanL = QLabel(str(mean_data))
+        self.meanL.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.meanL.setMinimumHeight(200)
         self.meanL.setFont(QFont('Arial', 50))
         img = path + "/img/wc_mean.png"
@@ -209,7 +210,7 @@ class App(QWidget):
 
     def setup_graph_container(self):
         self.graphContainer = QVBoxLayout()
-        self.canvas = MplCanvas(self, width=5, height=4, dpi=100)
+        self.canvas = MplCanvas(self, width=6, height=1, dpi=100)
         self.graphContainer.addWidget(self.canvas)
 
         self.gwb = QPushButton("WIND")
@@ -422,12 +423,12 @@ class App(QWidget):
             self.canvas.axes.clear()
             if self.gwb.isChecked():
                 self.canvas.axes.plot(graph_data['wind']['x'], graph_data['wind']['y'], label='Wind', color='yellow')
-                self.canvas.axes.set_ylabel("Wind Speed (m/s)", color='yellow')
+                self.canvas.axes.set_ylabel("Wind (m/s)", color='yellow')
             elif self.gab.isChecked():
                 self.canvas.axes.plot(graph_data['atp']['x'], graph_data['atp']['y'], label='Pressure', color='blue')
-                self.canvas.axes.set_ylabel("Pressure (hPa)", color='blue')
+                self.canvas.axes.set_ylabel("BMP (hPa)", color='blue')
             self.canvas.axes.set_xlabel("Time", color='white')
-            self.canvas.axes.legend()
+            # self.canvas.axes.legend()
             self.canvas.draw()
         except Exception as e:
             print(f"Error updating graph: {e}")

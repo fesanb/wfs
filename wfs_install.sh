@@ -56,5 +56,6 @@ pip3 install pyqtgraph
 pip3 install rpi.gpio
 pip3 install psutil
 pip3 install pyserial
+pip3 install matplotlib
 
 printf  '\e[92m - Installation successful \e[0m \n'

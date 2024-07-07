@@ -73,13 +73,20 @@ class WeatherFetcher(DatabaseFetcher):
         return "Beaufort 0 - Calm"
 
     def fetch_statistics(self):
-        periods = ['24 HOUR', '12 HOUR', '6 HOUR', '3 HOUR', '1 HOUR']
-        statistics = {}
-        for period in periods:
-            query = f"SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {period})"
-            data = self.fetch_data(query)
-            statistics[period] = str(round(data[0][0], 1)) if data else "0.0"
-        return statistics
+        try:
+            periods = ['24 HOUR', '12 HOUR', '6 HOUR', '3 HOUR', '1 HOUR']
+            statistics = {}
+            for period in periods:
+                query = f"SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {period})"
+                data = self.fetch_data(query)
+                if data and data[0][0] is not None:
+                    statistics[period] = str(round(data[0][0], 1))
+                else:
+                    statistics[period] = "0.0"
+            return statistics
+        except Exception as e:
+            filename = Path(__file__).name
+            error_handle(e, filename)
 
     def fetch_sens(self):
         data = self.fetch_data("SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)")
@@ -131,7 +138,7 @@ weather_fetcher = WeatherFetcher()
 
 
 class MplCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
+    def __init__(self, parent=None, width=6, height=1, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi, facecolor='black')
         self.axes = fig.add_subplot(111)
         self.axes.set_facecolor('black')
@@ -151,8 +158,8 @@ class App(QWidget):
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
         self.setStyleSheet("color: white; background-color: black;")
-        self.showFullScreen()
-        # self.setGeometry(0, 0, 720, 480)
+        # self.showFullScreen()
+        self.setGeometry(0, 0, 720, 480)
 
         self.initUI()
         self.setup_timers()
@@ -189,6 +196,7 @@ class App(QWidget):
                                  "background-position: center".format(img))
 
         self.meanL = QLabel(str(mean_data))
+        self.meanL.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.meanL.setMinimumHeight(200)
         self.meanL.setFont(QFont('Arial', 50))
         img = path + "/img/wc_mean.png"
@@ -210,7 +218,7 @@ class App(QWidget):
 
     def setup_graph_container(self):
         self.graphContainer = QVBoxLayout()
-        self.canvas = MplCanvas(self, width=5, height=4, dpi=100)
+        self.canvas = MplCanvas(self, width=6, height=1, dpi=100)
         self.graphContainer.addWidget(self.canvas)
 
         self.gwb = QPushButton("WIND")
@@ -426,12 +434,11 @@ class App(QWidget):
             self.canvas.axes.clear()
             if self.gwb.isChecked():
                 self.canvas.axes.plot(graph_data['wind']['x'], graph_data['wind']['y'], label='Wind', color='yellow')
-                self.canvas.axes.set_ylabel("Wind Speed (m/s)", color='yellow')
+                self.canvas.axes.set_ylabel("Wind (m/s)", color='yellow')
             elif self.gab.isChecked():
                 self.canvas.axes.plot(graph_data['atp']['x'], graph_data['atp']['y'], label='Pressure', color='blue')
-                self.canvas.axes.set_ylabel("Pressure (hPa)", color='blue')
+                self.canvas.axes.set_ylabel("BMP (hPa)", color='blue')
             self.canvas.axes.set_xlabel("Time", color='white')
-            self.canvas.axes.legend()
             self.canvas.draw()
         except Exception as e:
             filename = Path(__file__).name

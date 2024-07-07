@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="Changed to PYQt6, matlab graph, shorted and simplified code">
+    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="Changed back to PYQt5, matlab graph, shorted and simplified code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs2.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_install.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,6 +43,7 @@
     <setting file="file://$PROJECT_DIR$/test/test.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/test/testing.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/wfs.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/wfs2.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -327,7 +329,14 @@
       <option name="presentableId" value="LOCAL−00004" />
       <updated>1720126662075</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL−00005" summary="Changed back to PYQt5, matlab graph, shorted and simplified code">
+      <option name="closed" value="true" />
+      <created>1720186907041</created>
+      <option name="number" value="LOCAL−00005" />
+      <option name="presentableId" value="LOCAL−00005" />
+      <updated>1720186907041</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -376,7 +385,8 @@
     <MESSAGE value="Trying to reduce memory usage." />
     <MESSAGE value="Fixing small issues." />
     <MESSAGE value="Changed to PYQt6, matlab graph, shorted and simplified code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed to PYQt6, matlab graph, shorted and simplified code" />
+    <MESSAGE value="Changed back to PYQt5, matlab graph, shorted and simplified code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed back to PYQt5, matlab graph, shorted and simplified code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
