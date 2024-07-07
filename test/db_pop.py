@@ -45,7 +45,7 @@ def build_db():
 		cnx = mysql.connector.connect(user='wfs', database='wfs', password='wfs22')
 		cursor = cnx.cursor(buffered=True)
 
-		tm = datetime.now() - timedelta(hours=2)
+		tm = datetime.now() - timedelta(hours=12)
 
 		while tm < datetime.now():
 			tm = tm + timedelta(minutes=1)

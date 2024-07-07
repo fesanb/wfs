@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="Changed back to PYQt5, matlab graph, shorted and simplified code">
+    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="Fixed Error in the statistics module. App kept restarting due to a None data in DB.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/db_pop.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/db_pop.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs2.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/wfs_install.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +77,7 @@
       <recent name="C:\Users\stefa\PycharmProjects\wfs\install" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.wfs">
+  <component name="RunManager" selected="Python.db_pop">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="ENV_FILES" value="" />
@@ -220,8 +219,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.wfs2" />
         <item itemvalue="Python.db_pop" />
+        <item itemvalue="Python.wfs2" />
         <item itemvalue="Python.wfs" />
       </list>
     </recent_temporary>
@@ -336,7 +335,21 @@
       <option name="presentableId" value="LOCAL−00005" />
       <updated>1720186907041</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL−00006" summary="Fixed Error in the statistics module. App kept restarting due to a None data in DB.">
+      <option name="closed" value="true" />
+      <created>1720374647439</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1720374647439</updated>
+    </task>
+    <task id="LOCAL−00007" summary="Fixed Error in the statistics module. App kept restarting due to a None data in DB.">
+      <option name="closed" value="true" />
+      <created>1720374755402</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1720374755402</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -386,7 +399,8 @@
     <MESSAGE value="Fixing small issues." />
     <MESSAGE value="Changed to PYQt6, matlab graph, shorted and simplified code" />
     <MESSAGE value="Changed back to PYQt5, matlab graph, shorted and simplified code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed back to PYQt5, matlab graph, shorted and simplified code" />
+    <MESSAGE value="Fixed Error in the statistics module. App kept restarting due to a None data in DB." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Error in the statistics module. App kept restarting due to a None data in DB." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

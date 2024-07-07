@@ -1,16 +1,21 @@
 import sys
+
+import matplotlib.pyplot as plt
 from PyQt5.QtWidgets import (QWidget, QLabel, QApplication, QHBoxLayout,
                              QVBoxLayout, QPushButton, QFrame, QGridLayout)
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtCore import Qt, QTimer
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+from matplotlib.ticker import MaxNLocator
 import mysql.connector
 from datetime import datetime, timedelta
 from pathlib import Path
 import psutil
 from wfs_forecast import fc
 from wfs_error_handling import error_handle
+import numpy as np
+import time
 
 
 class DatabaseFetcher:
@@ -112,7 +117,7 @@ class WeatherFetcher(DatabaseFetcher):
         for key, query in queries.items():
             data = self.fetch_data(query)
             if data:
-                graph_data[key] = {'x': [datetime.fromtimestamp(item[1]) for item in data],
+                graph_data[key] = {'x': [time.strftime('%H:%M', time.localtime(item[1])) for item in data],
                                    'y': [item[0] for item in data]}
             else:
                 graph_data[key] = {'x': [datetime.now()], 'y': [0]}
@@ -219,6 +224,7 @@ class App(QWidget):
     def setup_graph_container(self):
         self.graphContainer = QVBoxLayout()
         self.canvas = MplCanvas(self, width=6, height=1, dpi=100)
+        self.canvas.setMinimumHeight(200)
         self.graphContainer.addWidget(self.canvas)
 
         self.gwb = QPushButton("WIND")
@@ -439,6 +445,7 @@ class App(QWidget):
                 self.canvas.axes.plot(graph_data['atp']['x'], graph_data['atp']['y'], label='Pressure', color='blue')
                 self.canvas.axes.set_ylabel("BMP (hPa)", color='blue')
             self.canvas.axes.set_xlabel("Time", color='white')
+            self.canvas.axes.xaxis.set_major_locator(MaxNLocator(nbins=8))
             self.canvas.draw()
         except Exception as e:
             filename = Path(__file__).name
