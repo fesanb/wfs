@@ -162,8 +162,8 @@ class App(QWidget):
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
         self.setStyleSheet("color: white; background-color: black;")
-        # self.showFullScreen()
-        self.setGeometry(0, 0, 720, 480)
+        self.showFullScreen()
+        # self.setGeometry(0, 0, 720, 480)
 
         self.initUI()
         self.setup_timers()
@@ -226,8 +226,10 @@ class App(QWidget):
         self.canvas.setMinimumHeight(200)
         self.graphContainer.addWidget(self.canvas)
 
-        self.graphSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        self.graphContainer.addItem(self.graphSpacer)
+        # self.graphSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        # self.graphContainer.addItem(self.graphSpacer)
+
+        self.graphContainer.addStretch(1)
 
         self.gwb = QPushButton("WIND")
         self.gwb.setCheckable(True)
