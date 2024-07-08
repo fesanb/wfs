@@ -143,7 +143,7 @@ class WeatherFetcher(DatabaseFetcher):
 weather_fetcher = WeatherFetcher()
 
 class MplCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=6, height=1, dpi=100):
+    def __init__(self, parent=None, width=8, height=1, dpi=100):
         fig = Figure(figsize=(width, height), dpi=dpi, facecolor='black')
         self.axes = fig.add_subplot(111)
         self.axes.set_facecolor('black')
@@ -162,8 +162,8 @@ class App(QWidget):
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
         self.setStyleSheet("color: white; background-color: black;")
-        self.showFullScreen()
-        # self.setGeometry(0, 0, 720, 480)
+        # self.showFullScreen()
+        self.setGeometry(0, 0, 800, 480)
 
         self.initUI()
         self.setup_timers()
@@ -192,17 +192,17 @@ class App(QWidget):
 
         self.windL = QLabel(wind_data)
         self.windL.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.windL.setMinimumHeight(200)
-        self.windL.setFont(QFont('Arial', 50))
-        img = path + "/img/wc_wind.png"
+        self.windL.setMinimumHeight(165)
+        self.windL.setFont(QFont('Arial', 40))
+        img = path + "/img/wind_BG.png"
         self.windL.setStyleSheet("background-image: url({}); "
                                  "background-repeat: no-repeat; "
                                  "background-position: center".format(img))
 
         self.meanL = QLabel(str(mean_data))
         self.meanL.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.meanL.setMinimumHeight(200)
-        self.meanL.setFont(QFont('Arial', 50))
+        self.meanL.setMinimumHeight(165)
+        self.meanL.setFont(QFont('Arial', 40))
         img = path + "/img/wc_mean.png"
         self.meanL.setStyleSheet("background-image: url({}); "
                                  "background-repeat: no-repeat; "
@@ -222,14 +222,12 @@ class App(QWidget):
 
     def setup_graph_container(self):
         self.graphContainer = QVBoxLayout()
-        self.canvas = MplCanvas(self, width=6, height=1, dpi=100)
-        self.canvas.setMinimumHeight(150)
-        self.graphContainer.addWidget(self.canvas)
+        self.graphPlotContainer = QHBoxLayout()
+        self.canvas = MplCanvas(self, width=8, height=2, dpi=100)
+        # self.canvas.setMinimumHeight(100)
+        self.graphPlotContainer.addWidget(self.canvas)
+        self.graphPlotContainer.addStretch()
 
-        # self.graphSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-        # self.graphContainer.addItem(self.graphSpacer)
-
-        self.graphContainer.addStretch(1)
 
         self.gwb = QPushButton("WIND")
         self.gwb.setCheckable(True)
@@ -240,9 +238,16 @@ class App(QWidget):
         self.gab.setCheckable(True)
         self.gab.clicked.connect(self.switch_to_pressure)
 
+        self.gtb = QPushButton("Temp")
+        self.gtb.setCheckable(True)
+        # self.gtb.clicked.connect(self.switch_to_temp)
+
         self.graphButtons = QHBoxLayout()
         self.graphButtons.addWidget(self.gwb)
         self.graphButtons.addWidget(self.gab)
+        self.graphButtons.addWidget(self.gtb)
+
+        self.graphContainer.addLayout(self.graphPlotContainer)
         self.graphContainer.addLayout(self.graphButtons)
 
         self.windContainer.addLayout(self.graphContainer)
