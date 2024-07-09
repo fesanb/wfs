@@ -17,6 +17,7 @@ from wfs_forecast import fc
 from wfs_error_handling import error_handle
 import numpy as np
 import time
+import os
 
 
 class DatabaseFetcher:
@@ -144,7 +145,7 @@ weather_fetcher = WeatherFetcher()
 
 class MplCanvas(FigureCanvas):
     def __init__(self, parent=None, width=8, height=1, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi, facecolor='black')
+        fig = Figure(figsize=(width, height), dpi=dpi, facecolor=(0, 0, 0, 0.5))
         self.axes = fig.add_subplot(111)
         self.axes.set_facecolor('black')
         self.axes.tick_params(axis='x', colors='white')
@@ -161,20 +162,33 @@ class App(QWidget):
         self.title = "WFS - Weather Forecast Station"
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
-        self.setStyleSheet("color: white; background-color: black;")
+        # self.setStyleSheet("color: white; background-color: blue;")
         # self.showFullScreen()
         self.setGeometry(0, 0, 800, 480)
+
+        path = str(Path(__file__).parent.absolute())
+        background_img = os.path.join(path, "img", "main_BG.png").replace(os.sep, '/')
+        self.setStyleSheet(f"""
+            QWidget {{
+                background-image : url({background_img});
+                background-repeat: no-repeat;
+                background-position: center;
+                color : white;
+                background-color : transparent;
+            }}
+        """)
+
 
         self.initUI()
         self.setup_timers()
 
     def initUI(self):
-        path = str(Path(__file__).parent.absolute())
         self.O1 = QVBoxLayout(self)
         self.mainContainer = QHBoxLayout()
         self.windContainer = QVBoxLayout()
         self.sensContainer = QVBoxLayout()
 
+        path = str(Path(__file__).parent.absolute())
         self.setup_wind_box(path)
         self.setup_graph_container()
         self.setup_sens_container(path)
@@ -194,19 +208,26 @@ class App(QWidget):
         self.windL.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.windL.setMinimumHeight(165)
         self.windL.setFont(QFont('Arial', 40))
-        img = path + "/img/wind_BG.png"
-        self.windL.setStyleSheet("background-image: url({}); "
-                                 "background-repeat: no-repeat; "
-                                 "background-position: center".format(img))
+        img = os.path.join(path, "img", "wind_BG.png")
+        self.windL.setStyleSheet(f"""
+            background-image: url({img.replace(os.sep, '/')});
+            background-repeat: no-repeat;
+            background-position: center;
+            color: white;
+        """)
 
         self.meanL = QLabel(str(mean_data))
         self.meanL.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.meanL.setMinimumHeight(165)
         self.meanL.setFont(QFont('Arial', 40))
-        img = path + "/img/wc_mean.png"
-        self.meanL.setStyleSheet("background-image: url({}); "
-                                 "background-repeat: no-repeat; "
-                                 "background-position: center".format(img))
+        img = os.path.join(path, "img", "mean_BG.png")
+        self.meanL.setStyleSheet(f"""
+            background-image: url({img.replace(os.sep, '/')});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: transparent;
+            color: white;
+        """)
 
         self.windBox.addWidget(self.windL)
         self.windBox.addWidget(self.meanL)
@@ -214,7 +235,7 @@ class App(QWidget):
 
         self.beaufortbox = QHBoxLayout()
         self.beaufortL = QLabel(mean_beaufort)
-        self.beaufortL.setStyleSheet("color: white; background-color: black;")
+        self.beaufortL.setStyleSheet("background-color: red;")
         self.beaufortL.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.beaufortL.setFont(QFont('Arial', 20))
         self.beaufortbox.addWidget(self.beaufortL)
@@ -312,6 +333,8 @@ class App(QWidget):
         self.max24 = QLabel("Max 24hr: NA m/s")
 
         self.statistic = QVBoxLayout(self.sensFrame)
+
+        # self.peak.setStyleSheet("color: white; background-color: blue;")
 
         self.statistic.addWidget(self.peak)
         self.statistic.addWidget(self.max1)
