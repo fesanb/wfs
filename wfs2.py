@@ -1,7 +1,8 @@
 import sys
-import matplotlib.pyplot as plt
+import os
 from PyQt5.QtWidgets import (QWidget, QLabel, QApplication, QHBoxLayout,
-                             QVBoxLayout, QPushButton, QFrame, QGridLayout)
+                             QVBoxLayout, QPushButton, QFrame, QGridLayout,
+                             QSpacerItem, QSizePolicy)
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtCore import Qt, QTimer
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -13,6 +14,7 @@ from pathlib import Path
 import psutil
 from wfs_forecast import fc
 from wfs_error_handling import error_handle
+import numpy as np
 import time
 
 class DatabaseFetcher:
@@ -31,9 +33,12 @@ class DatabaseFetcher:
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
-            return None
+
 
 class WeatherFetcher(DatabaseFetcher):
+    def __init__(self):
+        super().__init__()
+
     def fetch_wind(self):
         data = self.fetch_data("SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)")
         if data:
@@ -72,9 +77,9 @@ class WeatherFetcher(DatabaseFetcher):
         return "Beaufort 0 - Calm"
 
     def fetch_statistics(self):
-        periods = ['24 HOUR', '12 HOUR', '6 HOUR', '3 HOUR', '1 HOUR']
-        statistics = {}
         try:
+            periods = ['24 HOUR', '12 HOUR', '6 HOUR', '3 HOUR', '1 HOUR']
+            statistics = {}
             for period in periods:
                 query = f"SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {period})"
                 data = self.fetch_data(query)
@@ -86,7 +91,6 @@ class WeatherFetcher(DatabaseFetcher):
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
-            return statistics
 
     def fetch_sens(self):
         data = self.fetch_data("SELECT * FROM sens WHERE id=(SELECT MAX(id) FROM sens)")
@@ -112,13 +116,10 @@ class WeatherFetcher(DatabaseFetcher):
         for key, query in queries.items():
             data = self.fetch_data(query)
             if data:
-                graph_data[key] = {'x': [int(time.strftime('%H', time.localtime(item[1]))) for item in data],
+                graph_data[key] = {'x': [time.strftime('%H:%M', time.localtime(item[1])) for item in data],
                                    'y': [item[0] for item in data]}
-                # Print the first X value for debugging
-                print(f"First X value for {key} data: {graph_data[key]['x'][0]}")
             else:
                 current_hour = int(time.strftime('%H', time.localtime(time.time())))
-                print(f"First X value for {key} data: {current_hour}")
                 graph_data[key] = {'x': [current_hour], 'y': [0]}
         return graph_data
 
@@ -140,8 +141,8 @@ class WeatherFetcher(DatabaseFetcher):
 weather_fetcher = WeatherFetcher()
 
 class MplCanvas(FigureCanvas):
-    def __init__(self, parent=None, width=6, height=1, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi, facecolor='black')
+    def __init__(self, parent=None, width=8, height=1, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi, facecolor=(0, 0, 0, 0.5))
         self.axes = fig.add_subplot(111)
         self.axes.set_facecolor('black')
         self.axes.tick_params(axis='x', colors='white')
@@ -158,19 +159,33 @@ class App(QWidget):
         self.title = "WFS - Weather Forecast Station"
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
-        self.setStyleSheet("color: white; background-color: black;")
-        self.setGeometry(0, 0, 720, 480)
+        self.setGeometry(0, 0, 800, 480)
+
+        path = str(Path(__file__).parent.absolute())
+        background_img = os.path.join(path, "img", "main_BG.png").replace(os.sep, '/')
+        self.setStyleSheet(f"""
+            QFrame {{
+                background-image: url({background_img});
+                background-repeat: no-repeat;
+                background-position: center;
+                color: white;
+                background-color: transparent;
+            }}
+        """)
 
         self.initUI()
         self.setup_timers()
 
     def initUI(self):
-        path = str(Path(__file__).parent.absolute())
-        self.O1 = QVBoxLayout(self)
+        self.O1 = QFrame(self)
+        self.O1.setFrameShape(QFrame.StyledPanel)
+        self.O1.setLayout(QVBoxLayout())
+
         self.mainContainer = QHBoxLayout()
         self.windContainer = QVBoxLayout()
         self.sensContainer = QVBoxLayout()
 
+        path = str(Path(__file__).parent.absolute())
         self.setup_wind_box(path)
         self.setup_graph_container()
         self.setup_sens_container(path)
@@ -178,8 +193,11 @@ class App(QWidget):
 
         self.mainContainer.addLayout(self.windContainer)
         self.mainContainer.addLayout(self.sensContainer)
-        self.O1.addLayout(self.mainContainer)
-        self.O1.addLayout(self.footerBox)
+        self.O1.layout().addLayout(self.mainContainer)
+        self.O1.layout().addLayout(self.footerBox)
+
+        main_layout = QVBoxLayout(self)
+        main_layout.addWidget(self.O1)
 
     def setup_wind_box(self, path):
         self.windBox = QHBoxLayout()
@@ -188,21 +206,29 @@ class App(QWidget):
 
         self.windL = QLabel(wind_data)
         self.windL.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.windL.setMinimumHeight(200)
-        self.windL.setFont(QFont('Arial', 50))
-        img = path + "/img/wc_wind.png"
-        self.windL.setStyleSheet("background-image: url({}); "
-                                 "background-repeat: no-repeat; "
-                                 "background-position: center".format(img))
+        self.windL.setMinimumHeight(165)
+        self.windL.setFont(QFont('Arial', 40))
+        img = os.path.join(path, "img", "wind_BG.png")
+        self.windL.setStyleSheet(f"""
+            background-image: url({img.replace(os.sep, '/')});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: transparent;
+            color: white;
+        """)
 
         self.meanL = QLabel(str(mean_data))
         self.meanL.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.meanL.setMinimumHeight(200)
-        self.meanL.setFont(QFont('Arial', 50))
-        img = path + "/img/wc_mean.png"
-        self.meanL.setStyleSheet("background-image: url({}); "
-                                 "background-repeat: no-repeat; "
-                                 "background-position: center".format(img))
+        self.meanL.setMinimumHeight(165)
+        self.meanL.setFont(QFont('Arial', 40))
+        img = os.path.join(path, "img", "mean_BG.png")
+        self.meanL.setStyleSheet(f"""
+            background-image: url({img.replace(os.sep, '/')});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: transparent;
+            color: white;
+        """)
 
         self.windBox.addWidget(self.windL)
         self.windBox.addWidget(self.meanL)
@@ -210,7 +236,8 @@ class App(QWidget):
 
         self.beaufortbox = QHBoxLayout()
         self.beaufortL = QLabel(mean_beaufort)
-        self.beaufortL.setStyleSheet("color: white; background-color: black;")
+        # Ensure the background color is red and text color is white
+        self.beaufortL.setStyleSheet("background-color: red; color: white;")
         self.beaufortL.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.beaufortL.setFont(QFont('Arial', 20))
         self.beaufortbox.addWidget(self.beaufortL)
@@ -218,9 +245,10 @@ class App(QWidget):
 
     def setup_graph_container(self):
         self.graphContainer = QVBoxLayout()
-        self.canvas = MplCanvas(self, width=6, height=1, dpi=100)
-        self.canvas.setMinimumHeight(200)
-        self.graphContainer.addWidget(self.canvas)
+        self.graphPlotContainer = QHBoxLayout()
+        self.canvas = MplCanvas(self, width=8, height=2, dpi=100)
+        self.graphPlotContainer.addWidget(self.canvas)
+        self.graphPlotContainer.addStretch()
 
         self.gwb = QPushButton("WIND")
         self.gwb.setCheckable(True)
@@ -231,9 +259,15 @@ class App(QWidget):
         self.gab.setCheckable(True)
         self.gab.clicked.connect(self.switch_to_pressure)
 
+        self.gtb = QPushButton("Temp")
+        self.gtb.setCheckable(True)
+
         self.graphButtons = QHBoxLayout()
         self.graphButtons.addWidget(self.gwb)
         self.graphButtons.addWidget(self.gab)
+        self.graphButtons.addWidget(self.gtb)
+
+        self.graphContainer.addLayout(self.graphPlotContainer)
         self.graphContainer.addLayout(self.graphButtons)
 
         self.windContainer.addLayout(self.graphContainer)
@@ -421,7 +455,7 @@ class App(QWidget):
             elif self.gab.isChecked():
                 self.canvas.axes.plot(graph_data['atp']['x'], graph_data['atp']['y'], label='Pressure', color='blue')
                 self.canvas.axes.set_ylabel("BMP (hPa)", color='blue')
-            self.canvas.axes.set_xlabel("Hour", color='white')
+            self.canvas.axes.set_xlabel("Time", color='white')
             self.canvas.axes.xaxis.set_major_locator(MaxNLocator(nbins=8))
             self.canvas.draw()
         except Exception as e:

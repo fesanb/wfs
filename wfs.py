@@ -19,7 +19,6 @@ import numpy as np
 import time
 import os
 
-
 class DatabaseFetcher:
     def __init__(self):
         self.connection_params = {'user': 'wfs', 'database': 'wfs', 'password': 'wfs22'}
@@ -145,15 +144,20 @@ weather_fetcher = WeatherFetcher()
 
 class MplCanvas(FigureCanvas):
     def __init__(self, parent=None, width=8, height=1, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi, facecolor=(0, 0, 0, 0.5))
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        fig.patch.set_alpha(0.0)
         self.axes = fig.add_subplot(111)
+
         self.axes.set_facecolor('black')
+
         self.axes.tick_params(axis='x', colors='white')
         self.axes.tick_params(axis='y', colors='white')
         self.axes.spines['bottom'].set_color('white')
         self.axes.spines['top'].set_color('white')
         self.axes.spines['left'].set_color('white')
         self.axes.spines['right'].set_color('white')
+
+
         super(MplCanvas, self).__init__(fig)
 
 class App(QWidget):
@@ -162,27 +166,32 @@ class App(QWidget):
         self.title = "WFS - Weather Forecast Station"
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
-        # self.setStyleSheet("color: white; background-color: blue;")
-        # self.showFullScreen()
-        self.setGeometry(0, 0, 800, 480)
+        self.showFullScreen()
+        # self.setGeometry(800, 480, 800, 480)
 
         path = str(Path(__file__).parent.absolute())
-        background_img = os.path.join(path, "img", "main_BG.png").replace(os.sep, '/')
+        img = os.path.join(path, "img", "main_BG.png")
         self.setStyleSheet(f"""
-            QWidget {{
-                background-image : url({background_img});
+            QFrame#MFrame {{
+                background-image: url({img.replace(os.sep, '/')});
                 background-repeat: no-repeat;
                 background-position: center;
+            }}
+            
+            QLabel {{
                 color : white;
-                background-color : transparent;
             }}
         """)
-
 
         self.initUI()
         self.setup_timers()
 
+
     def initUI(self):
+        self.BGframe = QFrame(self)
+        self.BGframe.setObjectName("MFrame")
+        self.BGframe.setFixedWidth(800)  # Set fixed width
+        self.BGframe.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         self.O1 = QVBoxLayout(self)
         self.mainContainer = QHBoxLayout()
         self.windContainer = QVBoxLayout()
@@ -198,6 +207,7 @@ class App(QWidget):
         self.mainContainer.addLayout(self.sensContainer)
         self.O1.addLayout(self.mainContainer)
         self.O1.addLayout(self.footerBox)
+        self.BGframe.setLayout(self.O1)
 
     def setup_wind_box(self, path):
         self.windBox = QHBoxLayout()
@@ -213,7 +223,6 @@ class App(QWidget):
             background-image: url({img.replace(os.sep, '/')});
             background-repeat: no-repeat;
             background-position: center;
-            color: white;
         """)
 
         self.meanL = QLabel(str(mean_data))
@@ -225,8 +234,6 @@ class App(QWidget):
             background-image: url({img.replace(os.sep, '/')});
             background-repeat: no-repeat;
             background-position: center;
-            background-color: transparent;
-            color: white;
         """)
 
         self.windBox.addWidget(self.windL)
@@ -235,7 +242,6 @@ class App(QWidget):
 
         self.beaufortbox = QHBoxLayout()
         self.beaufortL = QLabel(mean_beaufort)
-        self.beaufortL.setStyleSheet("background-color: red;")
         self.beaufortL.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         self.beaufortL.setFont(QFont('Arial', 20))
         self.beaufortbox.addWidget(self.beaufortL)
@@ -244,11 +250,8 @@ class App(QWidget):
     def setup_graph_container(self):
         self.graphContainer = QVBoxLayout()
         self.graphPlotContainer = QHBoxLayout()
-        self.canvas = MplCanvas(self, width=8, height=2, dpi=100)
-        # self.canvas.setMinimumHeight(100)
+        self.canvas = MplCanvas(self, width=6, height=2, dpi=100)
         self.graphPlotContainer.addWidget(self.canvas)
-        self.graphPlotContainer.addStretch()
-
 
         self.gwb = QPushButton("WIND")
         self.gwb.setCheckable(True)
@@ -272,10 +275,10 @@ class App(QWidget):
         self.graphContainer.addLayout(self.graphButtons)
 
         self.windContainer.addLayout(self.graphContainer)
-        self.windContainer.addStretch()
 
     def setup_sens_container(self, path):
         self.sensFrame = QFrame(self)
+        self.sensFrame.setFrameStyle(QFrame.Panel | QFrame.Raised)
         self.sensBox = QVBoxLayout(self.sensFrame)
         self.sensheaderBox = QHBoxLayout(self.sensFrame)
         self.sensHL = QLabel("SENSOR")
@@ -460,7 +463,9 @@ class App(QWidget):
                 self.canvas.axes.set_ylabel("BMP (hPa)", color='blue')
             self.canvas.axes.set_xlabel("Time", color='white')
             self.canvas.axes.xaxis.set_major_locator(MaxNLocator(nbins=8))
+            self.canvas.axes.grid()
             self.canvas.draw()
+
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)

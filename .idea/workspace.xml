@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="UI fixes">
-      <change afterPath="$PROJECT_DIR$/img/main_BG.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/mean_BG.png" afterDir="false" />
+    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="UI fixes - testing colors and backgrounds">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/wfs_new_icons.svg" beforeDir="false" afterPath="$PROJECT_DIR$/img/wfs_new_icons.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/wind_BG.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/wind_BG.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs2.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -394,7 +391,14 @@
       <option name="presentableId" value="LOCAL−00013" />
       <updated>1720440302237</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL−00014" summary="UI fixes - testing colors and backgrounds">
+      <option name="closed" value="true" />
+      <created>1720554238063</created>
+      <option name="number" value="LOCAL−00014" />
+      <option name="presentableId" value="LOCAL−00014" />
+      <updated>1720554238063</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -447,7 +451,8 @@
     <MESSAGE value="Fixed Error in the statistics module. App kept restarting due to a None data in DB." />
     <MESSAGE value="fixed too many ticks on graph x, and some sizes on the UI." />
     <MESSAGE value="UI fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI fixes" />
+    <MESSAGE value="UI fixes - testing colors and backgrounds" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI fixes - testing colors and backgrounds" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
