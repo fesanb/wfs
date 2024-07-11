@@ -1,23 +1,21 @@
 import sys
+import os
+import time
+from datetime import datetime, timedelta
+from pathlib import Path
 
-import matplotlib.pyplot as plt
-from PyQt5.QtWidgets import (QWidget, QLabel, QApplication, QHBoxLayout,
-                             QVBoxLayout, QPushButton, QFrame, QGridLayout,
-                             QSpacerItem, QSizePolicy)
+import mysql.connector
+import psutil
+from PyQt5.QtWidgets import (QWidget, QLabel, QApplication, QHBoxLayout, QVBoxLayout, QPushButton, QFrame, QGridLayout, QSizePolicy)
 from PyQt5.QtGui import QIcon, QPixmap, QFont
 from PyQt5.QtCore import Qt, QTimer
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.ticker import MaxNLocator
-import mysql.connector
-from datetime import datetime, timedelta
-from pathlib import Path
-import psutil
+
 from wfs_forecast import fc
 from wfs_error_handling import error_handle
-import numpy as np
-import time
-import os
+
 
 class DatabaseFetcher:
     def __init__(self):
@@ -164,40 +162,36 @@ class MplCanvas(FigureCanvas):
         self.setStyleSheet("background: transparent;")
         self.setAttribute(Qt.WA_OpaquePaintEvent, False)
 
+
 class App(QWidget):
     def __init__(self, parent=None):
         super(App, self).__init__(parent=parent)
         self.title = "WFS - Weather Forecast Station"
         self.setWindowIcon(QIcon("img/drawing.svg.png"))
         self.setWindowTitle(self.title)
-        self.showFullScreen()
-        # self.setGeometry(800, 480, 800, 480)
 
-        self.BGframe = QFrame(self)
-        self.BGframe.setObjectName("MFrame")
-        self.BGframe.setFixedWidth(800)  # Set fixed width
-        self.BGframe.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        path = str(Path(__file__).parent.absolute())
-        img = os.path.join(path, "img", "main_BG.png")
-        self.setStyleSheet(f"""
-            QFrame#MFrame {{
-                background-image: url({img.replace(os.sep, '/')});
-                background-repeat: no-repeat;
-                background-position: center;
-                border: none;
-            }}
+        # Use full screen or windowed mode
+        self.full_screen = True  # Change this to True for full-screen mode
 
-            QLabel {{
-                color : white;
-            }}
-        """)
+        # Define the path to the background image
+        self.img_path = str(Path(__file__).parent.absolute() / "img" / "main_BG.png")
 
         self.initUI()
         self.setup_timers()
 
+        # Set full screen mode if required
+        if self.full_screen:
+            self.showFullScreen()
+
     def initUI(self):
+        self.BGframe = QFrame(self)
+        self.BGframe.setMinimumSize(800, 480)
+        self.BGframe.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.BGframe.setObjectName("MFrame")
+
+        self.applyBackground()
+
         self.O1 = QVBoxLayout(self.BGframe)
-        # self.O1.setObjectName("O1box")
         self.mainContainer = QHBoxLayout()
         self.windContainer = QVBoxLayout()
         self.sensContainer = QVBoxLayout()
@@ -213,6 +207,18 @@ class App(QWidget):
         self.O1.addLayout(self.mainContainer)
         self.O1.addLayout(self.footerBox)
         self.setLayout(self.O1)
+
+    def applyBackground(self):
+        img = self.img_path.replace(os.sep, '/')
+        self.setStyleSheet(f"""
+                    QFrame#MFrame {{
+                        background-image: url({img});
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-attachment: fixed;
+                        border: none;
+                    }}
+                """)
 
     def setup_wind_box(self, path):
         self.windBox = QHBoxLayout()
@@ -490,6 +496,7 @@ class App(QWidget):
         self.statistics_timer = QTimer()
         self.statistics_timer.timeout.connect(self.update_statistics)
         self.statistics_timer.start(60000)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
