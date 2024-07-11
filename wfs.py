@@ -140,7 +140,9 @@ class WeatherFetcher(DatabaseFetcher):
                 return "arrow_up.png"
         return "arrow_flat.png"
 
+
 weather_fetcher = WeatherFetcher()
+
 
 class MplCanvas(FigureCanvas):
     def __init__(self, parent=None, width=8, height=1, dpi=100):
@@ -157,8 +159,10 @@ class MplCanvas(FigureCanvas):
         self.axes.spines['left'].set_color('white')
         self.axes.spines['right'].set_color('white')
 
-
         super(MplCanvas, self).__init__(fig)
+
+        self.setStyleSheet("background: transparent;")
+        self.setAttribute(Qt.WA_OpaquePaintEvent, False)
 
 class App(QWidget):
     def __init__(self, parent=None):
@@ -169,6 +173,10 @@ class App(QWidget):
         self.showFullScreen()
         # self.setGeometry(800, 480, 800, 480)
 
+        self.BGframe = QFrame(self)
+        self.BGframe.setObjectName("MFrame")
+        self.BGframe.setFixedWidth(800)  # Set fixed width
+        self.BGframe.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         path = str(Path(__file__).parent.absolute())
         img = os.path.join(path, "img", "main_BG.png")
         self.setStyleSheet(f"""
@@ -176,8 +184,9 @@ class App(QWidget):
                 background-image: url({img.replace(os.sep, '/')});
                 background-repeat: no-repeat;
                 background-position: center;
+                border: none;
             }}
-            
+
             QLabel {{
                 color : white;
             }}
@@ -186,13 +195,9 @@ class App(QWidget):
         self.initUI()
         self.setup_timers()
 
-
     def initUI(self):
-        self.BGframe = QFrame(self)
-        self.BGframe.setObjectName("MFrame")
-        self.BGframe.setFixedWidth(800)  # Set fixed width
-        self.BGframe.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        self.O1 = QVBoxLayout(self)
+        self.O1 = QVBoxLayout(self.BGframe)
+        # self.O1.setObjectName("O1box")
         self.mainContainer = QHBoxLayout()
         self.windContainer = QVBoxLayout()
         self.sensContainer = QVBoxLayout()
@@ -207,7 +212,7 @@ class App(QWidget):
         self.mainContainer.addLayout(self.sensContainer)
         self.O1.addLayout(self.mainContainer)
         self.O1.addLayout(self.footerBox)
-        self.BGframe.setLayout(self.O1)
+        self.setLayout(self.O1)
 
     def setup_wind_box(self, path):
         self.windBox = QHBoxLayout()
@@ -336,8 +341,6 @@ class App(QWidget):
         self.max24 = QLabel("Max 24hr: NA m/s")
 
         self.statistic = QVBoxLayout(self.sensFrame)
-
-        # self.peak.setStyleSheet("color: white; background-color: blue;")
 
         self.statistic.addWidget(self.peak)
         self.statistic.addWidget(self.max1)
