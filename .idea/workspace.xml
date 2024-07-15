@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="UI testing - testing colors and backgrounds">
+    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="UI testing - adding more sens buttons.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/img/main_BG.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/main_BG.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/wfs_new_icons.svg" beforeDir="false" afterPath="$PROJECT_DIR$/img/wfs_new_icons.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/db_pop.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/db_pop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs-bme680.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-bme680.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs2.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-testfile.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -423,7 +422,21 @@
       <option name="presentableId" value="LOCAL−00017" />
       <updated>1720687181250</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL−00018" summary="UI testing - adding more sens buttons.">
+      <option name="closed" value="true" />
+      <created>1721037334106</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1721037334106</updated>
+    </task>
+    <task id="LOCAL−00019" summary="UI testing - adding more sens buttons.">
+      <option name="closed" value="true" />
+      <created>1721037490431</created>
+      <option name="number" value="LOCAL−00019" />
+      <option name="presentableId" value="LOCAL−00019" />
+      <updated>1721037490432</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -478,7 +491,8 @@
     <MESSAGE value="UI fixes" />
     <MESSAGE value="UI fixes - testing colors and backgrounds" />
     <MESSAGE value="UI testing - testing colors and backgrounds" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI testing - testing colors and backgrounds" />
+    <MESSAGE value="UI testing - adding more sens buttons." />
+    <option name="LAST_COMMIT_MESSAGE" value="UI testing - adding more sens buttons." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

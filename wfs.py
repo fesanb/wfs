@@ -77,9 +77,9 @@ class WeatherFetcher(DatabaseFetcher):
                 return description
         return "Beaufort 0 - Calm"
 
-    def fetch_statistics(self):
+    def fetch_peaks(self):
         try:
-            periods = ['24 HOUR', '12 HOUR', '6 HOUR', '3 HOUR', '1 HOUR']
+            periods = ['24 HOUR', '12 HOUR', '6 HOUR', '3 HOUR', '1 HOUR', '10 MINUTE']
             statistics = {}
             for period in periods:
                 query = f"SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {period})"
@@ -174,7 +174,7 @@ class App(QWidget):
         self.setWindowTitle(self.title)
 
         # Use full screen or windowed mode
-        self.full_screen = True  # Change this to True for full-screen mode
+        self.full_screen = True # Change this to True for full-screen mode
 
         self.img_path = str(Path(__file__).parent.absolute() / "img" / "main_BG.png")
 
@@ -298,8 +298,8 @@ class App(QWidget):
 
     def setup_sens_container(self, path):
         self.sensFrame = QFrame(self)
-        self.sensFrame.setFrameStyle(QFrame.StyledPanel | QFrame.Sunken)
-        self.sensFrame.setLineWidth(3)
+        # self.sensFrame.setFrameStyle(QFrame.StyledPanel | QFrame.Sunken)
+        # self.sensFrame.setLineWidth(3)
 
         self.sensBox = QVBoxLayout(self.sensFrame)
 
@@ -354,35 +354,58 @@ class App(QWidget):
     def setup_peak_winds(self):
 
         fontsize = QFont('Arial', 10)
-        self.statHeader = QLabel("PEAK WINDS")
+        self.statHeader = QLabel("PEAK WINDS  ")
         self.statHeader.setFont(QFont('Arial', 15))
-        self.peak = QLabel("Peak:      NA m/s")
-        self.max1 = QLabel("Max 1hr:   NA m/s")
-        self.max3 = QLabel("Max 3hr:   NA m/s")
-        self.max6 = QLabel("Max 6hr:   NA m/s")
-        self.max12 = QLabel("Max 12hr: NA m/s")
-        self.max24 = QLabel("Max 24hr: NA m/s")
+
+
+        self.peak = QLabel(" NA ")
+        self.peak1 = QLabel(" NA ")
+        self.peak3 = QLabel(" NA ")
+        self.peak6 = QLabel(" NA ")
+        self.peak12 = QLabel(" NA ")
+        self.peak24 = QLabel(" NA ")
 
         self.peak.setFont(fontsize)
-        self.max1.setFont(fontsize)
-        self.max3.setFont(fontsize)
-        self.max6.setFont(fontsize)
-        self.max12.setFont(fontsize)
-        self.max24.setFont(fontsize)
+        self.peak1.setFont(fontsize)
+        self.peak3.setFont(fontsize)
+        self.peak6.setFont(fontsize)
+        self.peak12.setFont(fontsize)
+        self.peak24.setFont(fontsize)
 
         self.peaks = QVBoxLayout(self.sensFrame)
-
         self.peaks.addWidget(self.statHeader)
-        self.peaks.addWidget(self.peak)
-        self.peaks.addWidget(self.max1)
-        self.peaks.addWidget(self.max3)
-        self.peaks.addWidget(self.max6)
-        self.peaks.addWidget(self.max12)
-        self.peaks.addWidget(self.max24)
-        self.peaks .addWidget(QLabel(""))
+        self.peakgrid = QGridLayout()
+        self.peaks.addLayout(self.peakgrid)
 
-        self.peaks.addStretch()
+        self.peakgrid.addWidget(QLabel("Peak 10min"), 0, 0, Qt.AlignRight)
+        self.peakgrid.addWidget(self.peak, 0, 1, Qt.AlignCenter)
+        self.peakgrid.addWidget(QLabel(" m/s"), 0, 2, Qt.AlignCenter)
+
+        self.peakgrid.addWidget(QLabel("Peak 1 hour"), 1, 0, Qt.AlignRight)
+        self.peakgrid.addWidget(self.peak1, 1, 1, Qt.AlignCenter)
+        self.peakgrid.addWidget(QLabel(" m/s"), 1, 2, Qt.AlignCenter)
+
+        self.peakgrid.addWidget(QLabel("Peak 3 hour"), 2, 0, Qt.AlignRight)
+        self.peakgrid.addWidget(self.peak3, 2, 1, Qt.AlignCenter)
+        self.peakgrid.addWidget(QLabel(" m/s"), 2, 2, Qt.AlignCenter)
+
+        self.peakgrid.addWidget(QLabel("Peak 6 hour"), 3, 0, Qt.AlignRight)
+        self.peakgrid.addWidget(self.peak6, 3, 1, Qt.AlignCenter)
+        self.peakgrid.addWidget(QLabel(" m/s"), 3, 2, Qt.AlignCenter)
+
+        self.peakgrid.addWidget(QLabel("Peak 12 hour"), 4, 0, Qt.AlignRight)
+        self.peakgrid.addWidget(self.peak12, 4, 1, Qt.AlignCenter)
+        self.peakgrid.addWidget(QLabel(" m/s"), 4, 2, Qt.AlignCenter)
+
+        self.peakgrid.addWidget(QLabel("Peak 24 hour"), 5, 0, Qt.AlignRight)
+        self.peakgrid.addWidget(self.peak24, 5, 1, Qt.AlignCenter)
+        self.peakgrid.addWidget(QLabel(" m/s"), 5, 2, Qt.AlignCenter)
+
+        self.peakgrid.setRowStretch(5,50)
         self.sensBox.addLayout(self.peaks)
+        self.peaks.addWidget(QLabel(""))
+        self.peaks.addWidget(QLabel(""))
+        self.peaks.addStretch()
 
     def setup_forecast(self):
         self.forecast = QVBoxLayout()
@@ -394,7 +417,7 @@ class App(QWidget):
         self.forecast.addWidget(self.Fheader)
         self.forecast.addWidget(self.Fforecast1)
         self.forecast.addWidget(self.Fforecast2)
-        self.forecast.addStretch()
+        # self.forecast.addStretch()
         self.sensBox.addLayout(self.forecast)
 
     def setup_footer(self, path):
@@ -430,15 +453,15 @@ class App(QWidget):
             error_handle(e, filename)
         QApplication.processEvents()
 
-    def update_statistics(self):
-        statistics = weather_fetcher.fetch_statistics()
+    def update_peaks(self):
+        peaks = weather_fetcher.fetch_peaks()
         try:
-            self.peak.setText(f"Peak:      {statistics['24 HOUR']} m/s")
-            self.max1.setText(f"Max 1hr:   {statistics['1 HOUR']} m/s")
-            self.max3.setText(f"Max 3hr:   {statistics['3 HOUR']} m/s")
-            self.max6.setText(f"Max 6hr:   {statistics['6 HOUR']} m/s")
-            self.max12.setText(f"Max 12hr: {statistics['12 HOUR']} m/s")
-            self.max24.setText(f"Max 24hr: {statistics['24 HOUR']} m/s")
+            self.peak.setText(peaks['10 MINUTE'])
+            self.peak1.setText(peaks['1 HOUR'])
+            self.peak3.setText(peaks['3 HOUR'])
+            self.peak6.setText(peaks['6 HOUR'])
+            self.peak12.setText(peaks['12 HOUR'])
+            self.peak24.setText(peaks['24 HOUR'])
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
@@ -522,6 +545,7 @@ class App(QWidget):
                 self.canvas.axes.set_ylabel("Humidity (%)", color='green')
             self.canvas.axes.set_xlabel("Time", color='white')
             self.canvas.axes.xaxis.set_major_locator(MaxNLocator(nbins=8))
+            self.canvas.axes.yaxis.set_major_locator(MaxNLocator(integer=bool))
             self.canvas.axes.grid()
             self.canvas.draw()
 
@@ -544,7 +568,7 @@ class App(QWidget):
         self.graph_timer.start(60000)
 
         self.statistics_timer = QTimer()
-        self.statistics_timer.timeout.connect(self.update_statistics)
+        self.statistics_timer.timeout.connect(self.update_peaks)
         self.statistics_timer.start(60000)
 
 
