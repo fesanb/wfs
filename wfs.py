@@ -36,15 +36,12 @@ class DatabaseFetcher:
 
 
 class WeatherFetcher(DatabaseFetcher):
-    def __init__(self):
-        super().__init__()
-
     def fetch_wind(self):
         data = self.fetch_data("SELECT * FROM wind WHERE id=(SELECT MAX(id) FROM wind)")
         if data:
             wind, timestamp = data[0][1], data[0][2]
-            return str(wind) if timestamp >= datetime.now() - timedelta(minutes=0.25) else "-.-"
-
+            if timestamp >= datetime.now() - timedelta(minutes=0.25):
+                return str(wind), timestamp
         return "-.-", None
 
     def fetch_mean(self):
@@ -84,10 +81,7 @@ class WeatherFetcher(DatabaseFetcher):
             for period in periods:
                 query = f"SELECT MAX(wind) FROM wind WHERE tmestmp >= DATE_SUB(NOW(), INTERVAL {period})"
                 data = self.fetch_data(query)
-                if data and data[0][0] is not None:
-                    statistics[period] = str(round(data[0][0], 1))
-                else:
-                    statistics[period] = "0.0"
+                statistics[period] = str(round(data[0][0], 1)) if data and data[0][0] is not None else "0.0"
             return statistics
         except Exception as e:
             filename = Path(__file__).name
@@ -152,18 +146,31 @@ class MplCanvas(FigureCanvas):
         self.axes = fig.add_subplot(111)
 
         self.axes.set_facecolor('black')
-
-        self.axes.tick_params(axis='x', colors='white')
-        self.axes.tick_params(axis='y', colors='white')
-        self.axes.spines['bottom'].set_color('white')
-        self.axes.spines['top'].set_color('white')
-        self.axes.spines['left'].set_color('white')
-        self.axes.spines['right'].set_color('white')
+        self.set_axis_colors()
 
         super(MplCanvas, self).__init__(fig)
-
         self.setStyleSheet("background: transparent;")
         self.setAttribute(Qt.WA_OpaquePaintEvent, False)
+
+    def set_axis_colors(self):
+        self.axes.tick_params(axis='x', colors='white')
+        self.axes.tick_params(axis='y', colors='white')
+        for spine in self.axes.spines.values():
+            spine.set_color('white')
+
+
+class QHLine(QFrame):
+    def __init__(self):
+        super(QHLine, self).__init__()
+        self.setFrameShape(QFrame.HLine)
+        self.setFrameShadow(QFrame.Sunken)
+
+
+class QVLine(QFrame):
+    def __init__(self):
+        super(QVLine, self).__init__()
+        self.setFrameShape(QFrame.VLine)
+        self.setFrameShadow(QFrame.Sunken)
 
 
 class App(QWidget):
@@ -174,7 +181,7 @@ class App(QWidget):
         self.setWindowTitle(self.title)
 
         # Use full screen or windowed mode
-        self.full_screen = True # Change this to True for full-screen mode
+        self.full_screen = False # Change this to True for full-screen mode
 
         self.img_path = str(Path(__file__).parent.absolute() / "img" / "main_BG.png")
 
@@ -204,29 +211,31 @@ class App(QWidget):
         self.setup_footer(path)
 
         self.mainContainer.addLayout(self.windContainer)
+        self.mainContainer.addWidget(QVLine())
         self.mainContainer.addLayout(self.sensContainer)
         self.O1.addLayout(self.mainContainer)
+        self.O1.addWidget(QHLine())
         self.O1.addLayout(self.footerBox)
         self.setLayout(self.O1)
 
     def applyBackground(self):
         img = self.img_path.replace(os.sep, '/')
         self.setStyleSheet(f"""
-                QFrame#MFrame {{
-                    background-image: url({img});
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-attachment: fixed;
-                    border: none;
-                }}
-                QLabel {{
-                    color : white;
-                }}
-                """)
+            QFrame#MFrame {{
+                background-image: url({img});
+                background-repeat: no-repeat;
+                background-position: center;
+                background-attachment: fixed;
+                border: none;
+            }}
+            QLabel {{
+                color : white;
+            }}
+        """)
 
     def setup_wind_box(self, path):
         self.windBox = QHBoxLayout()
-        wind_data = weather_fetcher.fetch_wind()
+        wind_data, wind_timestamp = weather_fetcher.fetch_wind()
         mean_data, mean_beaufort = weather_fetcher.fetch_mean()
 
         self.windL = QLabel(wind_data)
@@ -268,22 +277,10 @@ class App(QWidget):
         self.canvas = MplCanvas(self, width=6, height=2, dpi=100)
         self.graphPlotContainer.addWidget(self.canvas)
 
-        self.gwb = QPushButton("Wind(mean)")
-        self.gwb.setCheckable(True)
-        self.gwb.setChecked(True)
-        self.gwb.clicked.connect(self.switch_to_wind)
-
-        self.gab = QPushButton("Pressure")
-        self.gab.setCheckable(True)
-        self.gab.clicked.connect(self.switch_to_pressure)
-
-        self.gtb = QPushButton("Temperature")
-        self.gtb.setCheckable(True)
-        self.gtb.clicked.connect(self.switch_to_temp)
-
-        self.ghb = QPushButton("Humidity")
-        self.ghb.setCheckable(True)
-        self.ghb.clicked.connect(self.switch_to_hum)
+        self.gwb = self.create_graph_button("Wind (mean)", self.switch_to_wind)
+        self.gab = self.create_graph_button("Pressure", self.switch_to_pressure)
+        self.gtb = self.create_graph_button("Temperature", self.switch_to_temp)
+        self.ghb = self.create_graph_button("Humidity", self.switch_to_hum)
 
         self.graphButtons = QHBoxLayout()
         self.graphButtons.addWidget(self.gwb)
@@ -296,13 +293,15 @@ class App(QWidget):
 
         self.windContainer.addLayout(self.graphContainer)
 
+    def create_graph_button(self, text, method):
+        button = QPushButton(text)
+        button.setCheckable(True)
+        button.clicked.connect(method)
+        return button
+
     def setup_sens_container(self, path):
         self.sensFrame = QFrame(self)
-        # self.sensFrame.setFrameStyle(QFrame.StyledPanel | QFrame.Sunken)
-        # self.sensFrame.setLineWidth(3)
-
         self.sensBox = QVBoxLayout(self.sensFrame)
-
         self.sensheaderBox = QHBoxLayout(self.sensFrame)
 
         self.sensHL = QLabel("SENSOR")
@@ -328,7 +327,10 @@ class App(QWidget):
     def setup_sens_row(self, grid, row, sensor, unit, path):
         sens_data = weather_fetcher.fetch_sens()
         arrow = weather_fetcher.fetch_sens_arrow(row)
-        img = QPixmap(path + '/img/ico-generic.png')
+
+        img_path = self.get_sens_image_path(sensor, path)
+
+        img = QPixmap(img_path)
         ico = QLabel()
         ico.setPixmap(img)
         value = QLabel(sens_data[sensor] + f" {unit}")
@@ -337,6 +339,23 @@ class App(QWidget):
         arrow_label = QLabel()
         arrow_label.setPixmap(arrow_img)
 
+        self.assign_sens_widgets(sensor, value, arrow_label)
+
+        grid.addWidget(ico, row, 0, Qt.AlignmentFlag.AlignCenter)
+        grid.addWidget(value, row, 1, Qt.AlignmentFlag.AlignCenter)
+        grid.addWidget(arrow_label, row, 2, Qt.AlignmentFlag.AlignCenter)
+
+    def get_sens_image_path(self, sensor, path):
+        if sensor == 'temp':
+            return os.path.join(path, "img", "ico-generic_red.png")
+        elif sensor == 'hum':
+            return os.path.join(path, "img", "ico-generic_green.png")
+        elif sensor == 'atp':
+            return os.path.join(path, "img", "ico-generic_blue.png")
+        else:
+            return os.path.join(path, "img", "ico-generic.png")
+
+    def assign_sens_widgets(self, sensor, value, arrow_label):
         if sensor == 'temp':
             self.tempvalue = value
             self.temparrow = arrow_label
@@ -347,61 +366,27 @@ class App(QWidget):
             self.atpvalue = value
             self.atparrow = arrow_label
 
-        grid.addWidget(ico, row, 0, Qt.AlignmentFlag.AlignCenter)
-        grid.addWidget(value, row, 1, Qt.AlignmentFlag.AlignCenter)
-        grid.addWidget(arrow_label, row, 2, Qt.AlignmentFlag.AlignCenter)
-
     def setup_peak_winds(self):
-
         fontsize = QFont('Arial', 10)
         self.statHeader = QLabel("PEAK WINDS  ")
         self.statHeader.setFont(QFont('Arial', 15))
 
-
-        self.peak = QLabel(" NA ")
-        self.peak1 = QLabel(" NA ")
-        self.peak3 = QLabel(" NA ")
-        self.peak6 = QLabel(" NA ")
-        self.peak12 = QLabel(" NA ")
-        self.peak24 = QLabel(" NA ")
-
-        self.peak.setFont(fontsize)
-        self.peak1.setFont(fontsize)
-        self.peak3.setFont(fontsize)
-        self.peak6.setFont(fontsize)
-        self.peak12.setFont(fontsize)
-        self.peak24.setFont(fontsize)
+        self.peak_labels = [QLabel(" NA ") for _ in range(6)]
+        for label in self.peak_labels:
+            label.setFont(fontsize)
 
         self.peaks = QVBoxLayout(self.sensFrame)
         self.peaks.addWidget(self.statHeader)
         self.peakgrid = QGridLayout()
         self.peaks.addLayout(self.peakgrid)
 
-        self.peakgrid.addWidget(QLabel("Peak 10min"), 0, 0, Qt.AlignRight)
-        self.peakgrid.addWidget(self.peak, 0, 1, Qt.AlignCenter)
-        self.peakgrid.addWidget(QLabel(" m/s"), 0, 2, Qt.AlignCenter)
+        peak_titles = ["Peak 10min", "Peak 1 hour", "Peak 3 hour", "Peak 6 hour", "Peak 12 hour", "Peak 24 hour"]
+        for i, (title, label) in enumerate(zip(peak_titles, self.peak_labels)):
+            self.peakgrid.addWidget(QLabel(title), i, 0, Qt.AlignRight)
+            self.peakgrid.addWidget(label, i, 1, Qt.AlignCenter)
+            self.peakgrid.addWidget(QLabel("m/s"), i, 2, Qt.AlignCenter)
 
-        self.peakgrid.addWidget(QLabel("Peak 1 hour"), 1, 0, Qt.AlignRight)
-        self.peakgrid.addWidget(self.peak1, 1, 1, Qt.AlignCenter)
-        self.peakgrid.addWidget(QLabel(" m/s"), 1, 2, Qt.AlignCenter)
-
-        self.peakgrid.addWidget(QLabel("Peak 3 hour"), 2, 0, Qt.AlignRight)
-        self.peakgrid.addWidget(self.peak3, 2, 1, Qt.AlignCenter)
-        self.peakgrid.addWidget(QLabel(" m/s"), 2, 2, Qt.AlignCenter)
-
-        self.peakgrid.addWidget(QLabel("Peak 6 hour"), 3, 0, Qt.AlignRight)
-        self.peakgrid.addWidget(self.peak6, 3, 1, Qt.AlignCenter)
-        self.peakgrid.addWidget(QLabel(" m/s"), 3, 2, Qt.AlignCenter)
-
-        self.peakgrid.addWidget(QLabel("Peak 12 hour"), 4, 0, Qt.AlignRight)
-        self.peakgrid.addWidget(self.peak12, 4, 1, Qt.AlignCenter)
-        self.peakgrid.addWidget(QLabel(" m/s"), 4, 2, Qt.AlignCenter)
-
-        self.peakgrid.addWidget(QLabel("Peak 24 hour"), 5, 0, Qt.AlignRight)
-        self.peakgrid.addWidget(self.peak24, 5, 1, Qt.AlignCenter)
-        self.peakgrid.addWidget(QLabel(" m/s"), 5, 2, Qt.AlignCenter)
-
-        self.peakgrid.setRowStretch(5,50)
+        self.peakgrid.setRowStretch(5, 50)
         self.sensBox.addLayout(self.peaks)
         self.peaks.addWidget(QLabel(""))
         self.peaks.addWidget(QLabel(""))
@@ -417,7 +402,6 @@ class App(QWidget):
         self.forecast.addWidget(self.Fheader)
         self.forecast.addWidget(self.Fforecast1)
         self.forecast.addWidget(self.Fforecast2)
-        # self.forecast.addStretch()
         self.sensBox.addLayout(self.forecast)
 
     def setup_footer(self, path):
@@ -426,6 +410,7 @@ class App(QWidget):
         self.latitude = QLabel(f"Latitude: {gps['lat']}")
         self.longitude = QLabel(f"Longitude: {gps['long']}")
         self.altitude = QLabel(f"Altitude: {gps['alt']}")
+
         self.footerBox.addWidget(self.latitude)
         self.footerBox.addWidget(self.longitude)
         self.footerBox.addWidget(self.altitude)
@@ -441,8 +426,9 @@ class App(QWidget):
             self.res = QLabel(f"P:{psutil.cpu_percent()}% - M:{used_mem}%")
             self.footerBox.addWidget(self.res)
 
+
     def update_wind(self):
-        wind = weather_fetcher.fetch_wind()
+        wind, wind_timestamp = weather_fetcher.fetch_wind()
         mean_wind, beaufort = weather_fetcher.fetch_mean()
         try:
             self.windL.setText(wind)
@@ -456,12 +442,8 @@ class App(QWidget):
     def update_peaks(self):
         peaks = weather_fetcher.fetch_peaks()
         try:
-            self.peak.setText(peaks['10 MINUTE'])
-            self.peak1.setText(peaks['1 HOUR'])
-            self.peak3.setText(peaks['3 HOUR'])
-            self.peak6.setText(peaks['6 HOUR'])
-            self.peak12.setText(peaks['12 HOUR'])
-            self.peak24.setText(peaks['24 HOUR'])
+            for period, label in zip(['10 MINUTE', '1 HOUR', '3 HOUR', '6 HOUR', '12 HOUR', '24 HOUR'], self.peak_labels):
+                label.setText(peaks[period])
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
@@ -500,74 +482,66 @@ class App(QWidget):
         QApplication.processEvents()
 
     def switch_to_wind(self):
-        self.gwb.setChecked(True)
-        self.gab.setChecked(False)
-        self.gtb.setChecked(False)
-        self.ghb.setChecked(False)
+        self.set_graph_button_state(self.gwb)
         self.update_graph()
 
     def switch_to_pressure(self):
-        self.gwb.setChecked(False)
-        self.gab.setChecked(True)
-        self.gtb.setChecked(False)
-        self.ghb.setChecked(False)
+        self.set_graph_button_state(self.gab)
         self.update_graph()
 
     def switch_to_temp(self):
-        self.gwb.setChecked(False)
-        self.gab.setChecked(False)
-        self.gtb.setChecked(True)
-        self.ghb.setChecked(False)
+        self.set_graph_button_state(self.gtb)
         self.update_graph()
 
     def switch_to_hum(self):
-        self.gwb.setChecked(False)
-        self.gab.setChecked(False)
-        self.gtb.setChecked(False)
-        self.ghb.setChecked(True)
+        self.set_graph_button_state(self.ghb)
         self.update_graph()
+
+    def set_graph_button_state(self, active_button):
+        buttons = [self.gwb, self.gab, self.gtb, self.ghb]
+        for button in buttons:
+            button.setChecked(button == active_button)
 
     def update_graph(self):
         try:
             graph_data = weather_fetcher.fetch_graph(12)
             self.canvas.axes.clear()
             if self.gwb.isChecked():
-                self.canvas.axes.plot(graph_data['wind']['x'], graph_data['wind']['y'], label='Wind', color='yellow')
-                self.canvas.axes.set_ylabel("Mean Wind (m/s)", color='yellow')
+                self.plot_graph_data(graph_data, 'wind', 'yellow', "Mean Wind (m/s)")
             elif self.gab.isChecked():
-                self.canvas.axes.plot(graph_data['atp']['x'], graph_data['atp']['y'], label='Pressure', color='blue')
-                self.canvas.axes.set_ylabel("BMP (hPa)", color='blue')
+                self.plot_graph_data(graph_data, 'atp', 'blue', "BMP (hPa)")
             elif self.gtb.isChecked():
-                self.canvas.axes.plot(graph_data['temp']['x'], graph_data['temp']['y'], label='Temperature', color='red')
-                self.canvas.axes.set_ylabel("Temperature (C)", color='red')
+                self.plot_graph_data(graph_data, 'temp', 'red', "Temperature (C)")
             elif self.ghb.isChecked():
-                self.canvas.axes.plot(graph_data['hum']['x'], graph_data['hum']['y'], label='Humidity', color='green')
-                self.canvas.axes.set_ylabel("Humidity (%)", color='green')
-            self.canvas.axes.set_xlabel("Time", color='white')
-            self.canvas.axes.xaxis.set_major_locator(MaxNLocator(nbins=8))
-            self.canvas.axes.yaxis.set_major_locator(MaxNLocator(integer=bool))
-            self.canvas.axes.grid()
+                self.plot_graph_data(graph_data, 'hum', 'green', "Humidity (%)")
             self.canvas.draw()
-
         except Exception as e:
             filename = Path(__file__).name
             error_handle(e, filename)
         QApplication.processEvents()
 
+    def plot_graph_data(self, graph_data, key, color, ylabel):
+        self.canvas.axes.plot(graph_data[key]['x'], graph_data[key]['y'], label=key.capitalize(), color=color)
+        self.canvas.axes.set_ylabel(ylabel, color=color)
+        self.canvas.axes.set_xlabel("Time", color='white')
+        self.canvas.axes.xaxis.set_major_locator(MaxNLocator(nbins=8))
+        self.canvas.axes.yaxis.set_major_locator(MaxNLocator(integer=bool))
+        self.canvas.axes.grid()
+
     def setup_timers(self):
-        self.wind_timer = QTimer()
+        self.wind_timer = QTimer(self)
         self.wind_timer.timeout.connect(self.update_wind)
         self.wind_timer.start(1000)
 
-        self.sens_timer = QTimer()
+        self.sens_timer = QTimer(self)
         self.sens_timer.timeout.connect(self.update_sens)
         self.sens_timer.start(5000)
 
-        self.graph_timer = QTimer()
+        self.graph_timer = QTimer(self)
         self.graph_timer.timeout.connect(self.update_graph)
         self.graph_timer.start(60000)
 
-        self.statistics_timer = QTimer()
+        self.statistics_timer = QTimer(self)
         self.statistics_timer.timeout.connect(self.update_peaks)
         self.statistics_timer.start(60000)
 
