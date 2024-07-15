@@ -81,4 +81,4 @@ while True:
 	sens_insert(temp, hum, atp)
 	print("Single DB insert done")
 
-	time.sleep(10)
+	time.sleep(30)

@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="UI testing - testing colors and backgrounds">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/main_BG.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/main_BG.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/wfs_new_icons.svg" beforeDir="false" afterPath="$PROJECT_DIR$/img/wfs_new_icons.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/db_pop.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/db_pop.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs2.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wfs2.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-testfile.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +44,9 @@
     <setting file="file://$PROJECT_DIR$/arch/wfs-gui.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/test/test.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/test/testing.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/wfs-testfile.py" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/wfs.py" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/wfs2.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/wfs_V1.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -58,16 +62,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.db_pop.executor": "Run",
-    "Python.wfs.executor": "Run",
-    "Python.wfs2.executor": "Run",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/Stefan/PycharmProjects/wfs/wfs.py",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.grazie"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.db_pop.executor&quot;: &quot;Run&quot;,
+    &quot;Python.wfs.executor&quot;: &quot;Run&quot;,
+    &quot;Python.wfs2.executor&quot;: &quot;Run&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Stefan/PycharmProjects/wfs/wfs.py&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.grazie&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\stefa\PycharmProjects\wfs\dump" />
@@ -166,6 +170,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="wfs-testfile" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="wfs" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/bin/python3.5" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\Stefan\PycharmProjects\wfs\wfs-testfile.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="wfs" type="PythonConfigurationType" factoryName="Python">
       <module name="wfs" />
       <option name="ENV_FILES" value="" />
@@ -188,39 +214,17 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="wfs2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="wfs" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="/usr/bin/python3.5" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wfs2.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.wfs" />
       <item itemvalue="Python.testing" />
       <item itemvalue="Python.wfs-ard2db" />
       <item itemvalue="Python.db_pop" />
-      <item itemvalue="Python.wfs2" />
+      <item itemvalue="Python.wfs-testfile" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.db_pop" />
-        <item itemvalue="Python.wfs2" />
+        <item itemvalue="Python.wfs-testfile" />
         <item itemvalue="Python.wfs" />
       </list>
     </recent_temporary>
@@ -412,7 +416,14 @@
       <option name="presentableId" value="LOCAL−00016" />
       <updated>1720684073881</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL−00017" summary="UI testing - testing colors and backgrounds">
+      <option name="closed" value="true" />
+      <created>1720687181250</created>
+      <option name="number" value="LOCAL−00017" />
+      <option name="presentableId" value="LOCAL−00017" />
+      <updated>1720687181250</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
