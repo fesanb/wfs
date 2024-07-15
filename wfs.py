@@ -174,7 +174,7 @@ class App(QWidget):
         self.setWindowTitle(self.title)
 
         # Use full screen or windowed mode
-        self.full_screen = False  # Change this to True for full-screen mode
+        self.full_screen = True  # Change this to True for full-screen mode
 
         self.img_path = str(Path(__file__).parent.absolute() / "img" / "main_BG.png")
 
