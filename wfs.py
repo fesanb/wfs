@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import platform
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -181,7 +182,10 @@ class App(QWidget):
         self.setWindowTitle(self.title)
 
         # Use full screen or windowed mode
-        self.full_screen = False # Change this to True for full-screen mode
+        if platform.system() == 'Windows':
+            self.full_screen = False # Change this to True for full-screen mode
+        else:
+            self.full_screen = True
 
         self.img_path = str(Path(__file__).parent.absolute() / "img" / "main_BG.png")
 

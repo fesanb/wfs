@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="UI touch-up, graph touch-up.">
-      <change afterPath="$PROJECT_DIR$/img/ico-generic_blue.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/ico-generic_green.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/ico-generic_red.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/error-green.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/error-green.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/error-red.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/error-red.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs-testfile.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs-testfile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/wfs.py" afterDir="false" />
-    </list>
+    <list default="true" id="996c6a70-c8a4-4a7e-b230-ef65f14aa32f" name="Default Changelist" comment="UI touch-up, code improvements, some refractoring." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -446,7 +437,14 @@
       <option name="presentableId" value="LOCAL−00020" />
       <updated>1721044600923</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL−00021" summary="UI touch-up, code improvements, some refractoring.">
+      <option name="closed" value="true" />
+      <created>1721058305621</created>
+      <option name="number" value="LOCAL−00021" />
+      <option name="presentableId" value="LOCAL−00021" />
+      <updated>1721058305621</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -477,7 +475,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="!" />
     <MESSAGE value="Horizontal GIU starting to get there." />
     <MESSAGE value="Updating graph. Not working with datetime, converting back to &quot;id&quot;" />
     <MESSAGE value="removing ATP from graph" />
@@ -502,7 +499,8 @@
     <MESSAGE value="UI testing - testing colors and backgrounds" />
     <MESSAGE value="UI testing - adding more sens buttons." />
     <MESSAGE value="UI touch-up, graph touch-up." />
-    <option name="LAST_COMMIT_MESSAGE" value="UI touch-up, graph touch-up." />
+    <MESSAGE value="UI touch-up, code improvements, some refractoring." />
+    <option name="LAST_COMMIT_MESSAGE" value="UI touch-up, code improvements, some refractoring." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
