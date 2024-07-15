@@ -51,7 +51,7 @@ def db_insert(temp, hum, atp):
 db_fetch()
 
 if s.get_sensor_data():
-	new_sens = [round(s.data.temperature), round(s.data.humidity), round(s.data.pressure+20)]  #Pressure added +20 dues to unknown fault. Changing to BME290
+	new_sens = [round(s.data.temperature), round(s.data.humidity), round(s.data.pressure + 22)]  #Pressure added +20 dues to unknown fault. Changing to BME290
 	if new_sens == db_fetch.last_sens:
 		pass
 	else:
